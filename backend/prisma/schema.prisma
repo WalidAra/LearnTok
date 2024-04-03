@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Provider {
+  id   String @id @default(uuid())
+  name String
+
+  User User[]
+}
+
+model Status {
+  id   String @id @default(uuid())
+  name String
+
+  User User[]
+}
+
+model User {
+  id       String  @id @default(uuid())
+  password String
+  email    String  @unique
+  username String
+  fullName String
+  picture  String  @default("")
+  bio      String  @default("")
+  isBanned Boolean @default(false)
+
+  createdAt   DateTime @default(now())
+  lastLoginAt DateTime @default(now())
+
+  provider_id String
+  status_id   String
+
+  Provider   Provider   @relation(fields: [provider_id], references: [id])
+  Status     Status     @relation(fields: [status_id], references: [id])
+  followers  Follow[]   @relation("Followers")
+  followings Follow[]   @relation("Followings")
+  Video      Video[]
+  View       View[]
+  Like       Like[]
+  Comment    Comment[]
+  Bookmark   Bookmark[]
+  ForYou     ForYou[]
+}
+
+model Category {
+  id         String   @id @default(uuid())
+  category   String
+  videoCount Int      @default(0)
+  Video      Video[]
+  ForYou     ForYou[]
+}
+
+model Follow {
+  id           String   @id @default(uuid())
+  follower_id  String 
+  following_id String 
+  createdAt    DateTime @default(now())
+
+  follower  User @relation("Followers", fields: [follower_id], references: [id] , onDelete:Cascade)
+  following User @relation("Followings", fields: [following_id], references: [id], onDelete:Cascade)
+
+  @@unique([follower_id, following_id])
+}
+
+model Video {
+  id             String   @id @default(uuid())
+  user_id        String
+  title          String
+  description    String   @default("")
+  url            String
+  uploadedAt     DateTime @default(now())
+  comments_count Int      @default(0)
+  likes_count    Int      @default(0)
+  views_count    Int      @default(0)
+  category_id    String   
+
+  Category Category   @relation(fields: [category_id], references: [id])
+  User     User       @relation(fields: [user_id], references: [id] , onDelete:Cascade)
+  View     View[]
+  Like     Like[]
+  Comment  Comment[]
+  Bookmark Bookmark[]
+}
+
+model View {
+  id       String   @id @default(uuid())
+  user_id  String
+  video_id String
+  createdAt DateTime @default(now())
+  User     User     @relation(fields: [user_id], references: [id], onDelete:Cascade)
+  Video    Video    @relation(fields: [video_id], references: [id], onDelete:Cascade)
+
+  @@unique([user_id, video_id])
+}
+
+model Like {
+  id       String   @id @default(uuid())
+  user_id  String
+  video_id String
+  createdAt  DateTime @default(now())
+
+  User  User  @relation(fields: [user_id], references: [id], onDelete:Cascade)
+  Video Video @relation(fields: [video_id], references: [id], onDelete:Cascade)
+
+  @@unique([user_id, video_id])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  user_id   String
+  video_id  String
+  comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime?
+
+  User  User  @relation(fields: [user_id], references: [id], onDelete:Cascade)
+  Video Video @relation(fields: [video_id], references: [id], onDelete:Cascade)
+}
+
+model Bookmark {
+  id        String   @id @default(uuid())
+  user_id   String
+  video_id  String
+  createdAt DateTime  @default(now())
+
+  User  User  @relation(fields: [user_id], references: [id], onDelete:Cascade)
+  Video Video @relation(fields: [video_id], references: [id], onDelete:Cascade)
+
+  @@unique([user_id, video_id])
+}
+
+model ForYou {
+  id          String @id @default(uuid())
+  user_id     String
+  category_id String
+
+  User     User     @relation(fields: [user_id], references: [id], onDelete:Cascade)
+  Category Category @relation(fields: [category_id], references: [id])
+
+  @@unique([user_id , category_id])
+}

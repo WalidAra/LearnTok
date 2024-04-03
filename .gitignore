@@ -1,0 +1,5 @@
+/.vscode
+/rules.txt
+/backend/.env
+/backend/.todo
+/backend/node_modules
