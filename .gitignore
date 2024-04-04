@@ -3,3 +3,7 @@
 /backend/.env
 /backend/.todo
 /backend/node_modules
+
+/client/.env
+/client/.todo
+/client/node_modules
