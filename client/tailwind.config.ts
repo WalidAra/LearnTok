@@ -26,11 +26,29 @@ const config = {
     extend: {
       gridTemplateColumns: {
         auto1fr: "auto 1fr",
+        "1frauto1fr": "1fr auto 1fr",
+      },
+      gridTemplateRows: {
+        auto1fr: "auto 1fr",
+        "1frauto1fr": "1fr auto 1fr",
       },
 
-      width:{
-        "500":"500px",
-        "450":"450px"
+      height: {
+        M53: "calc(100vh - 53px)",
+      },
+
+      width: {
+        "500": "500px",
+        "450": "450px",
+        "128": "32rem",
+        "68": "17rem",
+      },
+
+      maxWidth: {
+        "500": "500px",
+        "450": "450px",
+        "128": "32rem",
+        "68": "17rem",
       },
 
       colors: {

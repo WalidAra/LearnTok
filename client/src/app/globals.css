@@ -8,6 +8,7 @@
   box-sizing: border-box;
   border: none;
   outline: none;
+  scroll-behavior: smooth;
 }
 
 .center_div {
@@ -19,6 +20,13 @@
 .test {
   background-color: rgba(255, 0, 0, 0.37);
   outline: 1px solid red;
+}
+
+.scroll-snap-type {
+  scroll-snap-type: y mandatory !important ;
+}
+.scroll-snap-align {
+  scroll-snap-align: center !important;
 }
 
 @layer base {
@@ -91,5 +99,118 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+
+/*------ Settings ------*/
+.sound-toggle-container {
+  --color: #a5a5b0;
+  --size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--size);
+  user-select: none;
+  fill: var(--color);
+}
+
+.sound-toggle-container .mute {
+  position: absolute;
+  animation: keyframes-fill .5s;
+}
+
+.sound-toggle-container .voice {
+  position: absolute;
+  display: none;
+  animation: keyframes-fill .5s;
+}
+
+/* ------ On check event ------ */
+.sound-toggle-container input:checked ~ .mute {
+  display: none;
+}
+
+.sound-toggle-container input:checked ~ .voice {
+  display: block;
+}
+
+/* ------ Hide the default checkbox ------ */
+.sound-toggle-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* ------ Animation ------ */
+@keyframes keyframes-fill {
+  0% {
+    transform: rotate(0deg) scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: rotate(-10deg) scale(1.2);
+  }
+}
+
+/* ___________________ */
+
+/*------ Settings ------*/
+.pause-play-container {
+  --color: #a5a5b0;
+  --size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--size);
+  user-select: none;
+  fill: var(--color);
+}
+
+.pause-play-container .play {
+  position: absolute;
+  animation: keyframes-fill .5s;
+}
+
+.pause-play-container .pause {
+  position: absolute;
+  display: none;
+  animation: keyframes-fill .5s;
+}
+
+/* ------ On check event ------ */
+.pause-play-container input:checked ~ .play {
+  display: none;
+}
+
+.pause-play-container input:checked ~ .pause {
+  display: block;
+}
+
+/* ------ Hide the default checkbox ------ */
+.pause-play-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* ------ Animation ------ */
+@keyframes keyframes-fill {
+  0% {
+    transform: rotate(-180deg) scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: rotate(-10deg) scale(1.2);
   }
 }

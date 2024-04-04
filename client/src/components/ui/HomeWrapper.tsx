@@ -13,7 +13,7 @@ const HomeWrapper = ({ children }: Children) => {
     >
       <SideBar />
 
-      <div className="flex flex-col ">
+      <div className="flex flex-col w-full h-screen">
         <NavBar />
         <MainView>{children}</MainView>
       </div>
