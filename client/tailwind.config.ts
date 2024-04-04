@@ -28,6 +28,11 @@ const config = {
         auto1fr: "auto 1fr",
       },
 
+      width:{
+        "500":"500px",
+        "450":"450px"
+      },
+
       colors: {
         // common colors
 
@@ -37,7 +42,7 @@ const config = {
 
         // mostly are for light theme
 
-        inputLight: "##F4F7FE",
+        inputLight: "#F4F7FE",
 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
