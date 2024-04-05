@@ -3,6 +3,7 @@ import { Flex } from "@chakra-ui/react";
 import React from "react";
 import VideoPlayer from "./container/VideoPlayer";
 import Link from "next/link";
+import Reactors from "./container/Reactors";
 
 export default function VideoContainer() {
   return (
@@ -26,7 +27,9 @@ export default function VideoContainer() {
       <div className=" flex-1 flex justify-center items-start md:items-center sm:grid sm:grid-cols-1frauto1fr">
         <div className="hidden sm:block"></div>
         <VideoPlayer />
-        <div className="hidden sm:block"></div>
+        <div className="h-full hidden pl-2 sm:flex sm:justify-center sm:items-center">
+          <Reactors />
+        </div>
       </div>
     </Flex>
   );

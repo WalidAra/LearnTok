@@ -66,6 +66,15 @@ const config = {
       colors: {
         // common colors
 
+        lPrimary: "#6c5ecf",
+        lSecondary: "#8941e3",
+
+        commonLightGreen: "#22b07d",
+        commonLightBlue: "#35bdff",
+        commonLightPurple: "#7868e9",
+        commonLightRed: "#ea5f5f",
+        commonLightOrange: "#ff7551",
+
         // dark theme
         smTextDarK: "#808191",
         xsTextDarK: "#4f4e5d",
