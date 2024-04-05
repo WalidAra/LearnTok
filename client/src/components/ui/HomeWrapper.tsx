@@ -7,13 +7,13 @@ import MainView from "./home/MainView";
 const HomeWrapper = ({ children }: Children) => {
   return (
     <ColorSync
-      className="w-full h-screen grid grid-cols-auto1fr "
+      className="w-full h-screen flex"
       onDark={""}
       onLight={""}
     >
       <SideBar />
 
-      <div className="flex flex-col w-full h-screen">
+      <div className="flex flex-col w-full h-screen ">
         <NavBar />
         <MainView>{children}</MainView>
       </div>

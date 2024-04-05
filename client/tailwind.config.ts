@@ -12,6 +12,13 @@ const config = {
   ],
   prefix: "",
   theme: {
+    screens: {
+      sm: "576px", // Small
+      md: "768px", // Medium
+      lg: "992px", // Large
+      xl: "1200px", // X-Large
+      "2xl": "1400px", // XX-Large
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -34,6 +41,11 @@ const config = {
       },
 
       height: {
+        M53: "calc(100vh - 53px)",
+        video: "calc(100vh - 53px - 16px)",
+      },
+
+      maxHeight: {
         M53: "calc(100vh - 53px)",
       },
 
