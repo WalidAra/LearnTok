@@ -1,8 +1,9 @@
 import React from "react";
 import UserOptions from "./UserOptions";
+import LoginBtn from "./LoginBtn";
 
 export default function IsAuth() {
-  const session = true;
+  const session = false;
 
-  return <>{session ? <UserOptions /> : <></>}</>;
+  return <>{session ? <UserOptions /> : <LoginBtn />}</>;
 }

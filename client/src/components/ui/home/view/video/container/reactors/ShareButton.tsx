@@ -20,7 +20,7 @@ export default function ShareButton() {
   return (
     <IconButton
       className={
-        isToggled ? "" : theme.isDark ? "" : "bg-slate-100 text-slate-300"
+        isToggled ? "" : theme.isDark ? "" : "bg-muted text-muted-foreground"
       }
       onClick={handleToggle}
     >

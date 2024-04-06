@@ -7,7 +7,13 @@ export default function ScrollingContainer({
   children,
 }: React.HTMLProps<HTMLDivElement>) {
   return (
-    <div key={key} className={cn("scroll-snap-type ", className)}>
+    <div
+      key={key}
+      className={cn(
+        "scroll-snap-type scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100",
+        className
+      )}
+    >
       {children}
     </div>
   );

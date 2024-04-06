@@ -13,7 +13,7 @@ export default function CommentIconButton() {
         className={
           theme.isDark
             ? ""
-            : "bg-slate-100 text-slate-300 active:text-foreground"
+            : "bg-muted text-muted-foreground active:text-foreground"
         }
       >
         <FaComment />

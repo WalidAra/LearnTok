@@ -24,7 +24,7 @@ export default function SaveIconButton() {
           ? "bg-commonLightOrange text-white"
           : theme.isDark
           ? ""
-          : "bg-slate-100 text-slate-300"
+          : "bg-muted text-muted-foreground"
       }
     >
       <BsBookmarkFill />
