@@ -23,16 +23,50 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
+        sm: "576px",
+        md: "768px",
+        lg: "992px",
+        xl: "1200px",
         "2xl": "1400px",
       },
     },
     extend: {
+      width: {
+        "13": "53px",
+        "500": "500px",
+        "450": "450px",
+      },
+
+      height: {
+        "13": "53px",
+        "500": "500px",
+        "450": "450px",
+      },
+      maxHeight: {
+        "13": "53px",
+        "500": "500px",
+        "450": "450px",
+      },
+
+      padding: {
+        "13": "53px",
+      },
+
       colors: {
         // common colors
 
+        commonLightGreen: "#22b07d",
+        commonLightBlue: "#35bdff",
+        commonLightPurple: "#7868e9",
+        commonLightRed: "#ea5f5f",
+        commonLightOrange: "#ff7551",
+        smText: "#808191",
         // dark theme
-
+        xsTextDarK: "#4f4e5d",
         // light theme
+
+        borderLight: "#E2E8F0",
+        inputLight: "#F4F7FE",
 
         // shadcn configuration
         border: "hsl(var(--border))",
@@ -90,7 +124,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), nextui()],
+  plugins: [nextui(), require("tailwindcss-animate")],
 } satisfies Config;
 
 export default config;

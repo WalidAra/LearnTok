@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
-import { NextUI } from "./NextUI";
-import { ChakraProvider } from "@chakra-ui/react";
 import { cn } from "@/lib/utils";
+import HomeWrapper from "@/components/ui/HomeWrapper";
+import { NextUI } from "@/components/layouts/NextUI";
+import { ChakraProvider } from "@chakra-ui/react";
 import ThemeProvider from "@/context/Theme";
 
 const fontSans = FontSans({
@@ -24,14 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
+        className={cn("min-h-screen font-sans antialiased", fontSans.variable)}
       >
         <ThemeProvider>
           <NextUI>
-            <ChakraProvider>{children}</ChakraProvider>
+            <ChakraProvider>
+              <HomeWrapper>{children}</HomeWrapper>
+            </ChakraProvider>
           </NextUI>
         </ThemeProvider>
       </body>

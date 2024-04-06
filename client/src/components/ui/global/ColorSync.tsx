@@ -8,12 +8,12 @@ type Props = React.HTMLProps<HTMLDivElement> & {
   onLight: string;
 };
 
-export default function ColorSync({ onDark, onLight, className, key }: Props) {
+export default function ColorSync({ onDark, onLight, className, key , children }: Props) {
   const { isDark } = useTheme();
 
   return (
     <div key={key} className={cn(className, isDark ? onDark : onLight)}>
-      ColorSync
+      {children}
     </div>
   );
 }
