@@ -2,6 +2,7 @@ import React from "react";
 import ColorSync from "./global/ColorSync";
 import SideBar from "./home/SideBar";
 import NavBar from "./home/NavBar";
+import AuthDialog from "./home/AuthDialog";
 
 const HomeWrapper = ({ children }: Children) => {
   return (
@@ -10,6 +11,7 @@ const HomeWrapper = ({ children }: Children) => {
       onDark={""}
       onLight={"bg-background"}
     >
+      <AuthDialog />
       <SideBar />
       <div className="flex flex-col w-full h-screen">
         <NavBar />

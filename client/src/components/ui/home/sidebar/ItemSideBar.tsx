@@ -25,7 +25,7 @@ export default function ItemSideBar({ children, tooltip }: Props) {
         </Button>
       </TooltipTrigger>
       <TooltipContent className="capitalize" side="right" sideOffset={5}>
-        {tooltip}
+        {tooltip.slice(1)}
       </TooltipContent>
     </Tooltip>
   );

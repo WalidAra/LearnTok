@@ -6,6 +6,7 @@ import HomeWrapper from "@/components/ui/HomeWrapper";
 import { NextUI } from "@/components/layouts/NextUI";
 import { ChakraProvider } from "@chakra-ui/react";
 import ThemeProvider from "@/context/Theme";
+import AuthDialogProvider from "@/context/AuthDialog";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -30,7 +31,9 @@ export default function RootLayout({
         <ThemeProvider>
           <NextUI>
             <ChakraProvider>
-              <HomeWrapper>{children}</HomeWrapper>
+              <AuthDialogProvider>
+                <HomeWrapper>{children}</HomeWrapper>
+              </AuthDialogProvider>
             </ChakraProvider>
           </NextUI>
         </ThemeProvider>

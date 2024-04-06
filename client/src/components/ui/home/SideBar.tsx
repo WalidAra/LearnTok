@@ -15,7 +15,7 @@ const SideBar = () => {
   return (
     <aside className="inset-y fixed  left-0 z-20 flex h-full flex-col border-r border-borderLight">
       <LogoSidebar />
-      <TooltipProvider>
+      <TooltipProvider delayDuration={1} >
         <nav className="grid gap-1 p-2">
           <ItemSideBar tooltip="/home">
             <LuHome size={20} />
