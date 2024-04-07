@@ -12,15 +12,33 @@ const config = {
   ],
   prefix: "",
   theme: {
+    screens: {
+      sm: "576px", // Small
+      md: "768px", // Medium
+      lg: "992px", // Large
+      xl: "1200px", // X-Large
+      "2xl": "1400px", // XX-Large
+    },
+
     container: {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        sm: "576px", // Small
+        md: "768px", // Medium
+        lg: "992px", // Large
+        xl: "1200px", // X-Large
+        "2xl": "1400px", // XX-Large
       },
     },
     extend: {
       colors: {
+        // common colors
+
+        // dark theme colors
+
+        // light theme colors
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -76,7 +94,7 @@ const config = {
       },
     },
   },
-  plugins: [nextui(),require("tailwindcss-animate")],
+  plugins: [nextui(), require("tailwindcss-animate")],
 } satisfies Config;
 
 export default config
