@@ -32,12 +32,39 @@ const config = {
       },
     },
     extend: {
+      width: {
+        "13": "53px",
+        "500": "500px",
+        "450": "450px",
+      },
+
+      height: {
+        "13": "53px",
+        "500": "500px",
+        "450": "450px",
+      },
+      maxHeight: {
+        "13": "53px",
+        "500": "500px",
+        "450": "450px",
+      },
+
+      padding: {
+        "13": "53px",
+      },
       colors: {
         // common colors
-
+        commonLightGreen: "#22b07d",
+        commonLightBlue: "#35bdff",
+        commonLightPurple: "#7868e9",
+        commonLightRed: "#ea5f5f",
+        commonLightOrange: "#ff7551",
+        smText: "#808191",
         // dark theme colors
 
         // light theme colors
+        borderLight: "#E2E8F0",
+        inputLight: "#F4F7FE",
 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
