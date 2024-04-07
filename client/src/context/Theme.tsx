@@ -1,34 +1,46 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import clientLocalStorage from "@/lib/clientLocalStorage";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type Props = {
-  isDark: boolean;
-  setTheme: (value: boolean | ((prev: boolean) => boolean)) => void;
+  theme: "system" | "light" | "dark";
+  setTheme: (value: "system" | "light" | "dark") => void;
+  ToggleTheme: () => void;
 };
 
 const Theme = createContext<Props>({
-  isDark: false,
-  setTheme: () => {},
+  theme: "light",
+  setTheme: (value: string) => {},
+  ToggleTheme: () => {},
 });
 
 import React from "react";
 
 export default function ThemeProvider({ children }: Children) {
-  const [isDark, setTheme] = useState<boolean>(false);
+  const [theme, setTheme] = useState<"system" | "light" | "dark">("system");
+
+  const ToggleTheme = () => {
+    if (theme === "dark") {
+      setTheme("light");
+    } else if (theme === "light") {
+      setTheme("dark");
+    }
+  };
 
   useEffect(() => {
-    const currentTheme = clientLocalStorage.getItem("learntok-theme");
-
-    if (currentTheme === "dark") {
-      setTheme(true);
-    } else {
-      setTheme(false);
+    const storedTheme = clientLocalStorage.getItem("learntok-theme");
+    if (storedTheme === "dark") {
+      setTheme("dark");
+    } else if (theme === "light") {
+      setTheme("light");
     }
   }, []);
 
   return (
-    <Theme.Provider value={{ isDark, setTheme }}>{children}</Theme.Provider>
+    <Theme.Provider value={{ theme, setTheme, ToggleTheme }}>
+      {children}
+    </Theme.Provider>
   );
 }
 

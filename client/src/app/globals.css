@@ -11,14 +11,14 @@
 }
 
 .test {
-  background-color: rgba(255, 0, 0, 0.425);
+  background-color: rgba(255, 0, 0, 0.363);
   outline: 1px solid red;
 }
 
 .center_div {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @layer base {

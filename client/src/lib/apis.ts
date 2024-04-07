@@ -1,7 +1,6 @@
 import axios from "axios";
+const BASE_URL = process.env.NEXT_BASE_URL;
 
-const BASE_URL = process.env.NEXT_BASE_URL_SERVER as string;
+const api = {};
 
-const apis = {};
-
-export default apis;
+export default api;
