@@ -12,7 +12,7 @@ export default function InputSearch() {
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      router.push(`/search?looking=${searchRef.current?.value}`);
+      router.push(`/search/${searchRef.current?.value}`);
     }
   };
 

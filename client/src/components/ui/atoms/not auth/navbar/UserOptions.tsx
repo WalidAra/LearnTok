@@ -9,15 +9,20 @@ import {
   MenuOptionGroup,
   MenuDivider,
 } from "@chakra-ui/react";
-import { Button } from "@/components/cli/button";
 import { LuSettings2 } from "react-icons/lu";
+import ColorSync from "@/components/ui/global/ColorSync";
 export default function UserOptions() {
   return (
     <Menu>
       <MenuButton>
-        <Button size={"icon"} variant={"outline"}>
+        <ColorSync
+          className="size-9 inline-flex hover:bg-accent justify-center items-center  border relative rounded-lg"
+          onDark={""}
+          onLight={"border-borderLight "}
+          onSystem={"dark: border-borderLight"}
+        >
           <LuSettings2 className="size-5" />
-        </Button>
+        </ColorSync>
       </MenuButton>
       <MenuList>
         <MenuItem>Download</MenuItem>
