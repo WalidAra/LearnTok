@@ -5,6 +5,8 @@ import { NextUI } from "./NextUI";
 import { ChakraProvider } from "@chakra-ui/react";
 import HomeLayout from "@/components/ui/layouts/HomeLayout";
 import ThemeProvider from "@/context/Theme";
+import AuthDialogProvider from "@/context/AuthDialog";
+import AuthDialog from "@/components/ui/molecules/AuthDialog";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +27,10 @@ export default function RootLayout({
         <ThemeProvider>
           <NextUI>
             <ChakraProvider>
-              <HomeLayout>{children}</HomeLayout>
+              <AuthDialogProvider>
+                <AuthDialog />
+                <HomeLayout>{children}</HomeLayout>
+              </AuthDialogProvider>
             </ChakraProvider>
           </NextUI>
         </ThemeProvider>
