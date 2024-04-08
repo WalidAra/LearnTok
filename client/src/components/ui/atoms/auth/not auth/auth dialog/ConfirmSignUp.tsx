@@ -1,19 +1,15 @@
 "use client";
 import React, { useRef } from "react";
-import SocialSignInPanel from "./SocialSignInPanel";
-import OAuthContainer from "./OAuthContainer";
 import { InputWithLabel } from "./AuthInput";
+import SocialSignInPanel from "./SocialSignInPanel";
 import { Button } from "@/components/cli/button";
-import Or from "./Or";
 
-const SignIn = () => {
+const ConfirmSignUp = () => {
   const emailRef = useRef<any>(null);
   const passwordRef = useRef<any>(null);
   return (
     <div className="w-full flex flex-col gap-4">
-      <SocialSignInPanel />
-      <OAuthContainer />
-      <Or />
+      <SocialSignInPanel isSignInForm={false} />
       <form className="w-full flex flex-col gap-4">
         <InputWithLabel
           forwardRef={emailRef}
@@ -29,10 +25,10 @@ const SignIn = () => {
           type="password"
         />
 
-        <Button type="submit">Login</Button>
+        <Button type="submit">Sign up</Button>
       </form>
     </div>
   );
 };
 
-export default SignIn;
+export default ConfirmSignUp;

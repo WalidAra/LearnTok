@@ -21,6 +21,8 @@ import OAuthContainer from "../atoms/auth/not auth/auth dialog/OAuthContainer";
 import { Button } from "@/components/cli/button";
 import SignIn from "../atoms/auth/not auth/auth dialog/SignIn";
 import ColorSync from "../global/ColorSync";
+import SignUp from "../atoms/auth/not auth/auth dialog/SignUp";
+import ConfirmSignUp from "../atoms/auth/not auth/auth dialog/ConfirmSignUp";
 
 const AuthDialog = () => {
   const { isOpen, onClose, onOpen } = useAuthDialog();
@@ -43,7 +45,7 @@ const AuthDialog = () => {
         isCentered
       >
         <AlertDialogOverlay>
-          <AlertDialogContent w={'92%'} >
+          <AlertDialogContent w={"92%"}>
             <AlertDialogHeader
               display={"flex"}
               justifyContent={"space-between"}
@@ -64,6 +66,8 @@ const AuthDialog = () => {
 
             <AlertDialogBody className="flex flex-col gap-3">
               <SignIn />
+              {/* <SignUp /> */}
+              {/* <ConfirmSignUp /> */}
             </AlertDialogBody>
 
             <AlertDialogFooter className="flex flex-col gap-3">

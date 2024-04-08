@@ -5,7 +5,7 @@ import OAuthFacebookBtn from "./OAuthFacebookBtn";
 
 export default function OAuthContainer() {
   return (
-    <Flex className="w-full justify-center gap-5 flex-wrap items-center">
+    <Flex className="w-full flex items-center flex-wrap sm:flex-nowrap gap-2  sm:grid sm:grid-cols-2 sm:gap-6">
       <OAuthGoogleBtn />
       <OAuthFacebookBtn />
     </Flex>
