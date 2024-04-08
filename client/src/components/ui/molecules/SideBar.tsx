@@ -13,15 +13,15 @@ import ColorSync from "../global/ColorSync";
 const SideBar = () => {
   return (
     <ColorSync
-      className="border-r inset-y fixed left-0 z-20 h-full "
+      className="border-r inset-y fixed left-0 z-20 h-full lg:w-56 "
       onDark={""}
       onLight={"border-borderLight"}
-      onSystem={"dark:"}
+      onSystem={"dark: border-borderLight"}
     >
-      <aside className="flex w-full h-full flex-col">
+      <aside className="flex h-full w-full flex-col">
         <SidebarIcon />
         <TooltipProvider delayDuration={1}>
-          <nav className="grid gap-1 p-2">
+          <nav className="grid gap-1 p-2 w-full">
             <SidebarItem tooltip="/home">
               <LuHome className="size-5" />
             </SidebarItem>

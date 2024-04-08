@@ -9,7 +9,7 @@ const NavBar = () => {
       className="sticky top-0 z-10 h-[53px] border-b px-2 xl:px-4"
       onDark={""}
       onLight={"border-borderLight"}
-      onSystem={""}
+      onSystem={"border-borderLight dark:"}
     >
       <header className="w-full justify-between items-center h-full flex">
         <InputSearch />

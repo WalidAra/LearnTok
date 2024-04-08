@@ -1,4 +1,3 @@
-import { Button } from "@/components/cli/button";
 import {
   Tooltip,
   TooltipTrigger,
@@ -6,6 +5,8 @@ import {
 } from "@/components/cli/tooltip";
 import Link from "next/link";
 import React from "react";
+import SideNavIconBtn from "./SideNavIconBtn";
+import SideNavBtn from "./SideNavBtn";
 
 type Props = {
   children: React.ReactNode;
@@ -14,22 +15,24 @@ type Props = {
 
 export default function SidebarItem({ children, tooltip }: Props) {
   return (
-    <Link href={`${tooltip === "/home" ? "/" : tooltip.trim()}`}>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-lg " // bg-muted
-            aria-label="Playground"
-          >
-            {children}
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent className="capitalize" side="right" sideOffset={5}>
-          {tooltip.slice(1)}
-        </TooltipContent>
-      </Tooltip>
+    <Link
+      className="w-full"
+      href={`${tooltip === "/home" ? "/" : tooltip.trim()}`}
+    >
+      <div className="lg:hidden block w-full">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <SideNavIconBtn tooltip={tooltip}>{children}</SideNavIconBtn>
+          </TooltipTrigger>
+          <TooltipContent className="capitalize" side="right" sideOffset={5}>
+            {tooltip.slice(1)}
+          </TooltipContent>
+        </Tooltip>
+      </div>
+
+      <SideNavBtn tooltip={tooltip}>
+        {children}
+      </SideNavBtn>
     </Link>
   );
 }
