@@ -7,7 +7,7 @@ import NavBar from "../molecules/NavBar";
 const HomeLayout = ({ children }: Children) => {
   return (
     <ColorSync
-      className="grid h-screen w-full pl-[53px]"
+      className="grid h-screen w-full pl-[53px] duration-200"
       onDark={""}
       onLight={"bg-background"}
       onSystem={"dark:"}

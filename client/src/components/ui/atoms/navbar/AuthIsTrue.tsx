@@ -1,9 +1,9 @@
 import { Flex } from "@chakra-ui/react";
 import React from "react";
-import LoginAuthDialog from "../not auth/navbar/LoginAuthDialog";
-import UserOptions from "../not auth/navbar/UserOptions";
-import UserMenu from "../is auth/navbar/UserMenu";
-import NoteMenu from "../is auth/navbar/NoteMenu";
+import LoginAuthDialog from "../auth/not auth/navbar/LoginAuthDialog";
+import UserOptions from "../auth/not auth/navbar/UserOptions";
+import UserMenu from "../auth/is auth/navbar/UserMenu";
+import NoteMenu from "../auth/is auth/navbar/NoteMenu";
 
 export default function AuthIsTrue() {
   const session = false;

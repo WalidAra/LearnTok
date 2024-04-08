@@ -5,14 +5,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 type Props = {
   theme: "system" | "light" | "dark";
-  setTheme: (value: "system" | "light" | "dark") => void;
+  setTheme: (value: React.SetStateAction<"light" | "system" | "dark">) => void;
   ToggleTheme: () => void;
 };
 
 const Theme = createContext<Props>({
   theme: "light",
-  setTheme: (value: string) => {},
   ToggleTheme: () => {},
+  setTheme: (value: React.SetStateAction<"light" | "system" | "dark">) => {},
 });
 
 import React from "react";
