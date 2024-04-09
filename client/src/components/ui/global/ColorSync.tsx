@@ -1,4 +1,7 @@
 "use client";
+import { cn } from "@/lib/utils";
+import React from "react";
+import { useTheme } from "next-themes";
 
 type Props = React.HTMLProps<HTMLDivElement> & {
   onDark: string;
@@ -6,24 +9,17 @@ type Props = React.HTMLProps<HTMLDivElement> & {
   onSystem: string;
 };
 
-import { useTheme } from "@/context/Theme";
-import { cn } from "@/lib/utils";
-import React from "react";
-
 const ColorSync = ({
   onDark,
   onLight,
-  className,
   key,
+  className,
   children,
   onSystem,
-  onClick,
 }: Props) => {
   const { theme } = useTheme();
-
   return (
     <div
-      onClick={onClick}
       key={key}
       className={cn(
         className,

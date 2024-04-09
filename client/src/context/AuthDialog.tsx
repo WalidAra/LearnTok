@@ -1,5 +1,5 @@
 "use client";
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure } from "@nextui-org/react";
 import { createContext, useContext } from "react";
 
 type Props = {
@@ -16,7 +16,7 @@ const AuthDialog = createContext<Props>({
 
 import React from "react";
 
-export default function AuthDialogProvider({ children }: Children) {
+export default function AuthDialogProvider({ children }: Kids) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <AuthDialog.Provider value={{ isOpen, onClose, onOpen }}>
@@ -25,4 +25,6 @@ export default function AuthDialogProvider({ children }: Children) {
   );
 }
 
-export const useAuthDialog = () => useContext(AuthDialog);
+export const useAuthDialog = () => {
+  return useContext(AuthDialog);
+};

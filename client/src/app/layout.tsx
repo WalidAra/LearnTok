@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
-import { NextUI } from "./NextUI";
-import { ChakraProvider } from "@chakra-ui/react";
+import { cn } from "@/lib/utils";
+import Providers from "./Providers";
 import HomeLayout from "@/components/ui/layouts/HomeLayout";
-import ThemeProvider from "@/context/Theme";
+import { ThemeProvider } from "@/context/Theme-provider";
 import AuthDialogProvider from "@/context/AuthDialog";
-import AuthDialog from "@/components/ui/molecules/AuthDialog";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "LearnTok",
@@ -23,16 +25,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider>
-          <NextUI>
-            <ChakraProvider>
-              <AuthDialogProvider>
-                <AuthDialog />
-                <HomeLayout>{children}</HomeLayout>
-              </AuthDialogProvider>
-            </ChakraProvider>
-          </NextUI>
+      <body
+        className={cn("h-screen overflow-auto font-sans antialiased", fontSans.variable)}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>
+            <AuthDialogProvider>
+              <HomeLayout>{children}</HomeLayout>
+            </AuthDialogProvider>
+          </Providers>
         </ThemeProvider>
       </body>
     </html>

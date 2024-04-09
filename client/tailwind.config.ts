@@ -1,4 +1,5 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
+const { fontFamily } = require("tailwindcss/defaultTheme");
 import { nextui } from "@nextui-org/react";
 
 const config = {
@@ -19,7 +20,6 @@ const config = {
       xl: "1200px", // X-Large
       "2xl": "1400px", // XX-Large
     },
-
     container: {
       center: true,
       padding: "2rem",
@@ -35,36 +35,41 @@ const config = {
       width: {
         "13": "53px",
         "500": "500px",
-        "450": "450px",
+        "112": "450px",
+        "128": "512px",
+        "68": "265px",
+      },
+
+      gridTemplateColumns: {
+        "1frauto1fr": "1fr auto 1fr",
+      },
+      gridTemplateRows: {
+        "1frauto1fr": "1fr auto 1fr",
       },
 
       height: {
         "13": "53px",
-        "500": "500px",
-        "450": "450px",
+        "125": "500px",
+        "112": "450px",
+        "128": "512px",
+        clientVideo: "calc(100vh - 53px - 16px)",
+        mainView: "calc(100vh - 53px)",
       },
       maxHeight: {
         "13": "53px",
         "500": "500px",
-        "450": "450px",
+        "125": "450px",
+        "128": "512px",
       },
 
       padding: {
         "13": "53px",
       },
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+      },
       colors: {
         // common colors
-        commonLightGreen: "#22b07d",
-        commonLightBlue: "#35bdff",
-        commonLightPurple: "#7868e9",
-        commonLightRed: "#ea5f5f",
-        commonLightOrange: "#ff7551",
-        smText: "#808191",
-        // dark theme colors
-
-        // light theme colors
-        borderLight: "#E2E8F0",
-        inputLight: "#F4F7FE",
 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -124,4 +129,4 @@ const config = {
   plugins: [nextui(), require("tailwindcss-animate")],
 } satisfies Config;
 
-export default config
+export default config;

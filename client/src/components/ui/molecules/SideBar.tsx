@@ -1,52 +1,47 @@
 import React from "react";
-import SidebarIcon from "../atoms/sidebar/SidebarIcon";
-import SidebarItem from "../atoms/sidebar/SidebarItem";
-import { LuHome } from "react-icons/lu";
-import { LuUsers } from "react-icons/lu";
-import { LuSparkles } from "react-icons/lu";
-import { LuCompass } from "react-icons/lu";
-import { LuTrendingUp } from "react-icons/lu";
-import { LuBookmark } from "react-icons/lu";
+import SideBarLogo from "../atoms/sidebar/SideBarLogo";
 import { TooltipProvider } from "@/components/cli/tooltip";
-import ColorSync from "../global/ColorSync";
+import SideNavItem from "../atoms/sidebar/SideNavItem";
+import {
+  LuHome,
+  LuUsers,
+  LuSparkles,
+  LuCompass,
+  LuTrendingUp,
+  LuBookmark,
+} from "react-icons/lu";
 
 const SideBar = () => {
   return (
-    <ColorSync
-      className="border-r inset-y fixed left-0 z-20 h-full lg:w-56 "
-      onDark={""}
-      onLight={"border-borderLight"}
-      onSystem={"dark: border-borderLight"}
-    >
-      <aside className="flex h-full w-full flex-col">
-        <SidebarIcon />
-        <TooltipProvider delayDuration={1}>
-          <nav className="grid gap-1 p-2 w-full">
-            <SidebarItem tooltip="/home">
-              <LuHome className="size-5" />
-            </SidebarItem>
+    <aside className="inset-y fixed left-0 z-20 flex h-full flex-col border-r border-border">
+      <SideBarLogo />
 
-            <SidebarItem tooltip="/following">
-              <LuUsers className="size-5" />
-            </SidebarItem>
+      <TooltipProvider delayDuration={1} >
+        <nav className="grid gap-1 p-2">
+          <SideNavItem tooltip="/home">
+            <LuHome size={20} />
+          </SideNavItem>
 
-            <SidebarItem tooltip="/for you">
-              <LuSparkles className="size-5" />
-            </SidebarItem>
+          <SideNavItem tooltip="/following">
+            <LuUsers size={20} />
+          </SideNavItem>
 
-            <SidebarItem tooltip="/discover">
-              <LuCompass className="size-5" />
-            </SidebarItem>
-            <SidebarItem tooltip="/trending">
-              <LuTrendingUp className="size-5" />
-            </SidebarItem>
-            <SidebarItem tooltip="/bookmark">
-              <LuBookmark className="size-5" />
-            </SidebarItem>
-          </nav>
-        </TooltipProvider>
-      </aside>
-    </ColorSync>
+          <SideNavItem tooltip="/for you">
+            <LuSparkles size={20} />
+          </SideNavItem>
+
+          <SideNavItem tooltip="/discover">
+            <LuCompass size={20} />
+          </SideNavItem>
+          <SideNavItem tooltip="/trending">
+            <LuTrendingUp size={20} />
+          </SideNavItem>
+          <SideNavItem tooltip="/bookmark">
+            <LuBookmark size={20} />
+          </SideNavItem>
+        </nav>
+      </TooltipProvider>
+    </aside>
   );
 };
 
