@@ -16,25 +16,33 @@ import {
 import { Input } from "@/components/cli/input";
 import { Flex, Link } from "@chakra-ui/react";
 import RememberMe from "../atoms/auth dialog/body/RememberMe";
-import GoNext from "../atoms/auth dialog/body/GoNext";
+import { useMyForm } from "@/context/MyForm";
+import { Button } from "@/components/cli/button";
 
 const formSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters" }),
+  username: z.string().min(2).max(50),
+  fullName: z.string().min(6).max(50),
 });
 
 const SignUp = () => {
+  const {
+    carousel: { api },
+    username: { setUsername },
+    fullName: { setFullName },
+  } = useMyForm();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      fullName: "",
+      username: "",
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    setUsername(values.username);
+    setFullName(values.fullName);
+    api.scrollNext();
   }
 
   return (
@@ -43,12 +51,12 @@ const SignUp = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
           <FormField
             control={form.control}
-            name="email"
+            name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your email" {...field} />
+                  <Input placeholder="Enter your username" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -56,15 +64,15 @@ const SignUp = () => {
           />
           <FormField
             control={form.control}
-            name="password"
+            name="fullName"
             render={({ field }) => (
               <FormItem>
                 <Flex className="items-center justify-between">
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Full name</FormLabel>
                   <Link className="text-sm">Forget password</Link>
                 </Flex>
                 <FormControl>
-                  <Input placeholder="Enter your password" {...field} />
+                  <Input placeholder="Enter your full name" {...field} />
                 </FormControl>
                 <FormDescription className="flex items-center gap-2">
                   <RememberMe />
@@ -73,7 +81,12 @@ const SignUp = () => {
               </FormItem>
             )}
           />
-          <GoNext />
+          <Button
+            className="w-full"
+            type="submit"
+          >
+            Next
+          </Button>
         </form>
       </Form>
     </FormWrapper>

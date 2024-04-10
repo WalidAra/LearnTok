@@ -11,8 +11,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/cli/carousel";
 import { useMyForm } from "@/context/MyForm";
 

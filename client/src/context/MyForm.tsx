@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 import { type CarouselApi } from "@/components/cli/carousel";
 
 type Props = {
@@ -12,11 +12,14 @@ type Props = {
     setCurrent: (value: number) => void;
   };
 
-  data: {
-    email: string;
-    password: string;
+  username: {
     username: string;
+    setUsername: (value: string) => void;
+  };
+
+  fullName: {
     fullName: string;
+    setFullName: (value: string) => void;
   };
 };
 
@@ -27,11 +30,14 @@ const MyForm = createContext<Props>({
     setCurrent: (value: number) => {},
   },
 
-  data: {
-    email: "",
-    password: "",
+  username: {
     username: "",
+    setUsername: (value: string) => {},
+  },
+
+  fullName: {
     fullName: "",
+    setFullName: (value: string) => {},
   },
 });
 
@@ -40,15 +46,26 @@ import React from "react";
 export default function MyFormProvider({ children }: Kids) {
   const [current, setCurrent] = useState<number>(1);
   const [api, setApi] = React.useState<CarouselApi>();
+
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [fullName, setFullName] = useState<string>("");
+
   return (
     <MyForm.Provider
       value={{
-        data: {
-          email: "",
-          password: "",
-          username: "",
-          fullName: "",
+
+        username: {
+          username,
+          setUsername,
         },
+
+        fullName: {
+          fullName,
+          setFullName,
+        },
+
         carousel: { api, setApi },
         form: { current, setCurrent },
       }}

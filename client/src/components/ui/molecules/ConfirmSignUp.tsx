@@ -18,6 +18,7 @@ import { Input } from "@/components/cli/input";
 import { Box, Flex, Link } from "@chakra-ui/react";
 import RememberMe from "../atoms/auth dialog/body/RememberMe";
 import SocialSignInPanel from "../atoms/auth dialog/body/SocialSignInPanel";
+import { useMyForm } from "@/context/MyForm";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -27,6 +28,11 @@ const formSchema = z.object({
 });
 
 export default function ConfirmSignUp() {
+  const {
+    username: { username },
+    fullName: { fullName },
+  } = useMyForm();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,8 +40,9 @@ export default function ConfirmSignUp() {
       password: "",
     },
   });
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    console.log(values, username, fullName);
   }
 
   return (
