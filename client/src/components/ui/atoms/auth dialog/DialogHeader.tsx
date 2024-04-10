@@ -14,9 +14,8 @@ const DialogHeader = () => {
       fontWeight="bold"
       className="px-1.5"
     >
-      <div className="size-8">
-        <FormReturnButton />
-      </div>
+      <FormReturnButton />
+
       <Flex className="gap-2 items-center">
         <LearnTokLogo size={25} />
         <h2>LearnTok</h2>

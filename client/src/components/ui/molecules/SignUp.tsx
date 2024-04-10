@@ -4,8 +4,6 @@ import FormWrapper from "../atoms/auth dialog/FormWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-import { Button } from "@/components/cli/button";
 import {
   Form,
   FormControl,
@@ -18,6 +16,7 @@ import {
 import { Input } from "@/components/cli/input";
 import { Flex, Link } from "@chakra-ui/react";
 import RememberMe from "../atoms/auth dialog/body/RememberMe";
+import GoNext from "../atoms/auth dialog/body/GoNext";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -74,9 +73,7 @@ const SignUp = () => {
               </FormItem>
             )}
           />
-          <Button className="w-full" type="submit">
-            Next
-          </Button>
+          <GoNext />
         </form>
       </Form>
     </FormWrapper>

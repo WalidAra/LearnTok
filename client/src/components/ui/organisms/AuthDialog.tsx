@@ -12,6 +12,7 @@ import { useAuthDialog } from "@/context/AuthDialog";
 import DialogFooter from "../atoms/auth dialog/DialogFooter";
 import DialogHeader from "../atoms/auth dialog/DialogHeader";
 import DialogBody from "../atoms/auth dialog/DialogBody";
+import MyFormProvider from "@/context/MyForm";
 
 const AuthDialog = () => {
   const cancelRef = React.useRef<any>();
@@ -36,12 +37,14 @@ const AuthDialog = () => {
       isCentered
     >
       <AlertDialogOverlay>
-        <AlertDialogContent w={"90%"}  maxH={"95%"}>
-          <DialogHeader />
-          <Divider />
-          <DialogBody />
-          <Divider />
-          <DialogFooter />
+        <AlertDialogContent w={"90%"} maxH={"95%"}>
+          <MyFormProvider>
+            <DialogHeader />
+            <Divider />
+            <DialogBody />
+            <Divider />
+            <DialogFooter />
+          </MyFormProvider>
         </AlertDialogContent>
       </AlertDialogOverlay>
     </AlertDialog>

@@ -8,7 +8,7 @@ type Props = {
 const SocialSignInPanel = ({ isSignInForm = true }: Props) => {
   return (
     <Box className="flex flex-col w-full text-center">
-      <h1 className="text-2xl font-semibold capitalize">
+      <h1 className="text-2xl font-semibold capitalize text-nowrap ">
         {isSignInForm ? "Login to your account" : "Create your new account"}
       </h1>
       <p className="text-xs text-smTextDark">

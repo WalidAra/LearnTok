@@ -1,5 +1,7 @@
-"use client"
-/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react-hooks/exhaustive-deps */
+
+"use client";
+
 import { AlertDialogBody } from "@chakra-ui/react";
 import React from "react";
 import SignIn from "../../molecules/SignIn";
@@ -12,24 +14,39 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/cli/carousel";
+import { useMyForm } from "@/context/MyForm";
 
 const DialogBody = () => {
+  const {
+    carousel: { api, setApi },
+    form: { current, setCurrent },
+  } = useMyForm();
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api, current]);
   return (
-    <AlertDialogBody>
-      <Carousel>
+    <AlertDialogBody >
+      <Carousel setApi={setApi}>
         <CarouselContent className="basis-full">
           <CarouselItem className="basis-full">
-            <SignIn />
+            {current === 1 && <SignIn />}
           </CarouselItem>
           <CarouselItem className="basis-full">
-            <SignUp />
+            {current === 2 && <SignUp />}
           </CarouselItem>
           <CarouselItem className="basis-full">
-            <ConfirmSignUp />
+            {current === 3 && <ConfirmSignUp />}
           </CarouselItem>
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
       </Carousel>
     </AlertDialogBody>
   );

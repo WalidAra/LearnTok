@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/cli/input";
 import { Box, Flex, Link } from "@chakra-ui/react";
 import RememberMe from "../atoms/auth dialog/body/RememberMe";
+import SocialSignInPanel from "../atoms/auth dialog/body/SocialSignInPanel";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -38,7 +39,8 @@ export default function ConfirmSignUp() {
   }
 
   return (
-    <Box className="w-full">
+    <Box className="w-full px-1.5 flex flex-col">
+      <SocialSignInPanel isSignInForm={false} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
           <FormField
