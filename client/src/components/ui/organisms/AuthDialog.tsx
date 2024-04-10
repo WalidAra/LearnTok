@@ -1,21 +1,33 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  AlertDialogCloseButton,
+  Divider,
 } from "@chakra-ui/react";
 import { useAuthDialog } from "@/context/AuthDialog";
+import DialogFooter from "../atoms/auth dialog/DialogFooter";
+import DialogHeader from "../atoms/auth dialog/DialogHeader";
+import DialogBody from "../atoms/auth dialog/DialogBody";
 
 const AuthDialog = () => {
   const cancelRef = React.useRef<any>();
-
+  const session = false;
   const { isOpen, onClose, onOpen } = useAuthDialog();
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!session) {
+        onOpen();
+      }
+    }, 5 * 60 * 1000);
+
+    return () => clearInterval(timer);
+  }, [session]);
+
   return (
     <AlertDialog
       isOpen={isOpen}
@@ -24,16 +36,12 @@ const AuthDialog = () => {
       isCentered
     >
       <AlertDialogOverlay>
-        <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Delete Customer
-          </AlertDialogHeader>
-
-          <AlertDialogBody>
-            Are you sure? You can't undo this action afterwards.
-          </AlertDialogBody>
-
-          <AlertDialogFooter></AlertDialogFooter>
+        <AlertDialogContent w={"90%"}  maxH={"95%"}>
+          <DialogHeader />
+          <Divider />
+          <DialogBody />
+          <Divider />
+          <DialogFooter />
         </AlertDialogContent>
       </AlertDialogOverlay>
     </AlertDialog>
