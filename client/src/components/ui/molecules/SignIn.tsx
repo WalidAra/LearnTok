@@ -17,6 +17,8 @@ import {
 import { Input } from "@/components/cli/input";
 import { Flex, Link } from "@chakra-ui/react";
 import RememberMe from "../atoms/auth dialog/body/RememberMe";
+import api from "@/lib/apis";
+import { signIn } from "next-auth/react";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -34,9 +36,23 @@ const SignIn = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const response: HTTPResponseWithToken = await api.Login({
+      email: values.email,
+      password: values.password,
+    });
+
+    if (response.status) {
+      const res = await signIn("credentials", {
+        redirect: false,
+        token: response.token,
+      });
+      console.log("====================================");
+      console.log(res);
+      console.log("====================================");
+    }
   }
+
   return (
     <FormWrapper isSignInForm>
       <Form {...form}>
@@ -64,7 +80,11 @@ const SignIn = () => {
                   <Link className="text-sm">Forget password</Link>
                 </Flex>
                 <FormControl>
-                  <Input placeholder="Enter your password" {...field} />
+                  <Input
+                    type="password"
+                    placeholder="Enter your password"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription className="flex items-center gap-2">
                   <RememberMe />

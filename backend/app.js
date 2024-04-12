@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const nigga = require("express-list-endpoints");
+require("dotenv").config();
 
 app.use(cors());
 const PORT = 9090;
@@ -12,8 +13,9 @@ app.get("/", (req, res) => {
 
 const router = require("./apis/routes.js");
 app.use("/api", router);
+
 console.log("====================================");
-console.log("You Made" ,nigga(router).length , "APIS Mr.Exotic :D");
+console.log("You Made", nigga(router).length, "APIS Mr.Exotic :D");
 console.log("====================================");
 
 app.listen(PORT, () => {

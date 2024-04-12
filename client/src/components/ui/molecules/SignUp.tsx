@@ -58,6 +58,9 @@ const SignUp = () => {
                 <FormControl>
                   <Input placeholder="Enter your username" {...field} />
                 </FormControl>
+                <FormDescription className="flex items-center gap-2">
+                  This is your public display name.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -74,17 +77,11 @@ const SignUp = () => {
                 <FormControl>
                   <Input placeholder="Enter your full name" {...field} />
                 </FormControl>
-                <FormDescription className="flex items-center gap-2">
-                  <RememberMe />
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button
-            className="w-full"
-            type="submit"
-          >
+          <Button className="w-full" type="submit">
             Next
           </Button>
         </form>

@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 import React, { useEffect } from "react";
 import {
@@ -13,20 +12,20 @@ import DialogFooter from "../atoms/auth dialog/DialogFooter";
 import DialogHeader from "../atoms/auth dialog/DialogHeader";
 import DialogBody from "../atoms/auth dialog/DialogBody";
 import MyFormProvider from "@/context/MyForm";
+import { useSession } from "next-auth/react";
 
 const AuthDialog = () => {
   const cancelRef = React.useRef<any>();
-  const session = false;
+  const { data: session } = useSession();
   const { isOpen, onClose, onOpen } = useAuthDialog();
-
   useEffect(() => {
-    const timer = setInterval(() => {
-      if (!session) {
+    if (!session || !session.user) {
+      const timer = setInterval(() => {
         onOpen();
-      }
-    }, 5 * 60 * 1000);
+      }, 100);
 
-    return () => clearInterval(timer);
+      return () => clearInterval(timer);
+    }
   }, [session]);
 
   return (

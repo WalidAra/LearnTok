@@ -19,6 +19,8 @@ import { Box, Flex, Link } from "@chakra-ui/react";
 import RememberMe from "../atoms/auth dialog/body/RememberMe";
 import SocialSignInPanel from "../atoms/auth dialog/body/SocialSignInPanel";
 import { useMyForm } from "@/context/MyForm";
+import { signIn } from "next-auth/react";
+import api from "@/lib/apis";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -41,8 +43,24 @@ export default function ConfirmSignUp() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values, username, fullName);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+
+    const result: HTTPResponseWithToken = await api.Register({
+      email: values.email,
+      password: values.password,
+      fullName,
+      username,
+    });
+
+    if (result.status) {
+      const res = await signIn("credentials", {
+        redirect: false,
+        token: result.token,
+      });
+      console.log("====================================");
+      console.log(res);
+      console.log("====================================");
+    }
   }
 
   return (

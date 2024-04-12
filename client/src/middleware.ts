@@ -1,29 +1,13 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { validate } from "uuid";
+import { auth } from "./auth";
+export async function middleware(request: NextRequest) {
+  const session = await auth();
 
-function isUUID(str: string) {
-  try {
-    validate(str);
-    return true;
-  } catch (error) {
-    return false;
+  if (!session) {
+    return NextResponse.redirect(new URL("/", request.url));
   }
-}
-
-function hasParam(request: NextRequest, paramName: string) {
-  const url = new URL(request.url);
-
-  if (
-    url.searchParams.has(paramName) ||
-    url.pathname.includes(`/${paramName}/`)
-  ) {
-  }
-}
-
-export function middleware(request: NextRequest) {
   return NextResponse.next();
-  // return NextResponse.redirect(new URL("/", request.url));
 }
 
 export const config = {
