@@ -38,6 +38,7 @@ const config = {
         "112": "450px",
         "128": "512px",
         "68": "265px",
+        "175": "650px",
       },
 
       gridTemplateColumns: {
@@ -52,6 +53,7 @@ const config = {
         "125": "500px",
         "112": "450px",
         "128": "512px",
+
         clientVideo: "calc(100vh - 53px - 16px)",
         mainView: "calc(100vh - 53px)",
       },
