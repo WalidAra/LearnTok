@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/cli/button";
 import {
   Tooltip,
@@ -6,6 +7,8 @@ import {
 } from "@/components/cli/tooltip";
 import Link from "next/link";
 import React from "react";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 type Props = {
   tooltip: string;
@@ -13,6 +16,7 @@ type Props = {
 };
 
 export default function SideNavItem({ children, tooltip }: Props) {
+  const pathname = usePathname();
 
   return (
     <Link href={tooltip === "/home" ? "/" : tooltip.split(" ").join("")}>
@@ -22,7 +26,13 @@ export default function SideNavItem({ children, tooltip }: Props) {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-lg " //bg-muted
+              className={cn(
+                "rounded-lg",
+                (pathname === "/" && tooltip === "/home") ||
+                  pathname === tooltip
+                  ? "bg-muted text-foreground"
+                  : ""
+              )}
               aria-label="Playground"
             >
               {children}
@@ -37,7 +47,12 @@ export default function SideNavItem({ children, tooltip }: Props) {
       <Button
         variant="ghost"
         size="default"
-        className="rounded-lg w-full items-center justify-start hidden md:flex gap-2 " //bg-muted
+        className={cn(
+          "rounded-lg w-full items-center justify-start hidden md:flex gap-2",
+          (pathname === "/" && tooltip === "/home") || pathname === tooltip
+            ? "bg-muted text-foreground"
+            : ""
+        )}
         aria-label="Playground"
       >
         {children}
