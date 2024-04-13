@@ -23,7 +23,9 @@ type Client = {
   picture: string;
   bio: string;
   isBanned: boolean;
+
   createdAt: string;
+
   provider_id: string;
   status_id: string;
 };

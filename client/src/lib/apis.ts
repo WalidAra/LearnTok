@@ -2,6 +2,28 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = {
+  getUserProfile: async ({ token }: { token: string }) => {
+
+    try {
+      const res = await axios.get(`${BASE_URL}/private/auth/profile`, {
+        headers: {
+          "learntok-auth-token": token,
+        },
+      });
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getUserByID: async ({ id }: { id: string }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/public/user/${id}`);
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+
   getVideos: async () => {
     try {
       const res = await axios.post(`${BASE_URL}/public/videos`, {

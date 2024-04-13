@@ -96,6 +96,7 @@ const Auth = {
         data: user,
         token,
       });
+      
     } catch (error) {
       console.error("Auth controller : ", error.message);
       return res.status(500).json({

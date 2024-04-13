@@ -12,21 +12,17 @@ import DialogFooter from "../atoms/auth dialog/DialogFooter";
 import DialogHeader from "../atoms/auth dialog/DialogHeader";
 import DialogBody from "../atoms/auth dialog/DialogBody";
 import MyFormProvider from "@/context/MyForm";
-import { useSession } from "next-auth/react";
 
 const AuthDialog = () => {
   const cancelRef = React.useRef<any>();
-  const { data: session } = useSession();
   const { isOpen, onClose, onOpen } = useAuthDialog();
   useEffect(() => {
-    if (!session || !session.user) {
-      const timer = setInterval(() => {
-        onOpen();
-      }, 100);
+    const timer = setInterval(() => {
+      onOpen();
+    }, 100);
 
-      return () => clearInterval(timer);
-    }
-  }, [session]);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <AlertDialog

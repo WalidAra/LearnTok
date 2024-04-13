@@ -21,6 +21,10 @@
   outline: 1px solid red;
 }
 
+.scroll-snap-type {
+  scroll-snap-type: y mandatory;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -10,7 +10,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     CredentialsProvider({
       name: "credentials",
       credentials: {},
-      authorize(credentials, request) {
+      authorize(credentials) {
         const { token } = credentials as { token: string };
         return { id: token, name: token };
       },

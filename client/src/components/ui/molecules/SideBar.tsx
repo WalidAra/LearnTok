@@ -10,13 +10,14 @@ import {
   LuTrendingUp,
   LuBookmark,
 } from "react-icons/lu";
+import { Divider } from "@chakra-ui/react";
 
 const SideBar = () => {
   return (
-    <aside className="inset-y fixed left-0 z-20 flex h-full flex-col border-r border-border">
+    <aside className="inset-y fixed left-0 z-20 flex h-full flex-col border-r border-border w-auto md:w-[220px] ">
       <SideBarLogo />
 
-      <TooltipProvider delayDuration={1} >
+      <TooltipProvider delayDuration={1}>
         <nav className="grid gap-1 p-2">
           <SideNavItem tooltip="/home">
             <LuHome size={20} />
@@ -41,6 +42,10 @@ const SideBar = () => {
           </SideNavItem>
         </nav>
       </TooltipProvider>
+
+      <div className="px-4">
+        <Divider />
+      </div>
     </aside>
   );
 };
