@@ -11,5 +11,13 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/bookmark", "/following", "/foryou", "/profile", "/setting"],
+  matcher: [
+    "/bookmark",
+    "/following",
+    "/foryou",
+    "/profile",
+    "/setting",
+    "/upload",
+    "/notifications",
+  ],
 };

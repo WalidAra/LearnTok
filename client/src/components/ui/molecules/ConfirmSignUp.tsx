@@ -21,6 +21,7 @@ import SocialSignInPanel from "../atoms/auth dialog/body/SocialSignInPanel";
 import { useMyForm } from "@/context/MyForm";
 import { signIn } from "next-auth/react";
 import api from "@/lib/apis";
+import { useAuthDialog } from "@/context/AuthDialog";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -30,6 +31,8 @@ const formSchema = z.object({
 });
 
 export default function ConfirmSignUp() {
+
+  const {onClose} = useAuthDialog();
   const {
     username: { username },
     fullName: { fullName },
@@ -54,12 +57,9 @@ export default function ConfirmSignUp() {
 
     if (result.status) {
       const res = await signIn("credentials", {
-        redirect: false,
         token: result.token,
       });
-      console.log("====================================");
-      console.log(res);
-      console.log("====================================");
+      onClose();
     }
   }
 

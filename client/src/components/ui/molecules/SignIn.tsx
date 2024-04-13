@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import FormWrapper from "../atoms/auth dialog/FormWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,6 +19,7 @@ import { Flex, Link } from "@chakra-ui/react";
 import RememberMe from "../atoms/auth dialog/body/RememberMe";
 import api from "@/lib/apis";
 import { signIn } from "next-auth/react";
+import { useAuthDialog } from "@/context/AuthDialog";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -28,6 +29,8 @@ const formSchema = z.object({
 });
 
 const SignIn = () => {
+  const { onClose } = useAuthDialog();
+  const [isError, setIsError] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,12 +47,12 @@ const SignIn = () => {
 
     if (response.status) {
       const res = await signIn("credentials", {
-        redirect: false,
         token: response.token,
       });
-      console.log("====================================");
-      console.log(res);
-      console.log("====================================");
+      setIsError(false);
+      onClose();
+    } else {
+      setIsError(true);
     }
   }
 
@@ -86,8 +89,15 @@ const SignIn = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription className="flex items-center gap-2">
+                <FormDescription className="flex flex-col gap-3">
                   <RememberMe />
+
+                  {isError && (
+                    <p className="font-medium text-red-500">
+                      Invalid email or password. Please check your credentials
+                      and try again.
+                    </p>
+                  )}
                 </FormDescription>
                 <FormMessage />
               </FormItem>

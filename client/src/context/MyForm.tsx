@@ -46,9 +46,6 @@ import React from "react";
 export default function MyFormProvider({ children }: Kids) {
   const [current, setCurrent] = useState<number>(1);
   const [api, setApi] = React.useState<CarouselApi>();
-
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
 

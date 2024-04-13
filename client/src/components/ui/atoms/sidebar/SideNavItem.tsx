@@ -13,6 +13,7 @@ type Props = {
 };
 
 export default function SideNavItem({ children, tooltip }: Props) {
+
   return (
     <Link href={tooltip === "/home" ? "/" : tooltip.split(" ").join("")}>
       <div className="md:hidden block">
@@ -41,7 +42,7 @@ export default function SideNavItem({ children, tooltip }: Props) {
       >
         {children}
 
-        <span> {tooltip.slice(1)} </span>
+        <span className="capitalize"> {tooltip.slice(1)} </span>
       </Button>
     </Link>
   );
