@@ -8,7 +8,7 @@ const saltRounds = 10;
 
 const Auth = {
   SignUp: async (req, res) => {
-    const { email, password, username, fullName } = req.body;
+    const { email, password, username, fullName, recall } = req.body;
 
     try {
       const isUser = await prisma.user.findUnique({
@@ -42,7 +42,7 @@ const Auth = {
       });
 
       const user = destructProfile(newUser);
-      const token = await createToken(newUser.id);
+      const token = await createToken(newUser.id, recall);
 
       return res.status(200).json({
         status: true,
@@ -59,7 +59,7 @@ const Auth = {
   },
 
   SignIn: async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, recall } = req.body;
     try {
       const isUser = await prisma.user.findUnique({
         where: { email: email },
@@ -88,7 +88,7 @@ const Auth = {
       });
 
       const user = destructProfile(updatedUser);
-      const token = await createToken(updatedUser.id);
+      const token = await createToken(updatedUser.id , recall);
 
       return res.status(200).json({
         status: true,

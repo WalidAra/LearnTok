@@ -9,5 +9,6 @@ router.use("/like", require("./like/like.private"));
 router.use("/comment", require("./comment/comment.private"));
 router.use("/bookmark", require("./bookmark/bookmark.private"));
 router.use("/forYou", require("./forYou/you.private.js"));
+router.use("/token", require("./token/token.private.js"));
 
 module.exports = router;

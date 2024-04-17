@@ -19,7 +19,7 @@ const AuthDialog = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       onOpen();
-    }, 100);
+    }, 300000);
 
     return () => clearInterval(timer);
   }, []);

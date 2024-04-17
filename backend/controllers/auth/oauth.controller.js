@@ -43,7 +43,7 @@ const OAuth = {
       });
 
       user = destructUser(isUser);
-      token = await createToken(isUser.id);
+      token = await createToken(isUser.id, true);
       console.log(token);
       return res.status(200).json({
         status: true,

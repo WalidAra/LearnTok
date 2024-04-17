@@ -2,8 +2,20 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = {
-  getUserProfile: async ({ token }: { token: string }) => {
+  VerifyToken: async (token: string) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/private/token/verify`, {
+        headers: {
+          "learntok-auth-token": token,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 
+  getUserProfile: async ({ token }: { token: string }) => {
     try {
       const res = await axios.get(`${BASE_URL}/private/auth/profile`, {
         headers: {
