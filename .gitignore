@@ -8,3 +8,7 @@
 /client/.env
 /client/.todo
 /client/node_modules
+
+/mobile/.env
+/mobile/.todo
+/mobile/node_modules

@@ -25,7 +25,7 @@ export default function UserMenu({ id }: Props) {
       <DropdownMenuTrigger>
         <UserMenuTrigger id={id} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mt-4 w-60 shadow-none p-2 rounded-xl">
+      <DropdownMenuContent className="mt-4 w-60 shadow-none p-2 rounded-xl mr-5 sm:mr-0">
         <DropdownMenuLabel className="font-normal">
           <UserCard id={id} />
         </DropdownMenuLabel>
