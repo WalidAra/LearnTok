@@ -52,11 +52,13 @@ const api = {
     fullName,
     password,
     username,
+    recall,
   }: {
     email: string;
     password: string;
     username: string;
     fullName: string;
+    recall: boolean;
   }) => {
     try {
       const res = await axios.post(`${BASE_URL}/public/auth/sign-up`, {
@@ -71,11 +73,20 @@ const api = {
     }
   },
 
-  Login: async ({ email, password }: { email: string; password: string }) => {
+  Login: async ({
+    email,
+    password,
+    recall,
+  }: {
+    email: string;
+    password: string;
+    recall: boolean;
+  }) => {
     try {
       const res = await axios.post(`${BASE_URL}/public/auth/sign-in`, {
         email,
         password,
+        recall,
       });
       return res.data;
     } catch (error: any) {

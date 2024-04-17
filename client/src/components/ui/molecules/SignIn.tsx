@@ -29,6 +29,8 @@ const formSchema = z.object({
 });
 
 const SignIn = () => {
+  const [recall, setRecall] = useState<boolean>(false);
+
   const { onClose } = useAuthDialog();
   const [isError, setIsError] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,6 +45,7 @@ const SignIn = () => {
     const response: HTTPResponseWithToken = await api.Login({
       email: values.email,
       password: values.password,
+      recall,
     });
 
     if (response.status) {
@@ -90,7 +93,7 @@ const SignIn = () => {
                   />
                 </FormControl>
                 <FormDescription className="flex flex-col gap-3">
-                  <RememberMe />
+                  <RememberMe recall={recall} setRecall={setRecall} />
 
                   {isError && (
                     <p className="font-medium text-red-500">

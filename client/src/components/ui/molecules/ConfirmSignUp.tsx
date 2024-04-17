@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -31,8 +31,7 @@ const formSchema = z.object({
 });
 
 export default function ConfirmSignUp() {
-
-  const {onClose} = useAuthDialog();
+  const { onClose } = useAuthDialog();
   const {
     username: { username },
     fullName: { fullName },
@@ -45,14 +44,15 @@ export default function ConfirmSignUp() {
       password: "",
     },
   });
+  const [recall, setRecall] = useState<boolean>(false);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-
     const result: HTTPResponseWithToken = await api.Register({
       email: values.email,
       password: values.password,
       fullName,
       username,
+      recall,
     });
 
     if (result.status) {
@@ -94,7 +94,7 @@ export default function ConfirmSignUp() {
                   <Input placeholder="Enter your password" {...field} />
                 </FormControl>
                 <FormDescription className="flex items-center gap-2">
-                  <RememberMe />
+                  <RememberMe recall={recall} setRecall={setRecall} />
                 </FormDescription>
                 <FormMessage />
               </FormItem>
