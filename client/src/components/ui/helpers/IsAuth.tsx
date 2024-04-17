@@ -6,7 +6,6 @@ import { auth } from "@/auth";
 import UserMenu from "../molecules/UserMenu";
 import NotificationMenu from "../molecules/NotificationMenu";
 
-
 export default async function IsAuth() {
   const session = await auth();
   return (
@@ -14,8 +13,7 @@ export default async function IsAuth() {
       {session && session?.user?.name ? (
         <>
           <UserMenu id={session.user.name} />
-
-            <NotificationMenu />
+          <NotificationMenu />
         </>
       ) : (
         <>

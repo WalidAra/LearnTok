@@ -9,15 +9,19 @@ export async function middleware(request: NextRequest) {
   if (!session || !session.user?.name) {
     return NextResponse.redirect(new URL("/", request.url));
   }
-  
-  const res = await api.VerifyToken(session.user.name);
 
-  if (!res.status) {
-    await signOut({
-      redirect: false,
-    });
-    return NextResponse.redirect(new URL("/", request.url));
-  }
+  console.log('====================================');
+  console.log(session.user.name);
+  console.log('====================================');
+  const res = await api.VerifyToken(session.user.name);
+  console.log(res);
+
+  // if (!res.status) {
+  //   await signOut({
+  //     redirect: false,
+  //   });
+  //   return NextResponse.redirect(new URL("/", request.url));
+  // }
 
   return NextResponse.next();
 }

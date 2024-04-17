@@ -56,7 +56,7 @@ export default function ConfirmSignUp() {
     });
 
     if (result.status) {
-      const res = await signIn("credentials", {
+      await signIn("credentials", {
         token: result.token,
       });
       onClose();
@@ -91,7 +91,11 @@ export default function ConfirmSignUp() {
                   <Link className="text-sm">Forget password</Link>
                 </Flex>
                 <FormControl>
-                  <Input placeholder="Enter your password" {...field} />
+                  <Input
+                    type="password"
+                    placeholder="Enter your password"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription className="flex items-center gap-2">
                   <RememberMe recall={recall} setRecall={setRecall} />

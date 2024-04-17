@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/verify", async () => {
+router.get("/verify", async (res , req ) => {
   const token = req.headers["learntok-auth-token"];
 
   if (!token) {
