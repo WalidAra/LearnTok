@@ -2,22 +2,26 @@ import React from "react";
 import { User } from "@nextui-org/react";
 import { Flex } from "@chakra-ui/react";
 import LearnTokBadge from "../global/LearnTokBadge";
+import api from "@/lib/apis";
 
 type Props = {
-  // user props
+  id: string;
 };
 
-const UserCard = () => {
+const UserCard = async ({ id }: Props) => {
+  const res: HTTPResponse = await api.getUserProfile({ token: id });
   return (
     <User
       name={
-        <Flex className="items-center gap-2">
-          Jane Doe <LearnTokBadge />{" "}
+        <Flex className="items-center font-medium gap-2">
+          {res.data.username} <LearnTokBadge />
         </Flex>
       }
-      description="Product Designer"
+      description={res.data.fullName}
       avatarProps={{
-        src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+        src: res.data.picture
+          ? res.data.picture
+          : "https://i.pinimg.com/564x/18/b5/b5/18b5b599bb873285bd4def283c0d3c09.jpg",
         size: "sm",
         isBordered: true,
       }}

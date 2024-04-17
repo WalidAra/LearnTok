@@ -10,8 +10,8 @@ export default async function Home() {
   return (
     <MainView className="overflow-auto flex flex-col gap-2 p-2 scroll-snap-type main-view">
       <Suspense fallback={<Loading />}>
-        <VideoCard />
-        <VideoCard />
+        {/* <VideoCard />
+        <VideoCard /> */}
       </Suspense>
     </MainView>
   );

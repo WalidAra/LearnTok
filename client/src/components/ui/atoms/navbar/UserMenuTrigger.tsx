@@ -8,22 +8,22 @@ type Props = {
   id: string;
 };
 export default async function UserMenuTrigger({ id }: Props) {
-  const user: Client = await api.getUserProfile({ token: id });
+  const res: HTTPResponse = await api.getUserProfile({ token: id });
 
   return (
     <User
       className="cursor-pointer"
       name={
-        <Flex className="items-center gap-2">
-          <p className="hidden sm:block">Jane Doe</p>
+        <Flex className="items-center gap-2 mx-1 font-medium">
+          <p className="hidden sm:block"> {res.data.username} </p>
           <div className={"text-smText"}>
             <IoIosArrowDown />
           </div>
         </Flex>
       }
       avatarProps={{
-        src: user.picture
-          ? user.picture
+        src: res.data.picture
+          ? res.data.picture
           : "https://i.pinimg.com/564x/18/b5/b5/18b5b599bb873285bd4def283c0d3c09.jpg",
         size: "sm",
         isBordered: true,

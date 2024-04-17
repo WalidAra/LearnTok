@@ -7,7 +7,7 @@ type Theme = "light" | "dark" | "system";
 type HTTPResponse = {
   status: boolean;
   message: string;
-  data: any;
+  data: Client;
 };
 type HTTPResponseWithToken = {
   status: boolean;

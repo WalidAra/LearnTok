@@ -1,28 +1,12 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { auth } from "./auth";
-import api from "./lib/apis";
-import { signOut } from "next-auth/react";
 export async function middleware(request: NextRequest) {
   const session = await auth();
 
-  if (!session || !session.user?.name) {
+  if (!session || !session.user) {
     return NextResponse.redirect(new URL("/", request.url));
   }
-
-  console.log('====================================');
-  console.log(session.user.name);
-  console.log('====================================');
-  const res = await api.VerifyToken(session.user.name);
-  console.log(res);
-
-  // if (!res.status) {
-  //   await signOut({
-  //     redirect: false,
-  //   });
-  //   return NextResponse.redirect(new URL("/", request.url));
-  // }
-
   return NextResponse.next();
 }
 
