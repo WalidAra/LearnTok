@@ -18,7 +18,7 @@ import VideoContainer from "../VideoContainer";
 const ProfileContent = () => {
   return (
     <section className="w-full flex flex-col ">
-      <Tabs variant="unstyled">
+      <Tabs display={'flex'} flexDirection={'column'} gap={6} variant="unstyled">
         <TabList className="border-b border-border center-div md:gap-7">
           <Tab
             className="border-b-4 border-transparent"
@@ -64,9 +64,9 @@ const ProfileContent = () => {
           </Tab>
         </TabList>
 
-        <Flex className="my-6 flex flex-col">
+        <Flex className="flex flex-col gap-3">
           <VideoFilter />
-          <Text mt="25px" mb="36px" fontSize="2xl" ms="24px" fontWeight="700">
+          <Text  fontSize="2xl" className="pl-4" fontWeight="700">
             4 Results
           </Text>
         </Flex>
