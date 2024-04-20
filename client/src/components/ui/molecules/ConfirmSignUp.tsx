@@ -22,6 +22,7 @@ import { useMyForm } from "@/context/MyForm";
 import { signIn } from "next-auth/react";
 import api from "@/lib/apis";
 import { useAuthDialog } from "@/context/AuthDialog";
+import { Spinner } from "@nextui-org/react";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -31,6 +32,8 @@ const formSchema = z.object({
 });
 
 export default function ConfirmSignUp() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const { onClose } = useAuthDialog();
   const {
     username: { username },
@@ -105,7 +108,14 @@ export default function ConfirmSignUp() {
             )}
           />
           <Button className="w-full" type="submit">
-            Sign up
+            {!isLoading ? (
+              "Sign up"
+            ) : (
+              <Flex className="items-center gap-2">
+                <Spinner size="sm" />
+                loading...
+              </Flex>
+            )}
           </Button>
         </form>
       </Form>

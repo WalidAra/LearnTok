@@ -19,6 +19,7 @@ import { Flex, Link } from "@chakra-ui/react";
 import RememberMe from "../atoms/auth dialog/body/RememberMe";
 import api from "@/lib/apis";
 import { signIn } from "next-auth/react";
+import { Spinner } from "@nextui-org/react";
 import { useAuthDialog } from "@/context/AuthDialog";
 
 const formSchema = z.object({
@@ -30,6 +31,7 @@ const formSchema = z.object({
 
 const SignIn = () => {
   const [recall, setRecall] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { onClose } = useAuthDialog();
   const [isError, setIsError] = useState<boolean>(false);
@@ -42,6 +44,7 @@ const SignIn = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
     const response: HTTPResponseWithToken = await api.Login({
       email: values.email,
       password: values.password,
@@ -107,7 +110,14 @@ const SignIn = () => {
             )}
           />
           <Button className="w-full" type="submit">
-            Login
+            {!isLoading ? (
+              "Sign in"
+            ) : (
+              <Flex className="items-center gap-2">
+                <Spinner size="sm" />
+                loading...
+              </Flex>
+            )}
           </Button>
         </form>
       </Form>

@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/cli/dropdown-menu";
 import UserCard from "../atoms/UserCard";
-import { LuUser2, LuSettings, LuMoon } from "react-icons/lu";
+import { LuUser2, LuSettings, LuMoon, LuUploadCloud } from "react-icons/lu";
 import Link from "next/link";
 import { Flex } from "@chakra-ui/react";
 import ThemeSwitcher from "../atoms/ThemeSwitcher";
@@ -35,6 +35,13 @@ export default function UserMenu({ id }: Props) {
           <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
             <LuUser2 className="text-lg" />
             <span>Profile</span>
+          </DropdownMenuItem>
+        </Link>
+
+        <Link href={"/upload"}>
+          <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+            <LuUploadCloud className="text-lg" />
+            <span>Upload</span>
           </DropdownMenuItem>
         </Link>
 

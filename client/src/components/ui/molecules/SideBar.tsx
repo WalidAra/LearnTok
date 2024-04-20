@@ -37,9 +37,6 @@ const SideBar = () => {
           <SideNavItem tooltip="/trending">
             <LuTrendingUp size={20} />
           </SideNavItem>
-          <SideNavItem tooltip="/bookmark">
-            <LuBookmark size={20} />
-          </SideNavItem>
         </nav>
       </TooltipProvider>
 

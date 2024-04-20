@@ -43,9 +43,12 @@ const config = {
 
       gridTemplateColumns: {
         "1frauto1fr": "1fr auto 1fr",
+        "video-page": "repeat(auto-fill, minmax(450px, 1fr));",
+        "1fr2fr": "1fr 2fr",
       },
       gridTemplateRows: {
         "1frauto1fr": "1fr auto 1fr",
+        "1fr2fr": "208px 3fr",
       },
 
       height: {

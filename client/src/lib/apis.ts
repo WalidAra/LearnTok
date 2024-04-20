@@ -2,6 +2,15 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = {
+  getCategories: async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/public/categories`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   VerifyToken: async (token: string) => {
     try {
       const res = await axios.get(`${BASE_URL}/private/token/verify`, {
