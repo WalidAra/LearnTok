@@ -16,10 +16,10 @@ export default function SideBarLogo() {
           <LearnTokLogo size={25} />
         </Button>
 
-        <h1 className="md:flex hidden items-center gap-3 font-bold text-2xl w-full justify-start">
+        <div className=" items-center justify-start gap-2 font-semibold w-full hidden md:flex">
           <LearnTokLogo size={25} />
-          LearnTok
-        </h1>
+          <span className="text-xl">Learntok</span>
+        </div>
       </div>
     </Link>
   );

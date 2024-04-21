@@ -6,7 +6,7 @@ import Authenticator from "../helpers/Authenticator";
 
 const HomeLayout = ({ children }: Kids) => {
   return (
-    <div className="grid h-screen bg-background w-full pl-[53px] md:pl-[220px] text-muted-foreground">
+    <div className="grid h-screen bg-background w-full pl-[53px] md:pl-[220px] lg:pl-[280px] text-muted-foreground">
       <Authenticator />
       <SideBar />
       <Box className="flex flex-col h-screen w-full">

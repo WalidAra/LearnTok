@@ -1,4 +1,5 @@
 const prisma = require("../../config/prisma");
+const CategoryModel = require("../../models/Category/category.model");
 const videoModel = require("../../models/video/video.model");
 
 const Video = {
@@ -107,36 +108,40 @@ const Video = {
 
   uploadVideo: async (req, res) => {
     const { id } = req.user;
-    const { title, description, url, category_id } = req.body;
+    const { title, description, url, categories } = req.body;
     try {
       const uploadedVideo = await prisma.video.create({
         data: {
-          title: title,
-          description: description,
-          url: url,
-          category_id: category_id,
+          title,
+          description,
+          url,
           user_id: id,
         },
       });
-      const currentCategory = await prisma.category.findUnique({
-        where: {
-          id: category_id,
-        },
-      });
-      await prisma.category.update({
-        where: {
-          id: category_id,
-        },
-        data: {
-          videoCount: currentCategory.videoCount + 1,
-        },
-      });
 
-      if (!uploadedVideo) {
+      if (!uploadedVideo.id) {
         return res.status(200).json({
           status: false,
-          message: "Video uploaded successfully",
+          message: "Video is not uploaded successfully",
           data: null,
+        });
+      }
+
+      await CategoryModel.InsertVideoCategory(uploadedVideo.id, categories);
+
+      for (const category_id of categories) {
+        const currentCategory = await prisma.category.findUnique({
+          where: {
+            id: category_id,
+          },
+        });
+        await prisma.category.update({
+          where: {
+            id: category_id,
+          },
+          data: {
+            videoCount: currentCategory.videoCount + 1,
+          },
         });
       }
 
@@ -154,7 +159,7 @@ const Video = {
       });
     }
   },
-
+  
   getVideoByID: async (req, res) => {
     const { id } = req.params;
     try {

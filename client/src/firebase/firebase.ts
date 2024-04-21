@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY as string,
@@ -25,3 +26,5 @@ const DefineAnalytics = async () => {
 };
 DefineAnalytics();
 export const auth = getAuth();
+export const storage = getStorage(app);
+

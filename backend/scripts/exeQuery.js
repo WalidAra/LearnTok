@@ -5,6 +5,19 @@ const prisma = new PrismaClient();
 const ExeQuery = async () => {
   try {
     console.log("====================================");
+    await prisma.status.createMany({
+      data: [
+        {
+          name: "Active",
+        },
+        {
+          name: "Warning",
+        },
+        {
+          name: "Caution",
+        },
+      ],
+    });
     console.log("====================================");
   } catch (error) {
     console.error(error.message);
@@ -30,3 +43,13 @@ ExeQuery();
 //         { category: "Sports and Fitness" },
 //         { category: "Travel and Culture" },
 //         { category: "Creative Writing" },
+
+// {
+//   name: "Google",
+// },
+// {
+//   name: "Facebook",
+// },
+// {
+//   name: "Direct",
+// },
