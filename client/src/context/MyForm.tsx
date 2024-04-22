@@ -1,15 +1,10 @@
 "use client";
-import { createContext, useContext, useRef, useState } from "react";
-import { type CarouselApi } from "@/components/cli/carousel";
+import { createContext, useContext, useState } from "react";
 
 type Props = {
-  carousel: {
-    api: any;
-    setApi: any;
-  };
-  form: {
-    current: number;
-    setCurrent: (value: number) => void;
+  slide: {
+    page: number;
+    setPage: (value: number | ((prev: number) => number)) => void;
   };
 
   username: {
@@ -24,10 +19,9 @@ type Props = {
 };
 
 const MyForm = createContext<Props>({
-  carousel: { api: undefined, setApi: undefined },
-  form: {
-    current: 1,
-    setCurrent: (value: number) => {},
+  slide: {
+    page: 0,
+    setPage: (value: number | ((prev: number) => number)) => {},
   },
 
   username: {
@@ -44,15 +38,13 @@ const MyForm = createContext<Props>({
 import React from "react";
 
 export default function MyFormProvider({ children }: Kids) {
-  const [current, setCurrent] = useState<number>(1);
-  const [api, setApi] = React.useState<CarouselApi>();
   const [username, setUsername] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
+  const [page, setPage] = useState<number>(0);
 
   return (
     <MyForm.Provider
       value={{
-
         username: {
           username,
           setUsername,
@@ -63,8 +55,10 @@ export default function MyFormProvider({ children }: Kids) {
           setFullName,
         },
 
-        carousel: { api, setApi },
-        form: { current, setCurrent },
+        slide: {
+          page,
+          setPage,
+        },
       }}
     >
       {children}

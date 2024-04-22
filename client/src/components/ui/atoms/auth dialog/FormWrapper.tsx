@@ -11,7 +11,7 @@ type Props = {
 
 export default function FormWrapper({ children, isSignInForm = true }: Props) {
   return (
-    <Box className="flex flex-col gap-2 w-full px-1.5">
+    <Box className="flex flex-col gap-2 w-full px-1.5 shrink-0">
       <Box className="w-full flex flex-col gap-3">
         <SocialSignInPanel isSignInForm={isSignInForm} />
         <OAuthContainer />

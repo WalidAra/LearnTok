@@ -26,7 +26,7 @@ const formSchema = z.object({
 
 const SignUp = () => {
   const {
-    carousel: { api },
+    slide:{setPage},
     username: { setUsername },
     fullName: { setFullName },
   } = useMyForm();
@@ -39,10 +39,9 @@ const SignUp = () => {
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     setUsername(values.username);
     setFullName(values.fullName);
-    api.scrollNext();
+    setPage(2);
   }
 
   return (

@@ -6,9 +6,13 @@ import { FcGoogle } from "react-icons/fc";
 import { auth } from "@/firebase/firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useTheme } from "next-themes";
+import api from "@/lib/apis";
+import { signIn } from "next-auth/react";
+import { useAuthDialog } from "@/context/AuthDialog";
 
 export default function OAuthGoogleBtn() {
   const googleAuth = new GoogleAuthProvider();
+  const { onClose } = useAuthDialog();
   const { theme } = useTheme();
   googleAuth.setCustomParameters({
     prompt: "select_account",
@@ -17,7 +21,27 @@ export default function OAuthGoogleBtn() {
 
   const handleOAuth = async () => {
     try {
-      const firebaseResult = await signInWithPopup(auth, googleAuth);
+      console.log("====================================");
+      const firebaseResult:any = await signInWithPopup(auth, googleAuth);
+      
+      const { accessToken } = firebaseResult.user;
+      console.log(accessToken , firebaseResult);
+      const response: HTTPResponseWithToken = await api.oAuthGoogle({
+        accessToken: accessToken,
+      });
+
+      console.log(response);
+      console.log("====================================");
+
+      if (response.status) {
+        const res = await signIn("credentials", {
+          token: response.token,
+          callbackUrl: "/",
+        });
+        onClose();
+      }else{
+        alert(response.message);
+      }
     } catch (error) {
       console.error("Error signing in with Google:", error);
     }

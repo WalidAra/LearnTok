@@ -7,45 +7,33 @@ import React from "react";
 import SignIn from "../../molecules/SignIn";
 import SignUp from "../../molecules/SignUp";
 import ConfirmSignUp from "../../molecules/ConfirmSignUp";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/cli/carousel";
+import { motion } from "framer-motion";
 import { useMyForm } from "@/context/MyForm";
+import { cn } from "@/lib/utils";
 
 const DialogBody = () => {
   const {
-    carousel: { api, setApi },
-    form: { current, setCurrent },
+    slide: { page },
   } = useMyForm();
 
-  React.useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api, current]);
   return (
-    <AlertDialogBody >
-      <Carousel setApi={setApi}>
-        <CarouselContent className="basis-full">
-          <CarouselItem className="basis-full">
-            {current === 1 && <SignIn />}
-          </CarouselItem>
-          <CarouselItem className="basis-full">
-            {current === 2 && <SignUp />}
-          </CarouselItem>
-          <CarouselItem className="basis-full">
-            {current === 3 && <ConfirmSignUp />}
-          </CarouselItem>
-        </CarouselContent>
-      </Carousel>
+    <AlertDialogBody>
+      <div
+        className={cn(
+          "w-full overflow-hidden duration-75",
+          page < 2 ? "sm:h-[377px] h-[421px]" : "h-[300px]"
+        )}
+      >
+        <motion.div
+          transition={{ type: "tween", duration: 0.6, ease: "anticipate" }}
+          animate={{ translateX: `-${page * 100}%` }}
+          className="w-full flex"
+        >
+          <SignIn />
+          <SignUp />
+          <ConfirmSignUp />
+        </motion.div>
+      </div>
     </AlertDialogBody>
   );
 };

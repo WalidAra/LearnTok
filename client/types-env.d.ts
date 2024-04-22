@@ -1,5 +1,5 @@
 type Kids = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 type Theme = "light" | "dark" | "system";

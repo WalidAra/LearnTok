@@ -2,6 +2,51 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = {
+  oAuthGoogle: async ({ accessToken }: { accessToken: string }) => {
+    try {
+      const res = await axios.post(`${BASE_URL}/public/oauth/google`, {
+        accessToken: accessToken,
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  uploadVideo: async ({
+    title,
+    description,
+    url,
+    categories,
+    token,
+  }: {
+    title: string;
+    description: string;
+    url: string;
+    categories: string[];
+    token: string;
+  }) => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/private/video/upload`,
+        {
+          title,
+          description,
+          url,
+          categories,
+        },
+        {
+          headers: {
+            "learntok-auth-token": token,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   getCategories: async () => {
     try {
       const res = await axios.get(`${BASE_URL}/public/categories`);

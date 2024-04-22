@@ -1,13 +1,10 @@
 "use client";
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 type Props = {
-  title: any;
-
-  description: any;
   category: {
-    value: string[];
-    setValue: (value: string[]) => void;
+    categories: string[];
+    setCategories: (value: string[]) => void;
   };
 
   url: {
@@ -17,11 +14,9 @@ type Props = {
 };
 
 const Upload = createContext<Props>({
-  title: null,
-  description: null,
   category: {
-    value: [],
-    setValue: (value: string[]) => {},
+    categories: [],
+    setCategories: (value: string[]) => {},
   },
   url: {
     url: "",
@@ -32,17 +27,14 @@ const Upload = createContext<Props>({
 import React from "react";
 
 export default function UploadProvider({ children }: Kids) {
-  const title = useRef<HTMLInputElement>();
-  const description = useRef<HTMLTextAreaElement>();
   const [categories, setCategories] = useState<string[]>([]);
   const [url, setUrl] = useState<string>("");
 
   return (
     <Upload.Provider
       value={{
-        category: { setValue: setCategories, value: categories },
-        description: description,
-        title: title,
+        category: { setCategories, categories },
+
         url: {
           setUrl: setUrl,
           url: url,

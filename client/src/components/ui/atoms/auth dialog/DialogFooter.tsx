@@ -7,8 +7,7 @@ import React from "react";
 
 const DialogFooter = () => {
   const {
-    carousel: { api },
-    form: { setCurrent, current },
+    slide: { page, setPage },
   } = useMyForm();
 
   return (
@@ -23,22 +22,21 @@ const DialogFooter = () => {
       </Box>
       <Box className="center-div">
         <p className="text-sm  text-smText">
-          {current === 1 ? "Don't Have account ?" : "Already have a account ?"}
+          {page === 0 ? "Don't Have account ?" : "Already have a account ?"}
         </p>
         <Button
           onClick={() => {
-            if (current === 1) {
-              setCurrent(2);
-              api.scrollNext();
+            if (page === 0) {
+              setPage(1);
+
             } else {
-              setCurrent(1);
-              api.scrollPrev();
+              setPage(0);
             }
           }}
           variant="link"
           className="p-0 pl-1"
         >
-          {current === 1 ? "sign up" : "login"}
+          {page === 0 ? "sign up" : "login"}
         </Button>
       </Box>
     </AlertDialogFooter>

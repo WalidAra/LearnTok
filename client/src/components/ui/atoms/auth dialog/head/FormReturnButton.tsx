@@ -4,17 +4,16 @@ import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
 export default function FormReturnButton() {
   const {
-    carousel: { api },
-    form:{current}
+    slide:{page , setPage}
   } = useMyForm();
 
   const handleClick = () => {
-    api.scrollPrev();
+    setPage((prev)=> prev - 1);
   };
 
   return (
     <div className="size-8">
-      {current !== 1 && (
+      {page !== 0 && (
         <button
           onClick={handleClick}
           className="size-8 duration-200 hover:bg-black/5 rounded center-div "

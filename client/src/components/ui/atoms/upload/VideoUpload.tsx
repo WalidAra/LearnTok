@@ -25,6 +25,7 @@ const VideoUpload = () => {
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
+
     const fileTypes = ["video/mp4", "video/webm", "video/ogg"];
 
     if (selectedFile && fileTypes.includes(selectedFile.type)) {
@@ -36,7 +37,6 @@ const VideoUpload = () => {
         (snapshot) => {
           let progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(progress);
           setUploadProgress(progress);
         },
         (error) => {
