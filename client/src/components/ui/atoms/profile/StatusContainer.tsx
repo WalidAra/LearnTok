@@ -21,7 +21,7 @@ function formatNumber(number: number) {
 export default function StatusContainer({ count, label }: Props) {
   const formattedCount = formatNumber(count);
   return (
-    <Flex className="items-center gap-1.5 font-semibold capitalize">
+    <Flex className="items-center gap-1.5 text-sm sm:text-base font-semibold capitalize">
       <span> {formattedCount} </span>
       <p> {label} </p>
     </Flex>

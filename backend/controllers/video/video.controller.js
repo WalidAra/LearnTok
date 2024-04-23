@@ -159,7 +159,7 @@ const Video = {
       });
     }
   },
-  
+
   getVideoByID: async (req, res) => {
     const { id } = req.params;
     try {
@@ -206,6 +206,29 @@ const Video = {
     const { page } = req.body;
     try {
       const videos = await videoModel.getVideos({ user_id: id }, page);
+      return res.status(200).json({
+        status: true,
+        message: "User videos fetched successfully",
+        data: videos,
+      });
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json({
+        status: false,
+        message: "Internal Server Error",
+        data: null,
+      });
+    }
+  },
+
+  getUserBaseVideos: async (req, res) => {
+    const { id } = req.user;
+    try {
+      const videos = await prisma.video.findMany({
+        where: {
+          user_id: id,
+        },
+      });
       return res.status(200).json({
         status: true,
         message: "User videos fetched successfully",

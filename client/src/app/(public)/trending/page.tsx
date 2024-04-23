@@ -1,7 +1,7 @@
 import MainView from "@/components/ui/molecules/MainView";
-import PopularSearch from "@/components/ui/molecules/PopularSearch";
-import PopularUsers from "@/components/ui/molecules/PopularUsers";
-import TrendCard from "@/components/ui/molecules/TrendCard";
+import PopularSearch from "@/components/ui/molecules/trend/PopularSearch";
+import PopularUsers from "@/components/ui/molecules/trend/PopularUsers";
+import TrendCard from "@/components/ui/molecules/trend/TrendCard";
 import React from "react";
 
 const Trending = () => {
@@ -20,7 +20,6 @@ const Trending = () => {
           <section className="2xl:w-96 xl:w-80 md:w-72 gap-4 flex-col h-full hidden md:grid md:grid-rows-1fr2fr ">
             <PopularUsers />
             <PopularSearch />
-
           </section>
         </div>
       </div>

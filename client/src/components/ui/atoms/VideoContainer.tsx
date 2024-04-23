@@ -18,10 +18,10 @@ function formatNumber(number: number) {
 
 export default function VideoContainer() {
   return (
-    <Link href={'/'} >
-      <Flex className="flex-col w-60 gap-2 ">
+    <Link href={"/"}>
+      <Flex className="flex-col gap-1.5 ">
         <Box className="w-full relative">
-          <Flex className="absolute bottom-2 left-2 items-center gap-2 text-sm">
+          <Flex className="absolute sm:bottom-2 bottom-1 left-1 sm:left-2 items-center gap-2 text-xs sm:text-sm">
             <div className=" font-medium  text-white flex items-center gap-1">
               <LuPlay />
               125k
@@ -36,12 +36,12 @@ export default function VideoContainer() {
             </div>
           </Flex>
           <video
-            className="w-full aspect-[7/9.33] rounded"
-            src="https://firebasestorage.googleapis.com/v0/b/learntok.appspot.com/o/videos%2FSnaptik.app_7264594679251946784.mp4?alt=media&token=238170a4-de13-4ff6-ad49-b27e71d928a3"
+            className="w-full aspect-[7/9.33] rounded-sm bg-black object-cover"
+            src="https://firebasestorage.googleapis.com/v0/b/learntok.appspot.com/o/videos%2F2024-04-16%2019-13-52.mp4?alt=media&token=e92ee06d-4c21-429a-b142-dfa8686c56e9"
           ></video>
         </Box>
 
-        <p className="line-clamp-1 px-0.5 font-medium">
+        <p className="line-clamp-1 px-0.5 font-medium text-sm sm:text-base ">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia sequi
           ullam eveniet, enim ex, odio nemo numquam sapiente cum explicabo
           similique. Molestiae consectetur eaque placeat minus, ipsa non et

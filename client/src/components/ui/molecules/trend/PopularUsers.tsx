@@ -4,7 +4,7 @@ import {
   CarouselItem,
 } from "@/components/cli/carousel";
 import React from "react";
-import UserTrendCard from "./UserTrendCard";
+import UserTrendCard from "../UserTrendCard";
 
 const PopularUsers = () => {
   return (

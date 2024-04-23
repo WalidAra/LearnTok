@@ -1,6 +1,7 @@
 import api from "@/lib/apis";
 import { Flex } from "@chakra-ui/react";
 import { User } from "@nextui-org/react";
+import { signOut } from "next-auth/react";
 import React from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -9,6 +10,10 @@ type Props = {
 };
 export default async function UserMenuTrigger({ id }: Props) {
   const res: HTTPResponse = await api.getUserProfile({ token: id });
+
+  if (!res.status) {
+    signOut();
+  }
 
   return (
     <User

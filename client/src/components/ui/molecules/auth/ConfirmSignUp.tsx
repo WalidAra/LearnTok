@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import FormWrapper from "../atoms/auth dialog/FormWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
 import { Button } from "@/components/cli/button";
 import {
   Form,
@@ -15,12 +15,14 @@ import {
   FormMessage,
 } from "@/components/cli/form";
 import { Input } from "@/components/cli/input";
-import { Flex, Link } from "@chakra-ui/react";
-import RememberMe from "../atoms/auth dialog/body/RememberMe";
-import api from "@/lib/apis";
+import { Box, Flex, Link } from "@chakra-ui/react";
+import RememberMe from "../../atoms/auth dialog/body/RememberMe";
+import SocialSignInPanel from "../../atoms/auth dialog/body/SocialSignInPanel";
+import { useMyForm } from "@/context/MyForm";
 import { signIn } from "next-auth/react";
-import { Spinner } from "@nextui-org/react";
+import api from "@/lib/apis";
 import { useAuthDialog } from "@/context/AuthDialog";
+import { Spinner } from "@nextui-org/react";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -29,12 +31,15 @@ const formSchema = z.object({
     .min(6, { message: "Password must be at least 6 characters" }),
 });
 
-const SignIn = () => {
-  const [recall, setRecall] = useState<boolean>(false);
+export default function ConfirmSignUp() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { onClose } = useAuthDialog();
-  const [isError, setIsError] = useState<boolean>(false);
+  const {
+    username: { username },
+    fullName: { fullName },
+  } = useMyForm();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,30 +47,30 @@ const SignIn = () => {
       password: "",
     },
   });
+  const [recall, setRecall] = useState<boolean>(false);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    const response: HTTPResponseWithToken = await api.Login({
+    const result: HTTPResponseWithToken = await api.Register({
       email: values.email,
       password: values.password,
+      fullName,
+      username,
       recall,
     });
 
-    if (response.status) {
-      const res = await signIn("credentials", {
-        token: response.token,
+    if (result.status) {
+      await signIn("credentials", {
+        token: result.token,
       });
-      setIsError(false);
       onClose();
-    } else {
-      setIsError(true);
     }
   }
 
   return (
-    <FormWrapper isSignInForm>
+    <Box className="w-full px-1.5 flex flex-col shrink-0">
+      <SocialSignInPanel isSignInForm={false} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
           <FormField
             control={form.control}
             name="email"
@@ -95,15 +100,8 @@ const SignIn = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription className="flex flex-col gap-3">
+                <FormDescription className="flex items-center gap-2">
                   <RememberMe recall={recall} setRecall={setRecall} />
-
-                  {isError && (
-                    <p className="font-medium text-red-500">
-                      Invalid email or password. Please check your credentials
-                      and try again.
-                    </p>
-                  )}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -111,7 +109,7 @@ const SignIn = () => {
           />
           <Button className="w-full" type="submit">
             {!isLoading ? (
-              "Sign in"
+              "Sign up"
             ) : (
               <Flex className="items-center gap-2">
                 <Spinner size="sm" />
@@ -121,8 +119,6 @@ const SignIn = () => {
           </Button>
         </form>
       </Form>
-    </FormWrapper>
+    </Box>
   );
-};
-
-export default SignIn;
+}

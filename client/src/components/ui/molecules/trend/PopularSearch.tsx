@@ -2,7 +2,7 @@
 import { Button } from "@/components/cli/button";
 import { Box } from "@chakra-ui/react";
 import React, { useState } from "react";
-import SearchProgress from "./SearchProgress";
+import SearchProgress from "../../atoms/trend/SearchProgress";
 
 const PopularSearch = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import FormWrapper from "../atoms/auth dialog/FormWrapper";
+import FormWrapper from "../../atoms/auth dialog/FormWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,7 +15,7 @@ import {
 } from "@/components/cli/form";
 import { Input } from "@/components/cli/input";
 import { Flex, Link } from "@chakra-ui/react";
-import RememberMe from "../atoms/auth dialog/body/RememberMe";
+import RememberMe from "../../atoms/auth dialog/body/RememberMe";
 import { useMyForm } from "@/context/MyForm";
 import { Button } from "@/components/cli/button";
 
@@ -26,7 +26,7 @@ const formSchema = z.object({
 
 const SignUp = () => {
   const {
-    slide:{setPage},
+    slide: { setPage },
     username: { setUsername },
     fullName: { setFullName },
   } = useMyForm();

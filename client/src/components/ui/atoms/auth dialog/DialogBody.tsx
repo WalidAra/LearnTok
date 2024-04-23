@@ -4,9 +4,9 @@
 
 import { AlertDialogBody } from "@chakra-ui/react";
 import React from "react";
-import SignIn from "../../molecules/SignIn";
-import SignUp from "../../molecules/SignUp";
-import ConfirmSignUp from "../../molecules/ConfirmSignUp";
+import SignIn from "../../molecules/auth/SignIn";
+import SignUp from "../../molecules/auth/SignUp";
+import ConfirmSignUp from "../../molecules/auth/ConfirmSignUp";
 import { motion } from "framer-motion";
 import { useMyForm } from "@/context/MyForm";
 import { cn } from "@/lib/utils";

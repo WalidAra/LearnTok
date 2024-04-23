@@ -37,7 +37,7 @@ import { useSession } from "next-auth/react";
 
 const formSchema = z.object({
   title: z.string().min(2).max(50),
-  description: z.string().min(10).max(150),
+  description: z.string().min(10).max(100),
 });
 
 const UploadContainer = () => {

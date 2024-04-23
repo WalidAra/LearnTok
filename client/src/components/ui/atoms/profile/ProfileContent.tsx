@@ -14,12 +14,18 @@ import { MdOutlineCollections } from "react-icons/md";
 import { AiFillFormatPainter } from "react-icons/ai";
 import { LuHeart } from "react-icons/lu";
 import VideoContainer from "../VideoContainer";
+import CreatedVidsPanel from "../../molecules/profile/CreatedVidsPanel";
 
 const ProfileContent = () => {
   return (
     <section className="w-full flex flex-col ">
-      <Tabs display={'flex'} flexDirection={'column'} gap={6} variant="unstyled">
-        <TabList className="border-b border-border center-div md:gap-7">
+      <Tabs
+        display={"flex"}
+        flexDirection={"column"}
+        gap={6}
+        variant="unstyled"
+      >
+        <TabList className="border-b border-border center-div flex-wrap md:gap-7">
           <Tab
             className="border-b-4 border-transparent"
             _selected={{ borderBottom: "4px solid red" }}
@@ -66,31 +72,23 @@ const ProfileContent = () => {
 
         <Flex className="flex flex-col gap-3">
           <VideoFilter />
-          <Text  fontSize="2xl" className="pl-4" fontWeight="700">
+          <Text fontSize="2xl" className="pl-4" fontWeight="700">
             4 Results
           </Text>
         </Flex>
 
         <TabPanels padding={0}>
           <TabPanel padding={0}>
-            <Box className="inline-flex gap-4 w-full flex-wrap">
-              <VideoContainer />
-              <VideoContainer />
-              <VideoContainer />
-              <VideoContainer />
-              <VideoContainer />
+            <CreatedVidsPanel />
+          </TabPanel>
+          <TabPanel>
+            <Box className="w-full grid grid-cols-2 gap-2 sm:gap-4 sm:grid-cols-auto-fill">
               <VideoContainer />
               <VideoContainer />
             </Box>
           </TabPanel>
           <TabPanel>
-            <Box className="inline-flex gap-4 w-full flex-wrap">
-              <VideoContainer />
-              <VideoContainer />
-            </Box>
-          </TabPanel>
-          <TabPanel>
-            <Box className="inline-flex gap-4 w-full flex-wrap">
+            <Box className="w-full grid grid-cols-2 gap-2 sm:gap-4 sm:grid-cols-auto-fill">
               <VideoContainer />
             </Box>
           </TabPanel>

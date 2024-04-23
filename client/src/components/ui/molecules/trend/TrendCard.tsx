@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import React from "react";
-import StatusInfo from "../atoms/video/StatusInfo";
+import StatusInfo from "../../atoms/video/StatusInfo";
 import { AiFillEye, AiFillHeart } from "react-icons/ai";
 import { User } from "@nextui-org/react";
 
@@ -32,10 +32,14 @@ const TrendCard = () => {
             description="Product Designer"
             avatarProps={{
               src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-              isBordered:true
+              isBordered: true,
             }}
           />
-          <p className="line-clamp-1 text-sm" >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo eos est incidunt iure. Molestiae distinctio cumque a amet iusto quae? Voluptatem quos natus at autem ratione suscipit quo vitae nostrum.</p>
+          <p className="line-clamp-1 text-sm">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo eos
+            est incidunt iure. Molestiae distinctio cumque a amet iusto quae?
+            Voluptatem quos natus at autem ratione suscipit quo vitae nostrum.
+          </p>
         </Flex>
       </Flex>
     </div>
