@@ -2,6 +2,15 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = {
+  getUserFollowings: async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/public/user/followings`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   getUserCreatedVideos: async ({ token }: { token: string }) => {
     try {
       const res = await axios.get(`${BASE_URL}/private/auth/videos`, {

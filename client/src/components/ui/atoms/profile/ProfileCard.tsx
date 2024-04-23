@@ -6,13 +6,45 @@ import LearnTokLogo from "../../global/Logo";
 import CopyUrlProfile from "./CopyUrlProfile";
 import StatusContainer from "./StatusContainer";
 import { BsDot } from "react-icons/bs";
+import UserFollowingsCount from "./UserFollowingsCount";
 
-const ProfileCard = () => {
+type Props = {
+  user: Client;
+};
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const monthName = months[date.getMonth()];
+
+  const formattedDate = `Joined ${date.getDate()} ${monthName} ${date.getFullYear()}`;
+
+  return formattedDate;
+}
+
+const ProfileCard = ({ user }: Props) => {
   return (
-    <section className="w-full flex flex-col gap-3">
+    <section className="w-full flex flex-col gap-3 pt-10">
       <div className="w-full center-div">
         <Avatar
-          src="https://i.pinimg.com/564x/d7/b8/6a/d7b86a23cd5bc3593e9c5ea94b20927f.jpg"
+          src={
+            user.picture
+              ? user.picture
+              : "https://i.pinimg.com/564x/18/b5/b5/18b5b599bb873285bd4def283c0d3c09.jpg"
+          }
           className=" sm:w-36 sm:h-36 w-28 h-28"
           isBordered
         />
@@ -20,7 +52,7 @@ const ProfileCard = () => {
 
       <Box className="w-full flex flex-col gap-2 text-center">
         <Flex className="items-center justify-center gap-2">
-          <h1 className="font-semibold text-3xl">Walid Ara</h1>
+          <h1 className="font-semibold text-3xl"> {user.fullName} </h1>
           <LearnTokBadge />
         </Flex>
 
@@ -30,17 +62,18 @@ const ProfileCard = () => {
           <CopyUrlProfile />
         </Flex>
 
-        <p className=" text-base sm:text-lg font-medium">Joined 17 Nov 2019</p>
+        <p className=" text-base sm:text-lg font-medium">
+          {formatDate(user.createdAt)}
+        </p>
 
-        <p className="text-sm sm:text-base" >
-          👩‍💻 Tech Teacher 🌟 | Turning learners into coding pros! 💡| 👩‍💻 Tech
-          Teacher 🌟
+        <p className="sm:text-base text-sm font-medium">
+          {user.bio ? user.bio : "no bio."}
         </p>
 
         {/* 60 chars */}
 
         <Flex className="items-center justify-center sm:gap-1">
-          <StatusContainer count={2} label="followings" />
+          <UserFollowingsCount />
           <BsDot className="size-5" />
           <StatusContainer count={5000} label="followers" />
           <BsDot className="size-5" />

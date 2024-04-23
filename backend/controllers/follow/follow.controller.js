@@ -131,6 +131,30 @@ const Follow = {
       });
     }
   },
+  getUserBaseFollowings: async (req, res) => {
+    const { id } = req.user;
+
+    try {
+      const followers = await prisma.follow.findMany({
+        where: {
+          follower_id: id,
+        },
+      });
+
+      res.status(201).json({
+        status: true,
+        message: "Got followings successfully",
+        data: followers,
+      });
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json({
+        status: false,
+        message: "Internal Server Error",
+        data: null,
+      });
+    }
+  },
 };
 
 module.exports = Follow;
