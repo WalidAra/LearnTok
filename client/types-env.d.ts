@@ -33,3 +33,15 @@ type Client = {
   provider_id: string;
   status_id: string;
 };
+
+type VideoProps = {
+  id: string;
+  user_id: string;
+  title: string;
+  description: string;
+  url: string;
+  uploadedAt: string;
+  comments_count: number;
+  likes_count: number;
+  views_count: number;
+};

@@ -9,7 +9,7 @@ import { BsDot } from "react-icons/bs";
 
 const ProfileCard = () => {
   return (
-    <section className="w-full flex flex-col gap-3 pt-10">
+    <section className="w-full flex flex-col gap-3">
       <div className="w-full center-div">
         <Avatar
           src="https://i.pinimg.com/564x/d7/b8/6a/d7b86a23cd5bc3593e9c5ea94b20927f.jpg"
@@ -32,7 +32,7 @@ const ProfileCard = () => {
 
         <p className=" text-base sm:text-lg font-medium">Joined 17 Nov 2019</p>
 
-        <p className="text-sm sm:text-base">
+        <p className="text-sm sm:text-base" >
           👩‍💻 Tech Teacher 🌟 | Turning learners into coding pros! 💡| 👩‍💻 Tech
           Teacher 🌟
         </p>

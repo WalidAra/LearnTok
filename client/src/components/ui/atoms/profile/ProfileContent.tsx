@@ -13,7 +13,6 @@ import VideoFilter from "./VideoFilter";
 import { MdOutlineCollections } from "react-icons/md";
 import { AiFillFormatPainter } from "react-icons/ai";
 import { LuHeart } from "react-icons/lu";
-import VideoContainer from "../VideoContainer";
 import CreatedVidsPanel from "../../molecules/profile/CreatedVidsPanel";
 
 const ProfileContent = () => {
@@ -78,18 +77,13 @@ const ProfileContent = () => {
         </Flex>
 
         <TabPanels padding={0}>
-          <TabPanel padding={0}>
+          <TabPanel padding={0}></TabPanel>
+          <TabPanel>
             <CreatedVidsPanel />
           </TabPanel>
           <TabPanel>
             <Box className="w-full grid grid-cols-2 gap-2 sm:gap-4 sm:grid-cols-auto-fill">
-              <VideoContainer />
-              <VideoContainer />
-            </Box>
-          </TabPanel>
-          <TabPanel>
-            <Box className="w-full grid grid-cols-2 gap-2 sm:gap-4 sm:grid-cols-auto-fill">
-              <VideoContainer />
+              {/* <VideoContainer /> */}
             </Box>
           </TabPanel>
         </TabPanels>

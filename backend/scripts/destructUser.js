@@ -4,7 +4,7 @@ const destructUser = (obj) => {
     id,
     provider_id,
     lastLoginAt,
-    createdAt,
+
     email,
     ...user
   } = obj;
