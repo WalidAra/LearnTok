@@ -45,3 +45,10 @@ type VideoProps = {
   likes_count: number;
   views_count: number;
 };
+
+type Bookmark = {
+  id: string;
+  user_id: string;
+  video_id: string;
+  createdAt: string;
+};

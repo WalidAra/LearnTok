@@ -24,7 +24,7 @@ const DiscoverCard = () => {
         <User
           name={
             <Flex className="items-center gap-2">
-              Jane Doe <LearnTokBadge />{" "}
+              Jane Doe 
             </Flex>
           }
           description="Product Designer"

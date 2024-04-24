@@ -13,7 +13,7 @@ type Props = {
 const PublicUserProfile = ({ params: { id } }: Props) => {
   return (
     <MainView className="px-4 sm:px-10 py-10 flex flex-col gap-6 items-center">
-      <ProfileCard />
+      {/* <ProfileCard /> */}
       <FollowButtonSection />
       <ProfileContent />
     </MainView>

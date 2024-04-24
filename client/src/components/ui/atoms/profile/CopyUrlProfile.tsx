@@ -22,7 +22,7 @@ const CopyUrlProfile: React.FC = () => {
   return (
     <Button
       onClick={() => {
-        // navigator.clipboard.writeText(window.location.href);
+        navigator.clipboard.writeText(window.location.href);
         setIsClicked(true);
       }}
       size="sm"

@@ -16,7 +16,7 @@ export default function CommentCard({ comment }: Props) {
         <div className="rounded-xl bg-muted inline-flex flex-col p-3">
           <Flex className="items-center gap-1.5">
             <p className="font-medium">Exotic Ara</p>
-            <LearnTokBadge />
+            {/* <LearnTokBadge /> */}
           </Flex>
           <p>{comment}</p>
         </div>

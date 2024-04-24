@@ -4,9 +4,10 @@ import React from "react";
 import LearnTokBadge from "../../global/LearnTokBadge";
 import LearnTokLogo from "../../global/Logo";
 import CopyUrlProfile from "./CopyUrlProfile";
-import StatusContainer from "./StatusContainer";
 import { BsDot } from "react-icons/bs";
 import UserFollowingsCount from "./UserFollowingsCount";
+import UserFollowersCount from "./UserFollowersCount";
+import UserLikesCount from "./UserLikesCount";
 
 type Props = {
   user: Client;
@@ -53,7 +54,7 @@ const ProfileCard = ({ user }: Props) => {
       <Box className="w-full flex flex-col gap-2 text-center">
         <Flex className="items-center justify-center gap-2">
           <h1 className="font-semibold text-3xl"> {user.fullName} </h1>
-          <LearnTokBadge />
+          <LearnTokBadge status_id={user.status_id} />
         </Flex>
 
         <Flex className="items-center justify-center gap-2 font-medium">
@@ -70,14 +71,12 @@ const ProfileCard = ({ user }: Props) => {
           {user.bio ? user.bio : "no bio."}
         </p>
 
-        {/* 60 chars */}
-
         <Flex className="items-center justify-center sm:gap-1">
           <UserFollowingsCount />
           <BsDot className="size-5" />
-          <StatusContainer count={5000} label="followers" />
+          <UserFollowersCount />
           <BsDot className="size-5" />
-          <StatusContainer count={2000} label="likes" />
+          <UserLikesCount />
         </Flex>
       </Box>
     </section>

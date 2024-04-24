@@ -1,7 +1,6 @@
 const destructUser = (obj) => {
   const {
     password,
-    id,
     provider_id,
     lastLoginAt,
     email,

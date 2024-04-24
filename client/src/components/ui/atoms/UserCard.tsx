@@ -14,7 +14,7 @@ const UserCard = async ({ id }: Props) => {
     <User
       name={
         <Flex className="items-center font-medium gap-2">
-          {res.data.username} <LearnTokBadge />
+          {res.data.username} <LearnTokBadge status_id={res.data.status_id} />
         </Flex>
       }
       description={res.data.fullName}

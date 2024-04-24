@@ -76,7 +76,10 @@ const config = {
       },
       colors: {
         // common colors
-
+        lightGreen: "#22b07d",
+        lightOrange: "#ff7551",
+        lightRed: "#ec5252",
+        // rest
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

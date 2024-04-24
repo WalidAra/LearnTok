@@ -15,13 +15,10 @@ const Profile = async () => {
 
   const res: HTTPResponse = await api.getUserProfile({ token });
 
-  console.log("====================================");
-  console.log(res.data);
-  console.log("====================================");
   return (
     <MainView className="px-2 sm:px-10 pb-2  ">
       <div className="flex flex-col gap-6 items-center w-full overflow-x-hidden overflow-y-auto">
-        <ProfileCard   user={res.data} />
+        <ProfileCard user={res.data} />
         <ProfileContent />
       </div>
     </MainView>

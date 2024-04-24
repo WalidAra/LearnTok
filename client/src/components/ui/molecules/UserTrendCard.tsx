@@ -10,13 +10,13 @@ const UserTrendCard = () => {
   return (
     <div className="flex items-center flex-col gap-2">
       <Tooltip
-        className="p-0 m-0 border-0 shadow-none "   
+        className="p-0 m-0 border-0 shadow-none "
         content={<UserPopCard />}
       >
         <Avatar size="sm" isBordered />
       </Tooltip>
       <Flex className="items-center gap-2 text-sm font-medium">
-        ExoticAra__ <LearnTokBadge />
+        {/* ExoticAra__ <LearnTokBadge /> */}
       </Flex>
     </div>
   );

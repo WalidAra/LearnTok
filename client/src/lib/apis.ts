@@ -2,9 +2,89 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = {
-  getUserFollowings: async () => {
+  searchUsers: async ({name}:{name:string}) => {
+ try {
+   const res = await axios.post(`${BASE_URL}/public/user/search`, {
+     name,
+   });
+   return res.data;
+ } catch (error) {
+   console.log(error);
+ }
+  },
+
+  searchVideos: async ({ title }: { title: string }) => {
     try {
-      const res = await axios.get(`${BASE_URL}/public/user/followings`);
+      const res = await axios.post(`${BASE_URL}/public/videos/search`, {
+        title,
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getVideoByID: async ({ video_id }: { video_id: string }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/public/videos/${video_id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getUserBookmarks: async ({ token }: { token: string }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/private/auth/bookmarks`, {
+        headers: {
+          "learntok-auth-token": token,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getStatusByID: async ({ status_id }: { status_id: string }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/public/statuses/${status_id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getUserFollowings: async ({ token }: { token: string }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/private/auth/followings`, {
+        headers: {
+          "learntok-auth-token": token,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getUserFollowers: async ({ token }: { token: string }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/private/auth/followers`, {
+        headers: {
+          "learntok-auth-token": token,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getUserLikedVideos: async ({ token }: { token: string }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/private/auth/likedVideos`, {
+        headers: {
+          "learntok-auth-token": token,
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error);

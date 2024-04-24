@@ -9,7 +9,6 @@ import {
   TabsTrigger,
 } from "@/components/cli/tabs";
 import NoteBadge from "@/components/ui/atoms/notification/NoteBadge";
-import NoteContainer from "@/components/ui/atoms/notification/NoteContainer";
 import NormalNote from "@/components/ui/atoms/notification/types/NormalNote";
 import CommentNote from "@/components/ui/atoms/notification/types/CommentNote";
 
