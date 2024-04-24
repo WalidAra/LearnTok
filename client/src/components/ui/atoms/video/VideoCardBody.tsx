@@ -1,16 +1,60 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
+import { useCurrentHomeVid } from "@/context/Home";
 import { Box } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import ToggleSound from "./ToggleSound";
+import ToggleVideo from "./ToggleVideo";
+import VideoProgress from "./VideoProgress";
+import { cn } from "@/lib/utils";
 
-export default function VideoCardBody() {
+type Props = {
+  url: string;
+  index: number;
+};
+
+export default function VideoCardBody({ url, index }: Props) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const { current } = useCurrentHomeVid();
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (index + 1 === current) {
+      videoRef.current?.play();
+    } else {
+      videoRef.current?.pause();
+    }
+  }, []);
+
   return (
-    <Box p={0} flex={1} w={"100%"} className="flex justify-center items-center ">
-      <div className="bg-black relative overflow-hidden rounded-xl" >
+    <Box
+      onMouseOver={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      p={0}
+      flex={1}
+      w={"100%"}
+      className="sm:grid flex justify-center sm:justify-normal sm:grid-cols-1frauto1fr items-center "
+    >
+      <div></div>
+      <div className="bg-black relative overflow-hidden rounded-xl">
+        <Box
+          className={cn(
+            "absolute grid grid-rows-auto1fr left-0 top-0 w-full h-full z-30 duration-200 ease-out",
+            isHovered ? "opacity-100 " : " opacity-0"
+          )}
+        >
+          <ToggleSound videoRef={videoRef} />
+          <ToggleVideo videoRef={videoRef} />
+          <VideoProgress videoRef={videoRef} />
+        </Box>
         <video
-          src="https://firebasestorage.googleapis.com/v0/b/learntok.appspot.com/o/videos%2FSnaptik.app_7264594679251946784.mp4?alt=media&token=238170a4-de13-4ff6-ad49-b27e71d928a3"
-          controls
+          ref={videoRef}
+          src={url}
+          loop
           className="object-cover w-full sm:w-60 lg:w-60 xl:w-80 2xl:w-96 aspect-[9/16]"
-        ></video>
+        />
       </div>
+      <div></div>
     </Box>
   );
 }

@@ -52,3 +52,14 @@ type Bookmark = {
   video_id: string;
   createdAt: string;
 };
+
+type User = {
+  id: string;
+  username: string;
+  fullName: string;
+  picture: string;
+  bio: string;
+  isBanned: boolean;
+  createdAt: string;
+  status_id: string;
+};

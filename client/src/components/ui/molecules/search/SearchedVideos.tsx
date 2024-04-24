@@ -10,13 +10,14 @@ type Props = {
 export default async function SearchedVideos({ searchValue }: Props) {
   const res: HTTPResponse = await api.searchVideos({ title: searchValue });
 
+
   return (
     <Box className="flex-wrap w-full gap-4 flex">
-      {res.status || res.data.length > 0 ? (
-        res.data.map((v: VideoProps) => <DiscoverCard key={v.id} />)
+      {res.status && res.data.length > 0 ? (
+        res.data.map((v: VideoProps) => <DiscoverCard video={v} key={v.id} />)
       ) : (
         <Box className="center-div">
-          <Text>Sorry we found nothing</Text>
+          <Text textAlign={'start'} >Sorry we found nothing</Text>
         </Box>
       )}
     </Box>

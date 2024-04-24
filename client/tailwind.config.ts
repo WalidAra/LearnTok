@@ -50,6 +50,7 @@ const config = {
       gridTemplateRows: {
         "1frauto1fr": "1fr auto 1fr",
         "1fr2fr": "208px 3fr",
+        "auto1fr":"auto 1fr"
       },
 
       height: {
