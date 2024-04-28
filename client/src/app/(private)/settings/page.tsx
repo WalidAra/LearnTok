@@ -26,7 +26,7 @@ const Settings = async () => {
       return (
         <MainView className="md:grid-cols-2 grid-cols-1 gap-4 p-4 pb-20">
           <UserUpdateProvider>
-            <UpdateContainer />
+            <UpdateContainer token={session.user.name} />
             <div className="flex flex-col gap-6">
               <ProfilePicSetting url={client.picture} />
               <AccountSetting />

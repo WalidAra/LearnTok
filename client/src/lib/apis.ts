@@ -2,7 +2,51 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = {
-  deleteProfile: async ({token}:{token:string}) => {
+  updateUserProfile: async ({
+    token,
+    bio,
+    email,
+    firstName,
+    lastName,
+    newPassword,
+    username,
+    pic,
+  }: {
+    token: string;
+    bio?: string;
+    confirmNewPassword?: string;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    newPassword?: string;
+    oldPassword?: string;
+    username?: string;
+    pic: string;
+  }) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:9090/api/private/auth/update`,
+        {
+          bio,
+          email,
+          fullName: firstName + " " + lastName,
+          password: newPassword,
+          username,
+          picture: pic,
+        },
+        {
+          headers: {
+            "learntok-auth-token": token,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  deleteProfile: async ({ token }: { token: string }) => {
     try {
       const res = await axios.delete(`${BASE_URL}/private/auth/delete`, {
         headers: {

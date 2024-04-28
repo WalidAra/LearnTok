@@ -2,11 +2,18 @@
 
 import { Button } from "@/components/cli/button";
 import { useUserUpdate } from "@/context/user-update";
+import api from "@/lib/apis";
 import { cn } from "@/lib/utils";
 import { Flex } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function UpdateContainer() {
+type Props = {
+  token: string;
+};
+
+export default function UpdateContainer({ token }: Props) {
+  const router = useRouter();
   const {
     bio,
     confirmNewPassword,
@@ -48,7 +55,7 @@ export default function UpdateContainer() {
           Reset
         </Button>
         <Button
-          onClick={() => {
+          onClick={async () => {
             console.log(bio);
             console.log(email);
             console.log(firstName);
@@ -58,6 +65,23 @@ export default function UpdateContainer() {
             console.log(oldPassword);
             console.log(username);
             console.log(pic);
+
+            const res: HTTPResponse = await api.updateUserProfile({
+              token,
+              email,
+              bio,
+              confirmNewPassword,
+              oldPassword,
+              username,
+              firstName,
+              lastName,
+              newPassword,
+              pic,
+            });
+
+            if (res.status) {
+              router.refresh();
+            }
           }}
           variant={"default"}
           className="bg-green-600 hover:bg-green-800 duration-200 text-primary-foreground"

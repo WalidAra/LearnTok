@@ -142,25 +142,19 @@ const Auth = {
 
   update: async (req, res) => {
     const { id } = req.user;
-
-    const { oldPassword, newPassword } = req.body;
-
+    const { bio, email, fullName, password, username, picture } = req.body;
     try {
+         const hashedPwd = await bcrypt.hash(password, saltRounds);
       const isUser = await prisma.user.findUnique({ where: { id: id } });
-
-      if (oldPassword && newPassword) {
-        const match = await bcrypt.compare(oldPassword, isUser.password);
-
-        if (!match) {
-          return res.status(200).json({
-            status: false,
-            message: "wrong old password ",
-            data: null,
-          });
-        }
-      }
-
-      const updatedUser = { ...isUser, ...req.body };
+      const updatedUser = {
+        ...isUser,
+        bio: bio ? bio : isUser.bio,
+        email: email ? email : isUser.email,
+        fullName: fullName ? fullName : isUser.fullName,
+        password: password ? hashedPwd : isUser.password,
+        username: username ? username : isUser.username,
+        picture: picture ? picture : isUser.picture,
+      };
 
       const finalUser = await prisma.user.update({
         where: { id: id },
