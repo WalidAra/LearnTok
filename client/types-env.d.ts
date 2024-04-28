@@ -63,3 +63,12 @@ type User = {
   createdAt: string;
   status_id: string;
 };
+
+type CommentProps = {
+  id: string;
+  user_id: string;
+  video_id: string;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+};

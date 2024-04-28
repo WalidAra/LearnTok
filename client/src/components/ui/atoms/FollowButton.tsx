@@ -1,21 +1,39 @@
-"use client";
+"use client"
+import api from "@/lib/apis";
 import { Button } from "@nextui-org/react";
-import React, { useState } from "react";
+import { useSession } from "next-auth/react";
+import React from "react";
 
-export default function FollowButton() {
-  const [isFollowing, setIsFollowing] = useState<boolean>(false);
+type Props = {
+  following: boolean;
+  setFollowing: React.Dispatch<React.SetStateAction<boolean>>;
+  following_id: string;
+};
+
+export default function FollowButton({
+  following,
+  setFollowing,
+  following_id,
+}: Props) {
+  const { data: session } = useSession();
+
   return (
     <Button
+      onClick={async () => {
+        if (session?.user?.name) {
+          setFollowing((prev) => !prev);
+          const res: HTTPResponse = await api.ToggleFollow({
+            following_id,
+            token: session.user.name,
+          });
+        }
+      }}
       className="font-medium"
       color="danger"
       size="sm"
-      variant={isFollowing ? "bordered" : "solid"}
-      onClick={() => {
-        setIsFollowing((prev) => !prev);
-      }}
       radius="full"
     >
-      {isFollowing ? "Unfollow" : "Follow"}
+      {following ? "Unfollow" : "Follow"}
     </Button>
   );
 }

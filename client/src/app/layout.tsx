@@ -6,6 +6,7 @@ import Providers from "./Providers";
 import HomeLayout from "@/components/ui/layouts/HomeLayout";
 import { ThemeProvider } from "@/context/Theme-provider";
 import AuthDialogProvider from "@/context/AuthDialog";
+import { Toaster } from "@/components/cli/sonner";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -26,7 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn("h-screen overflow-auto font-sans antialiased", fontSans.variable)}
+        className={cn(
+          "h-screen overflow-auto font-sans antialiased",
+          fontSans.variable
+        )}
       >
         <ThemeProvider
           attribute="class"
@@ -37,6 +41,7 @@ export default function RootLayout({
           <Providers>
             <AuthDialogProvider>
               <HomeLayout>{children}</HomeLayout>
+              <Toaster />
             </AuthDialogProvider>
           </Providers>
         </ThemeProvider>

@@ -7,7 +7,7 @@ const LogOut = () => {
   return (
     <div
       onClick={async () => {
-        signOut();
+        signOut({ callbackUrl: "/", redirect: true });
       }}
       className="flex items-center gap-2 w-full text-red-500 cursor-pointer"
     >

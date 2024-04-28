@@ -2,15 +2,127 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = {
-  searchUsers: async ({name}:{name:string}) => {
- try {
-   const res = await axios.post(`${BASE_URL}/public/user/search`, {
-     name,
-   });
-   return res.data;
- } catch (error) {
-   console.log(error);
- }
+  deleteProfile: async ({token}:{token:string}) => {
+    try {
+      const res = await axios.delete(`${BASE_URL}/private/auth/delete`, {
+        headers: {
+          "learntok-auth-token": token,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  ToggleFollow: async ({
+    token,
+    following_id,
+  }: {
+    token: string;
+    following_id: string;
+  }) => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/private/follow/toggle`,
+        { following_id },
+        {
+          headers: {
+            "learntok-auth-token": token,
+          },
+        }
+      );
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  followState: async ({
+    token,
+    following_id,
+  }: {
+    token: string;
+    following_id: string;
+  }) => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/private/follow/check-following`,
+        { following_id },
+        {
+          headers: {
+            "learntok-auth-token": token,
+          },
+        }
+      );
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  createComment: async ({
+    comment,
+    token,
+    video_id,
+  }: {
+    token: string;
+    video_id: string;
+    comment: string;
+  }) => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/private/comment/create`,
+        { comment, video_id },
+        {
+          headers: {
+            "learntok-auth-token": token,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getVideoComments: async ({ video_id }: { video_id: string }) => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/public/videos/${video_id}/comments`
+      );
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getOtherUserFollowers: async ({ id }: { id: string }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/public/user/${id}/followers`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getOtherUserFollowings: async ({ id }: { id: string }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/public/user/${id}/followings`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  searchUsers: async ({ name }: { name: string }) => {
+    try {
+      const res = await axios.post(`${BASE_URL}/public/user/search`, {
+        name,
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   searchVideos: async ({ title }: { title: string }) => {
@@ -179,7 +291,11 @@ const api = {
       });
       return res.data;
     } catch (error: any) {
-      throw new Error(error.message);
+      return {
+        status: false,
+        message: "Internal Server Error",
+        data: null,
+      };
     }
   },
   getUserByID: async ({ id }: { id: string }) => {

@@ -1,11 +1,22 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 type Props = {
   videoRef: React.RefObject<HTMLVideoElement>;
 };
 
 const ToggleVideo = ({ videoRef }: Props) => {
   const [checked, setChecked] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+
+    if (videoRef.current.paused) {
+      setChecked(false);
+    } else {
+      setChecked(true);
+    }
+
+  }, [videoRef]);
 
   const handleToggleVideo = () => {
     if (videoRef.current) {
@@ -14,12 +25,12 @@ const ToggleVideo = ({ videoRef }: Props) => {
       } else {
         videoRef.current.pause();
       }
-      setChecked(!checked);
+      setChecked((prev) => !prev);
     }
   };
 
   return (
-    <div className="flex-1 center-div ">
+    <div className="absolute left-1/2 top-1/2  -translate-x-1/2 -translate-y-1/2   ">
       <label className="pause-container scale-150">
         <input checked={checked} onChange={handleToggleVideo} type="checkbox" />
         <svg

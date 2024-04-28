@@ -7,32 +7,39 @@ import Poster from "./video/Poster";
 import { FaComment } from "react-icons/fa6";
 
 type Props = {
-  user_id: string;
-  description: string;
-  title: string;
+  video: VideoProps;
+  token: string;
 };
 
-export default function VideoInfo() {
+export default function VideoInfo({ video , token}: Props) {
   return (
-    <Flex className="border-border border rounded-md p-4 flex-col gap-1 md:gap-3">
-      <Poster />
+    <Flex className="border-border border rounded-md p-4 flex-col gap-1">
+      <Poster token={token} id={video.user_id} />
       <h2
         className="text-2xl font-semibold tracking-tighter  text-slate-950 "
         data-testid="home-h2"
       >
-        This is a title of the video
+        {video.title}
       </h2>
 
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, nulla quo!
-        Iure porro, nemo adipisci animi expedita quod vero ullam voluptatum non,
-        aliquam eum aspernatur alias sit eligendi, ipsa recusandae.
-      </p>
+      <p>{video.description}</p>
 
       <Flex className="items-center gap-4">
-        <StatusInfo count={44} icon={<AiFillEye  />} label="views" />
-        <StatusInfo count={45} icon={<AiFillHeart />} label="likes" />
-        <StatusInfo count={45} icon={<FaComment />} label="comments" />
+        <StatusInfo
+          count={video.views_count}
+          icon={<AiFillEye />}
+          label="views"
+        />
+        <StatusInfo
+          count={video.likes_count}
+          icon={<AiFillHeart />}
+          label="likes"
+        />
+        <StatusInfo
+          count={video.comments_count}
+          icon={<FaComment />}
+          label="comments"
+        />
       </Flex>
     </Flex>
   );

@@ -10,7 +10,7 @@ type Props = {
 };
 
 const defaultValues: Props = {
-  current: 0,
+  current: 1,
   setCurrent: () => {},
   len: 0,
   setLen: () => {},
@@ -19,7 +19,7 @@ const defaultValues: Props = {
 const VideoContext = createContext<Props>(defaultValues);
 
 export const HomeProvider = ({ children }: Kids) => {
-  const [current, setCurrent] = useState<number>(0);
+  const [current, setCurrent] = useState<number>(1);
   const [len, setLen] = React.useState(0);
 
   return (

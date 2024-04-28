@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type Props = {
   videoRef: React.RefObject<HTMLVideoElement>;
@@ -8,10 +8,20 @@ type Props = {
 export default function ToggleSound({ videoRef }: Props) {
   const [checked, setChecked] = useState(true);
 
+  useEffect(() => {
+    if (!videoRef.current) return;
+
+    if (videoRef.current.muted) {
+      setChecked(false);
+    } else {
+      setChecked(true);
+    }
+  }, [videoRef]);
+
   const handleToggleSound = () => {
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
-      setChecked((prev)=>!prev);
+      setChecked((prev) => !prev);
     }
   };
 

@@ -19,24 +19,32 @@ export default function VideoCardBody({ url, index }: Props) {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   useEffect(() => {
-    if (index + 1 === current) {
+    if (videoRef.current && current === index + 1) {
       videoRef.current?.play();
     } else {
       videoRef.current?.pause();
     }
-  }, []);
+  }, [current, videoRef]);
 
   return (
     <Box
-      onMouseOver={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       p={0}
       flex={1}
       w={"100%"}
       className="sm:grid flex justify-center sm:justify-normal sm:grid-cols-1frauto1fr items-center "
     >
       <div></div>
-      <div className="bg-black relative overflow-hidden rounded-xl">
+      <div
+        className="bg-black relative overflow-hidden rounded-xl"
+        onMouseOver={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <video
+          ref={videoRef}
+          src={url}
+          loop
+          className="object-cover w-full sm:w-60 lg:w-60 xl:w-80 2xl:w-96 aspect-[9/16]"
+        />
         <Box
           className={cn(
             "absolute grid grid-rows-auto1fr left-0 top-0 w-full h-full z-30 duration-200 ease-out",
@@ -47,12 +55,6 @@ export default function VideoCardBody({ url, index }: Props) {
           <ToggleVideo videoRef={videoRef} />
           <VideoProgress videoRef={videoRef} />
         </Box>
-        <video
-          ref={videoRef}
-          src={url}
-          loop
-          className="object-cover w-full sm:w-60 lg:w-60 xl:w-80 2xl:w-96 aspect-[9/16]"
-        />
       </div>
       <div></div>
     </Box>

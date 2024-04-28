@@ -1,70 +1,98 @@
-"use client"
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
   CardBody,
   CardFooter,
   Avatar,
-  Button,
 } from "@nextui-org/react";
+import api from "@/lib/apis";
+import FollowButton from "../FollowButton";
 
-export default function UserPopCard() {
-  const [isFollowed, setIsFollowed] = React.useState<boolean>(false);
+type Props = {
+  user: User;
+  following: boolean;
+  following_id: string;
+  setFollowing: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+type State = {
+  followers: number;
+  followings: number;
+};
+
+function formatNumber(number: number) {
+  if (number >= 1000 && number < 1000000) {
+    return (number / 1000).toFixed(1) + "k";
+  } else if (number >= 1000000 && number < 1000000000) {
+    return (number / 1000000).toFixed(1) + "m";
+  } else if (number >= 1000000000 && number < 1000000000000) {
+    return (number / 1000000000).toFixed(1) + "b";
+  } else {
+    return number.toString();
+  }
+}
+
+export default function UserPopCard({ user, following, setFollowing , following_id }: Props) {
+  const [userState, setUserState] = useState<State>({
+    followers: 0,
+    followings: 0,
+  });
+
+  useEffect(() => {
+    api.getOtherUserFollowers({ id: user.id }).then((res: HTTPResponse) => {
+      setUserState((prev) => ({ ...prev, followers: res.data.length }));
+    });
+    api.getOtherUserFollowings({ id: user.id }).then((res: HTTPResponse) => {
+      setUserState((prev) => ({ ...prev, followings: res.data.length }));
+    });
+  }, []);
 
   return (
-    <Card className="max-w-[340px]">
+    <Card className="w-[340px]">
       <CardHeader className="justify-between">
-        <div className="flex gap-5">
+        <div className="flex gap-3">
           <Avatar
             isBordered
             radius="full"
             size="md"
-            src="/avatars/avatar-1.png"
+            src={
+              user.picture
+                ? user.picture
+                : "https://i.pinimg.com/564x/18/b5/b5/18b5b599bb873285bd4def283c0d3c09.jpg"
+            }
           />
-          <div className="flex flex-col gap-1 items-start justify-center">
+          <div className="flex flex-col items-start justify-center">
             <h4 className="text-small font-semibold leading-none text-default-600">
-              Zoey Lang
+              {user.fullName}
             </h4>
             <h5 className="text-small tracking-tight text-default-400">
-              @zoeylang
+              @{user.username}
             </h5>
           </div>
         </div>
-        <Button
-          className={
-            isFollowed
-              ? "bg-transparent text-foreground border-default-200"
-              : ""
-          }
-          color="primary"
-          radius="full"
-          size="sm"
-          variant={isFollowed ? "bordered" : "solid"}
-          onPress={() => setIsFollowed(!isFollowed)}
-        >
-          {isFollowed ? "Unfollow" : "Follow"}
-        </Button>
+        <FollowButton
+          following_id={following_id}
+          following={following}
+          setFollowing={setFollowing}
+        />
       </CardHeader>
       <CardBody className="px-3 py-0 text-small text-default-400">
-        <p className="line-clamp-3" >
-          Frontend developer and UI/UX enthusiast. Join me on this coding
-          adventure!{" "}
-          <span className="pt-2">
-            #FrontendWithZoey
-            <span className="py-2" aria-label="computer" role="img">
-              💻
-            </span>
-          </span>
-        </p>
+        <p className="line-clamp-3">{user.bio ? user.bio : "no bio."}</p>
       </CardBody>
       <CardFooter className="gap-3">
         <div className="flex gap-1">
-          <p className="font-semibold text-default-400 text-small">4</p>
+          <p className="font-semibold text-default-400 text-small">
+            {formatNumber(userState.followings)}
+          </p>
           <p className=" text-default-400 text-small">Following</p>
         </div>
         <div className="flex gap-1">
-          <p className="font-semibold text-default-400 text-small">97.1K</p>
+          <p className="font-semibold text-default-400 text-small">
+            {formatNumber(userState.followers)}
+          </p>
           <p className="text-default-400 text-small">Followers</p>
         </div>
       </CardFooter>

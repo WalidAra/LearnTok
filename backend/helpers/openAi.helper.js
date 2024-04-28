@@ -1,13 +1,12 @@
 const Openai = require("openai");
 require("dotenv").config();
 
-
 class openAIHelper {
   openai = null;
 
   constructor() {
     this.openai = new Openai({
-      apiKey: "sk-proj-CitB50y4QATeeZt6p6zzT3BlbkFJbxN1jVecsa0ez8jrntYu",
+      apiKey: process.env.OPENAI_KEY,
     });
   }
 
@@ -20,7 +19,7 @@ class openAIHelper {
             content: question,
           },
         ],
-        model: "gpt-4",
+        model: "gpt-3.5-turbo",
         stream: true,
       });
 
@@ -43,7 +42,7 @@ class openAIHelper {
             content:
               "You are an offensive language detector tailored to identify text that may offend Muslims.",
           },
-          { role: "user", content: question },
+          { role: "assistant", content: question },
         ],
         model: "gpt-3.5-turbo",
         stream: true,
@@ -61,7 +60,4 @@ class openAIHelper {
   }
 }
 
-// module.exports = openAIHelper;
-
-const c = new openAIHelper();
-c.getAnswerJson("allah akbar nigga boom");
+module.exports = openAIHelper;

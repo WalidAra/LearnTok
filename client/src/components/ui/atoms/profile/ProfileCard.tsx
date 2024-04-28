@@ -59,7 +59,7 @@ const ProfileCard = ({ user }: Props) => {
 
         <Flex className="items-center justify-center gap-2 font-medium">
           <LearnTokLogo size={20} />
-          <p>ExoticAra__</p>
+          <p> {user.username} </p>
           <CopyUrlProfile />
         </Flex>
 

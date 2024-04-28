@@ -10,7 +10,7 @@ import React from "react";
 
 export default function MainHome({ children }: Kids) {
   const [api, setApi] = React.useState<CarouselApi>();
-  const { setCurrent, setLen } = useCurrentHomeVid();
+  const { setCurrent, setLen , current , len } = useCurrentHomeVid();
 
   React.useEffect(() => {
     if (!api) {

@@ -119,7 +119,6 @@
   }
 }
 
-
 /*------ Settings ------*/
 .pause-container {
   --color: #a5a5b0;
@@ -136,13 +135,13 @@
 
 .pause-container .play {
   position: absolute;
-  animation: keyframes-fill .5s;
+  animation: keyframes-fill 0.5s;
 }
 
 .pause-container .pause {
   position: absolute;
   display: none;
-  animation: keyframes-fill .5s;
+  animation: keyframes-fill 0.5s;
 }
 
 /* ------ On check event ------ */
@@ -191,13 +190,13 @@
 
 .sound-container .mute {
   position: absolute;
-  animation: keyframes-fill .5s;
+  animation: keyframes-fill 0.5s;
 }
 
 .sound-container .voice {
   position: absolute;
   display: none;
-  animation: keyframes-fill .5s;
+  animation: keyframes-fill 0.5s;
 }
 
 /* ------ On check event ------ */

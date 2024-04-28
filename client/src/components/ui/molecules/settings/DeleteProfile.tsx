@@ -1,8 +1,12 @@
+"use client";
 import { Button } from "@/components/cli/button";
+import { useDeleteDialog } from "@/context/DeleteAccount";
 import { Box } from "@chakra-ui/react";
 import React from "react";
 
 export default function DeleteProfile() {
+  const { onOpen } = useDeleteDialog();
+
   return (
     <div className="border border-border w-full p-6 rounded-md flex justify-between flex-wrap items-center gap-6">
       <Box className="flex flex-col">
@@ -12,7 +16,7 @@ export default function DeleteProfile() {
         </p>
       </Box>
 
-      <Button>Delete account</Button>
+      <Button onClick={onOpen}>Delete account</Button>
     </div>
   );
 }

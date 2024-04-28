@@ -88,7 +88,7 @@ const Auth = {
       });
 
       const user = destructProfile(updatedUser);
-      const token = await createToken(updatedUser.id , recall);
+      const token = await createToken(updatedUser.id, recall);
 
       return res.status(200).json({
         status: true,
@@ -96,7 +96,6 @@ const Auth = {
         data: user,
         token,
       });
-      
     } catch (error) {
       console.error("Auth controller : ", error.message);
       return res.status(500).json({
@@ -143,8 +142,24 @@ const Auth = {
 
   update: async (req, res) => {
     const { id } = req.user;
+
+    const { oldPassword, newPassword } = req.body;
+
     try {
       const isUser = await prisma.user.findUnique({ where: { id: id } });
+
+      if (oldPassword && newPassword) {
+        const match = await bcrypt.compare(oldPassword, isUser.password);
+
+        if (!match) {
+          return res.status(200).json({
+            status: false,
+            message: "wrong old password ",
+            data: null,
+          });
+        }
+      }
+
       const updatedUser = { ...isUser, ...req.body };
 
       const finalUser = await prisma.user.update({
