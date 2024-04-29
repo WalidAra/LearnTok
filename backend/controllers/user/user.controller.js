@@ -40,11 +40,13 @@ const User = {
             {
               username: {
                 contains: name,
+                mode: "insensitive",
               },
             },
             {
               fullName: {
                 contains: name,
+                mode: "insensitive",
               },
             },
           ],

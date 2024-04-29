@@ -4,6 +4,7 @@ import { User } from "@nextui-org/react";
 import React from "react";
 import LearnTokBadge from "../global/LearnTokBadge";
 import api from "@/lib/apis";
+import Link from "next/link";
 
 type Props = {
   video: VideoProps;
@@ -56,45 +57,47 @@ const DiscoverCard = async ({ video }: Props) => {
 
   const user: User = res.data;
   return (
-    <div className="max-w-[280px] rounded-lg overflow-hidden bg-muted text-muted-foreground border border-border">
-      <div className="relative ">
-        <video
-          className="w-full"
-          style={{
-            aspectRatio: "280/180",
-            objectFit: "cover",
-          }}
-          height="180"
-          width="280"
-          src={video.url}
-        ></video>
-      </div>
+    <Link href={`/user/${video.user_id}/videos/${video.id}`}>
+      <div className="max-w-[280px] rounded-lg overflow-hidden bg-muted text-muted-foreground border border-border">
+        <div className="relative ">
+          <video
+            className="w-full"
+            style={{
+              aspectRatio: "280/180",
+              objectFit: "cover",
+            }}
+            height="180"
+            width="280"
+            src={video.url}
+          ></video>
+        </div>
 
-      <div className="p-4 h-[180px] flex flex-col items-start justify-evenly">
-        <User
-          name={
-            <Flex className="items-center gap-2">
-              {user.username} <LearnTokBadge status_id={user.status_id} />
-            </Flex>
-          }
-          description={user.fullName}
-          avatarProps={{
-            src: user.picture
-              ? user.picture
-              : "https://i.pinimg.com/564x/18/b5/b5/18b5b599bb873285bd4def283c0d3c09.jpg",
-          }}
-        />
+        <div className="p-4 h-[180px] flex flex-col items-start justify-evenly">
+          <User
+            name={
+              <Flex className="items-center gap-2">
+                {user.username} <LearnTokBadge status_id={user.status_id} />
+              </Flex>
+            }
+            description={user.fullName}
+            avatarProps={{
+              src: user.picture
+                ? user.picture
+                : "https://i.pinimg.com/564x/18/b5/b5/18b5b599bb873285bd4def283c0d3c09.jpg",
+            }}
+          />
 
-        <div className="mt-3">
-          <div className="font-semibold line-clamp-2">{video.title}</div>
-          <div className="flex items-center space-x-1 text-xs text-[#A3A3A3] mt-1">
-            <span> {formatNumber(video.views_count)} views </span>
-            <span>•</span>
-            <span>{timeAgo(video.uploadedAt)}</span>
+          <div className="mt-3">
+            <div className="font-semibold line-clamp-2">{video.title}</div>
+            <div className="flex items-center space-x-1 text-xs text-[#A3A3A3] mt-1">
+              <span> {formatNumber(video.views_count)} views </span>
+              <span>•</span>
+              <span>{timeAgo(video.uploadedAt)}</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

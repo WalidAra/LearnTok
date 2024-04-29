@@ -5,13 +5,12 @@ const videoModel = require("../../models/video/video.model");
 const Video = {
   searchVideos: async (req, res) => {
     const { title } = req.body;
-
     try {
       const videos = await prisma.video.findMany({
         where: {
           title: {
             contains: title,
-            mode: "insensitive",
+            mode:"insensitive"
           },
         },
       });

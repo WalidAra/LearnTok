@@ -171,9 +171,12 @@ const api = {
 
   searchVideos: async ({ title }: { title: string }) => {
     try {
-      const res = await axios.post(`${BASE_URL}/public/videos/search`, {
-        title,
-      });
+      const res = await axios.post(
+        `http://localhost:9090/api/public/videos/search`,
+        {
+          title,
+        }
+      );
       return res.data;
     } catch (error) {
       console.log(error);
