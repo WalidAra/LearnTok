@@ -10,7 +10,8 @@ import UserFollowersCount from "./UserFollowersCount";
 import UserLikesCount from "./UserLikesCount";
 
 type Props = {
-  user: Client;
+  user: User;
+  isClient?: boolean;
 };
 
 function formatDate(dateString: string): string {
@@ -36,7 +37,8 @@ function formatDate(dateString: string): string {
   return formattedDate;
 }
 
-const ProfileCard = ({ user }: Props) => {
+const ProfileCard = ({ user  , isClient = false}: Props) => {
+
   return (
     <section className="w-full flex flex-col gap-3 pt-10">
       <div className="w-full center-div">
@@ -72,9 +74,9 @@ const ProfileCard = ({ user }: Props) => {
         </p>
 
         <Flex className="items-center justify-center sm:gap-1">
-          <UserFollowingsCount />
+          <UserFollowingsCount isClient={isClient} user_id={user.id} />
           <BsDot className="size-5" />
-          <UserFollowersCount />
+          <UserFollowersCount isClient={isClient} user_id={user.id} />
           <BsDot className="size-5" />
           <UserLikesCount />
         </Flex>

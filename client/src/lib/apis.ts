@@ -2,6 +2,32 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = {
+  tokenIdMatch: async ({
+    token,
+    user_id,
+  }: {
+    user_id: string;
+    token: string;
+  }) => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/private/auth/match`,
+        {
+          user_id,
+        },
+        {
+          headers: {
+            "learntok-auth-token": token,
+          },
+        }
+      );
+
+      return res.data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  },
+
   updateUserProfile: async ({
     token,
     bio,
@@ -25,7 +51,7 @@ const api = {
   }) => {
     try {
       const res = await axios.put(
-        `http://localhost:9090/api/private/auth/update`,
+        `${BASE_URL}/private/auth/update`,
         {
           bio,
           email,
@@ -171,12 +197,9 @@ const api = {
 
   searchVideos: async ({ title }: { title: string }) => {
     try {
-      const res = await axios.post(
-        `http://localhost:9090/api/public/videos/search`,
-        {
-          title,
-        }
-      );
+      const res = await axios.post(`${BASE_URL}/public/videos/search`, {
+        title,
+      });
       return res.data;
     } catch (error) {
       console.log(error);
@@ -213,7 +236,27 @@ const api = {
       console.log(error);
     }
   },
-  getUserFollowings: async ({ token }: { token: string }) => {
+  getUserFollowings: async ({ user_id }: { user_id: string }) => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/public/user/${user_id}/followings`
+      );
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getUserFollowers: async ({ user_id }: { user_id: string }) => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/public/user/${user_id}/followers`
+      );
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getClientFollowings: async ({ token }: { token: string }) => {
     try {
       const res = await axios.get(`${BASE_URL}/private/auth/followings`, {
         headers: {
@@ -225,7 +268,7 @@ const api = {
       console.log(error);
     }
   },
-  getUserFollowers: async ({ token }: { token: string }) => {
+  getClientFollowers: async ({ token }: { token: string }) => {
     try {
       const res = await axios.get(`${BASE_URL}/private/auth/followers`, {
         headers: {

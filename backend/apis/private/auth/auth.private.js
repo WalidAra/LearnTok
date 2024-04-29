@@ -7,6 +7,7 @@ const Follow = require("../../../controllers/follow/follow.controller");
 const router = express.Router();
 
 router.get("/profile", Auth.Profile);
+router.post("/match", Auth.idMatch);
 router.delete("/delete", Auth.delete);
 router.put("/update", Auth.update);
 router.get("/bookmarks", Bookmark.getUserBookmarks);

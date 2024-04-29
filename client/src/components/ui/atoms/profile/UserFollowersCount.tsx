@@ -1,16 +1,26 @@
 import React from "react";
 import StatusContainer from "./StatusContainer";
-import { auth } from "@/auth";
 import api from "@/lib/apis";
+import { auth } from "@/auth";
 
-export default async function UserFollowersCount() {
-  let token: string = "";
+type Props = {
+  user_id: string;
+  isClient: boolean;
+};
 
+export default async function UserFollowersCount({ user_id, isClient }: Props) {
   const session = await auth();
-  if (session?.user?.name) {
-    token = session.user.name;
-  }
-  const res: HTTPResponse = await api.getUserFollowers({ token: token });
 
-  return <StatusContainer count={res.data.length} label="followers" />;
+  if (session?.user?.name) {
+    if (isClient) {
+      const res: HTTPResponse = await api.getClientFollowers({
+        token: session.user.name,
+      });
+      return <StatusContainer count={res.data.length} label="followers" />;
+    } else {
+      const res: HTTPResponse = await api.getUserFollowers({ user_id });
+
+      return <StatusContainer count={res.data.length} label="followers" />;
+    }
+  }
 }

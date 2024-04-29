@@ -7,6 +7,31 @@ const StatusModel = require("../../models/status/status.model");
 const saltRounds = 10;
 
 const Auth = {
+  idMatch: async (req, res) => {
+    const { id } = req.user;
+    const { user_id } = req.body;
+    try {
+      if (id === user_id) {
+        return res
+          .status(200)
+          .json({ status: true, data: null, message: "user id match" });
+      } else {
+        return res
+          .status(200)
+          .json({
+            status: false,
+            data: null,
+            message: "user id does not match",
+          });
+      }
+    } catch (error) {
+      console.error("Auth controller : ", error.message);
+      return res
+        .status(500)
+        .json({ message: "Internal server error", status: false, data: null });
+    }
+  },
+
   SignUp: async (req, res) => {
     const { email, password, username, fullName, recall } = req.body;
 
@@ -144,7 +169,7 @@ const Auth = {
     const { id } = req.user;
     const { bio, email, fullName, password, username, picture } = req.body;
     try {
-         const hashedPwd = await bcrypt.hash(password, saltRounds);
+      const hashedPwd = await bcrypt.hash(password, saltRounds);
       const isUser = await prisma.user.findUnique({ where: { id: id } });
       const updatedUser = {
         ...isUser,

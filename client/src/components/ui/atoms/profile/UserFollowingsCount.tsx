@@ -1,17 +1,28 @@
 import React from "react";
 import StatusContainer from "./StatusContainer";
-import { auth } from "@/auth";
 import api from "@/lib/apis";
+import { auth } from "@/auth";
 
-export default async function UserFollowingsCount() {
-  let token: string = "";
+type Props = {
+  user_id: string;
+  isClient: boolean;
+};
 
+export default async function UserFollowingsCount({
+  user_id,
+  isClient,
+}: Props) {
   const session = await auth();
+
   if (session?.user?.name) {
-    token = session.user.name;
+    if (isClient) {
+      const res: HTTPResponse = await api.getClientFollowings({
+        token: session.user.name,
+      });
+      return <StatusContainer count={res.data.length} label="followings" />;
+    } else {
+      const res: HTTPResponse = await api.getUserFollowings({ user_id });
+      return <StatusContainer count={res.data.length} label="followings" />;
+    }
   }
-
-  const res: HTTPResponse = await api.getUserFollowings({ token: token });
-
-  return <StatusContainer count={res.data.length} label="followings" />;
 }

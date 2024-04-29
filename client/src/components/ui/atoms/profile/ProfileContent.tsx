@@ -17,7 +17,7 @@ import { auth } from "@/auth";
 import api from "@/lib/apis";
 import CreatedVidsCard from "../../molecules/profile/CreatedVidsCard";
 import CollectedVidCard from "../../molecules/profile/CollectedVidCard";
-// getUserLikedVideos;
+
 const ProfileContent = async () => {
   const session = await auth();
 
