@@ -10,7 +10,8 @@ type Props = {
 export default async function SearchedVideos({ searchValue }: Props) {
   const res: HTTPResponse = await api.searchVideos({ title: searchValue });
 
-
+  console.log(res);
+  
   return (
     <Box className="flex-wrap w-full gap-4 flex">
       {res.status && res.data.length > 0 ? (

@@ -20,7 +20,7 @@ type Props = {
 const Search = ({ params: { search } }: Props) => {
   return (
     <MainView className="p-2 md:p-4">
-      <Tabs position="relative" >
+      <Tabs variant={'unstyled'} position="relative" >
         <TabList className="center-div ">
           <Tab>Videos</Tab>
           <Tab>Users</Tab>

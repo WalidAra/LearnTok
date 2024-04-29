@@ -1,38 +1,47 @@
 import React from "react";
 import { User, Tooltip } from "@nextui-org/react";
-import { Box, Flex } from "@chakra-ui/react";
-import LearnTokBadge from "../../global/LearnTokBadge";
+import { Flex } from "@chakra-ui/react";
 import Link from "next/link";
-import UserPopCard from "../../atoms/video/UserPopCard";
-import LikeButton from "../../atoms/LikeButton";
-import ShareButton from "../../atoms/ShareButton";
-import FollowButton from "../../atoms/FollowButton";
+import { auth } from "@/auth";
+import UserFCard from "./UserFCard";
 
-const Poster = () => {
-  return (
-    <div className="w-full border-b border-border items-center flex justify-between">
-      <Tooltip
-        className="p-0 m-0 border-0 shadow-none "
-        placement="right"
-        content={<UserPopCard />}
-      >
-        <Link href={"/"}>
-          <User
-            className="cursor-pointer"
-            name={
-              <Flex className="items-center font-medium gap-2">Joe Mama</Flex>
-            }
-            description="Product Designer"
-            avatarProps={{
-              src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-            }}
-          />
-        </Link>
-      </Tooltip>
+type Props = {
+  user: User;
+};
 
-      <FollowButton />
-    </div>
-  );
+const Poster = async ({ user }: Props) => {
+  const session = await auth();
+
+  if (session && session?.user?.name) {
+    return (
+      <div className="w-full border-b border-border items-center flex justify-between">
+        <Tooltip
+          className="p-0 m-0 border-0 shadow-none "
+          placement="right"
+          content={<UserFCard token={session.user.name} user={user} />}
+        >
+          <Link href={`/user/${user.id}`}>
+            <User
+              className="cursor-pointer"
+              name={
+                <Flex className="items-center font-medium gap-2">
+                  {" "}
+                  {user.username}{" "}
+                </Flex>
+              }
+              description={user.fullName}
+              avatarProps={{
+                src: user.picture ,
+                className: "my-2",
+              }}
+            />
+          </Link>
+        </Tooltip>
+
+        {/* <FollowButton /> */}
+      </div>
+    );
+  }
 };
 
 export default Poster;

@@ -9,11 +9,10 @@ type Props = {
 
 export default async function SearchedUsers({ searchValue }: Props) {
   const res: HTTPResponse = await api.searchUsers({ name: searchValue });
-
   return (
     <Box className="w-full sm:w-[80%] md:w-128 flex flex-col gap-3">
       {res.status && res.data.length > 0 ? (
-        res.data.map((v: User) => <Poster key={v.id} />)
+        res.data.map((v: User) => <Poster user={v} key={v.id} />)
       ) : (
         <Box className="">
           <Text>Sorry we found nothing</Text>

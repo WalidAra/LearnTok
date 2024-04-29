@@ -11,7 +11,7 @@ const UserTrendCard = () => {
     <div className="flex items-center flex-col gap-2">
       <Tooltip
         className="p-0 m-0 border-0 shadow-none "
-        content={<UserPopCard />}
+        content={<></>}
       >
         <Avatar size="sm" isBordered />
       </Tooltip>
