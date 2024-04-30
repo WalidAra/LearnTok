@@ -22,10 +22,9 @@ export default function OAuthGoogleBtn() {
   const handleOAuth = async () => {
     try {
       console.log("====================================");
-      const firebaseResult:any = await signInWithPopup(auth, googleAuth);
-      
+      const firebaseResult: any = await signInWithPopup(auth, googleAuth);
+
       const { accessToken } = firebaseResult.user;
-      console.log(accessToken , firebaseResult);
       const response: HTTPResponseWithToken = await api.oAuthGoogle({
         accessToken: accessToken,
       });
@@ -39,7 +38,7 @@ export default function OAuthGoogleBtn() {
           callbackUrl: "/",
         });
         onClose();
-      }else{
+      } else {
         alert(response.message);
       }
     } catch (error) {

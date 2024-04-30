@@ -6,8 +6,8 @@ import { toast } from "sonner";
 
 export default function Redirector() {
   useEffect(() => {
-    signOut();
     toast("Session expired ");
+    signOut({ callbackUrl: "/", redirect: true });
   }, []);
 
   return <></>;

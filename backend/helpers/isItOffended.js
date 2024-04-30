@@ -13,3 +13,10 @@ const DetectOffense = async (str) => {
 };
 
 module.exports = DetectOffense;
+
+// const Main = async () => {
+//   const t = await DetectOffense("fuck muslims");
+//   console.log(t);
+// };
+
+// Main();

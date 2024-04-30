@@ -19,7 +19,7 @@ const Profile = async () => {
     <MainView className="px-2 sm:px-10 pb-2  ">
       <div className="flex flex-col gap-6 items-center w-full overflow-x-hidden overflow-y-auto">
         <ProfileCard isClient user={res.data} />
-        <ProfileContent />
+        <ProfileContent user_id={token} isClient />
       </div>
     </MainView>
   );

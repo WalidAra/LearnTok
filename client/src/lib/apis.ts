@@ -2,6 +2,31 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = {
+  getOtherUserVideos: async ({ user_id }: { user_id: string }) => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/public/user/${user_id}/videos`,
+        { page: 1 }
+      );
+      return res.data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  },
+  getClientFollowingVideos: async ({ token }: { token: string }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/private/video/following`, {
+        headers: {
+          "learntok-auth-token": token,
+        },
+      });
+
+      return res.data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  },
+
   tokenIdMatch: async ({
     token,
     user_id,
@@ -87,15 +112,15 @@ const api = {
 
   ToggleFollow: async ({
     token,
-    following_id,
+    user_id,
   }: {
     token: string;
-    following_id: string;
+    user_id: string;
   }) => {
     try {
       const res = await axios.post(
         `${BASE_URL}/private/follow/toggle`,
-        { following_id },
+        { user_id },
         {
           headers: {
             "learntok-auth-token": token,
@@ -111,15 +136,15 @@ const api = {
 
   followState: async ({
     token,
-    following_id,
+    user_id,
   }: {
     token: string;
-    following_id: string;
+    user_id: string;
   }) => {
     try {
       const res = await axios.post(
         `${BASE_URL}/private/follow/check-following`,
-        { following_id },
+        { user_id },
         {
           headers: {
             "learntok-auth-token": token,

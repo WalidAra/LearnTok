@@ -28,12 +28,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/cli/tooltip";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  getStorage,
+  deleteObject,
+} from "firebase/storage";
 import { storage } from "@/firebase/firebase";
 import { Spinner } from "@nextui-org/react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { LuTrash } from "react-icons/lu";
 import { useSession } from "next-auth/react";
+import { toast } from "sonner";
+import { redirect, useRouter } from "next/navigation";
 
 const formSchema = z.object({
   title: z.string().min(2).max(50),
@@ -57,6 +65,7 @@ const UploadContainer = () => {
       title: "",
     },
   });
+  const router = useRouter();
 
   useEffect(() => {
     api.getCategories().then((res: HTTPResponse) => {
@@ -112,7 +121,6 @@ const UploadContainer = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsUploading(true);
     const token = session?.user?.name ?? "";
-    console.log(values, categories, token);
 
     const res: HTTPResponse = await api.uploadVideo({
       categories: categories,
@@ -123,11 +131,21 @@ const UploadContainer = () => {
     });
     setIsUploading(false);
     if (res.status) {
-      console.log("====================================");
-      console.log("gg upload video");
-      console.log("====================================");
       setVideoAsset(false);
       setFileName("");
+      router.refresh();
+    } else if (res.data.offensive) {
+      toast(res.message);
+      const videoUrl = url;
+      const videoRef = ref(storage, videoUrl);
+      deleteObject(videoRef)
+        .then(() => {
+          console.log("Video deleted successfully!");
+          router.refresh();
+        })
+        .catch((error: any) => {
+          console.error("Error deleting video:", error);
+        });
     }
   }
 

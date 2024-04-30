@@ -12,39 +12,49 @@ import {
 import { MdOutlineCollections } from "react-icons/md";
 import { AiFillFormatPainter } from "react-icons/ai";
 import { LuHeart } from "react-icons/lu";
-import CreatedVidsPanel from "../../molecules/profile/CreatedVidsCard";
-import { auth } from "@/auth";
 import api from "@/lib/apis";
 import CreatedVidsCard from "../../molecules/profile/CreatedVidsCard";
 import CollectedVidCard from "../../molecules/profile/CollectedVidCard";
 
-const ProfileContent = async () => {
-  const session = await auth();
+type Props = {
+  isClient?: boolean;
+  user_id: string;
+};
 
+const ProfileContent = async ({ isClient, user_id }: Props) => {
   let createdVideos: VideoProps[] = [];
   let collectedVideos: Bookmark[] = [];
   let likedVideos: any[] = [];
-  if (session?.user?.name) {
+
+  if (isClient) {
     const created: HTTPResponse = await api.getUserCreatedVideos({
-      token: session.user.name,
+      token: user_id,
     });
 
     if (created.status) {
       createdVideos = created.data;
     }
     const collected: HTTPResponse = await api.getUserBookmarks({
-      token: session.user.name,
+      token: user_id,
     });
 
     if (collected.status) {
       collectedVideos = collected.data;
     }
     const liked: HTTPResponse = await api.getUserLikedVideos({
-      token: session.user.name,
+      token: user_id,
     });
 
     if (liked.status) {
       likedVideos = liked.data;
+    }
+  } else {
+    const created: HTTPResponse = await api.getOtherUserVideos({
+      user_id,
+    });
+
+    if (created.status) {
+      createdVideos = created.data;
     }
   }
 
@@ -57,20 +67,22 @@ const ProfileContent = async () => {
         variant="unstyled"
       >
         <TabList className="border-b border-border center-div flex-wrap md:gap-7">
-          <Tab
-            className="border-b-4 border-transparent"
-            _selected={{ borderBottom: "4px solid red" }}
-          >
-            <Flex align="center">
-              <MdOutlineCollections className="size-5 mr-2" />
-              <Text fontSize="lg" fontWeight="500" me="12px">
-                Collected
-              </Text>
-              <Text color="secondaryGray.600" fontSize="md" fontWeight="400">
-                {collectedVideos.length}
-              </Text>
-            </Flex>
-          </Tab>
+          {isClient && (
+            <Tab
+              className="border-b-4 border-transparent"
+              _selected={{ borderBottom: "4px solid red" }}
+            >
+              <Flex align="center">
+                <MdOutlineCollections className="size-5 mr-2" />
+                <Text fontSize="lg" fontWeight="500" me="12px">
+                  Collected
+                </Text>
+                <Text color="secondaryGray.600" fontSize="md" fontWeight="400">
+                  {collectedVideos.length}
+                </Text>
+              </Flex>
+            </Tab>
+          )}
           <Tab
             className="border-b-4 border-transparent"
             _selected={{ borderBottom: "4px solid red" }}
@@ -101,8 +113,8 @@ const ProfileContent = async () => {
           </Tab>
         </TabList>
 
-        <TabPanels padding={0}>
-          <TabPanel padding={0}>
+        <TabPanels>
+          <TabPanel>
             <Box
               className={
                 collectedVideos.length > 0
@@ -124,7 +136,7 @@ const ProfileContent = async () => {
           <TabPanel>
             <Box
               className={
-                createdVideos.length
+                createdVideos.length > 0
                   ? "w-full grid grid-cols-2 gap-2 sm:gap-4 sm:grid-cols-auto-fill"
                   : "w-full p-4 text-center"
               }
@@ -134,7 +146,7 @@ const ProfileContent = async () => {
                   <CreatedVidsCard key={v.id} video={v} />
                 ))
               ) : (
-                <div className="w-full h-full center-div test">
+                <div className="w-full h-full center-div ">
                   <Text>You have not posted yet</Text>
                 </div>
               )}

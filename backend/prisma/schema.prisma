@@ -59,14 +59,14 @@ model Category {
 
 model Follow {
   id           String   @id @default(uuid())
-  follower_id  String 
-  following_id String 
+  client_id  String 
+  user_id String 
   createdAt    DateTime @default(now())
 
-  follower  User @relation("Followers", fields: [follower_id], references: [id] , onDelete:Cascade)
-  following User @relation("Followings", fields: [following_id], references: [id], onDelete:Cascade)
+  client  User @relation("Followers", fields: [client_id], references: [id] , onDelete:Cascade)
+  user User @relation("Followings", fields: [user_id], references: [id], onDelete:Cascade)
 
-  @@unique([follower_id, following_id])
+  @@unique([client_id, user_id])
 }
 
 model VideoCategory {

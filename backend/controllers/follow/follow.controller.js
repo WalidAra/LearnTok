@@ -2,15 +2,15 @@ const prisma = require("../../config/prisma");
 
 const Follow = {
   amIFollowing: async (req, res) => {
-    const { id } = req.user;
-    const { following_id } = req.body;
+    const { id } = req.user; // client
+    const { user_id } = req.body;
 
     try {
       const isFollow = await prisma.follow.findUnique({
         where: {
-          follower_id_following_id: {
-            follower_id: id,
-            following_id: following_id,
+          client_id_user_id: {
+            client_id: id,
+            user_id: user_id,
           },
         },
       });
@@ -34,14 +34,14 @@ const Follow = {
 
   toggleFollow: async (req, res) => {
     const { id } = req.user;
-    const { following_id } = req.body;
+    const { user_id } = req.body;
 
     try {
       const amIFollowing = await prisma.follow.findUnique({
         where: {
-          follower_id_following_id: {
-            follower_id: id,
-            following_id: following_id,
+          client_id_user_id: {
+            client_id: id,
+            user_id: user_id,
           },
         },
       });
@@ -49,9 +49,9 @@ const Follow = {
       if (amIFollowing) {
         await prisma.follow.delete({
           where: {
-            follower_id_following_id: {
-              follower_id: id,
-              following_id: following_id,
+            client_id_user_id: {
+              client_id: id,
+              user_id: user_id,
             },
           },
         });
@@ -63,8 +63,8 @@ const Follow = {
       } else {
         await prisma.follow.create({
           data: {
-            follower_id: id,
-            following_id: following_id,
+            client_id: id,
+            user_id: user_id,
           },
         });
         return res.status(200).json({
@@ -84,12 +84,12 @@ const Follow = {
   },
 
   getUserFollowers: async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params; // client
 
     try {
       const followers = await prisma.follow.findMany({
         where: {
-          following_id: id,
+          user_id: id,
         },
       });
 
@@ -113,7 +113,7 @@ const Follow = {
     try {
       const followers = await prisma.follow.findMany({
         where: {
-          follower_id: id,
+          client_id: id,
         },
       });
 
@@ -137,7 +137,31 @@ const Follow = {
     try {
       const followers = await prisma.follow.findMany({
         where: {
-          follower_id: id,
+          client_id: id,
+        },
+      });
+
+      res.status(201).json({
+        status: true,
+        message: "Got followings successfully",
+        data: followers,
+      });
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json({
+        status: false,
+        message: "Internal Server Error",
+        data: null,
+      });
+    }
+  },
+  getUserBaseFollowers: async (req, res) => {
+    const { id } = req.user;
+
+    try {
+      const followers = await prisma.follow.findMany({
+        where: {
+          user_id: id,
         },
       });
 

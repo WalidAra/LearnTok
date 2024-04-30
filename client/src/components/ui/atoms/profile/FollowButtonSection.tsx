@@ -7,17 +7,12 @@ type Props = {
   user_id: string;
 };
 
-const FollowButtonSection = async ({user_id}:Props) => {
+const FollowButtonSection = async ({ user_id }: Props) => {
   const session = await auth();
 
   if (session && session.user?.name) {
-    const res: HTTPResponse = await api.tokenIdMatch({
-      token: session.user.name,
-      user_id,
-    });
-
     const followRes: HTTPResponse = await api.followState({
-      following_id: user_id,
+      user_id: user_id,
       token: session.user.name,
     });
 

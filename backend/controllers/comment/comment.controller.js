@@ -1,4 +1,5 @@
 const prisma = require("../../config/prisma");
+const DetectOffense = require("../../helpers/isItOffended");
 
 const Comment = {
   getCommentByID: async (req, res) => {
@@ -56,6 +57,36 @@ const Comment = {
     const { video_id, comment } = req.body;
 
     try {
+      if (DetectOffense(comment).offensive) {
+        const user = await prisma.user.findUnique({ where: { id: id } });
+        const status = await prisma.status.findUnique({
+          where: { id: user.status_id },
+        });
+
+        let newStatus = "";
+
+        if (status.name === "Active") {
+          newStatus = await prisma.status.findUnique({
+            where: { name: "Warning" },
+          });
+        } else {
+          newStatus = await prisma.status.findUnique({
+            where: { name: "Caution" },
+          });
+        }
+
+        await prisma.user.update({
+          data: { status_id: newStatus },
+        });
+        return res.status(200).json({
+          status: false,
+          message: "Offensive Comment",
+          data: {
+            offensive: true,
+          },
+        });
+      }
+
       const createdComment = await prisma.comment.create({
         data: {
           user_id: id,

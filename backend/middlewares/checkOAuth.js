@@ -14,6 +14,7 @@ const checkOAuth = async (req, res, next) => {
   try {
     const decodedToken = jwt.decode(accessToken);
     req.oauth = decodedToken;
+
     next();
   } catch (error) {
     console.error(error.message);

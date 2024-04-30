@@ -1,8 +1,46 @@
 const prisma = require("../../config/prisma");
+const DetectOffense = require("../../helpers/isItOffended");
 const CategoryModel = require("../../models/Category/category.model");
+const StatusModel = require("../../models/status/status.model");
 const videoModel = require("../../models/video/video.model");
 
 const Video = {
+  getUserFollowingVideos: async (req, res) => {
+    const { id } = req.user;
+
+    try {
+      const clientFollowings = await prisma.follow.findMany({
+        where: {
+          client_id: id,
+        },
+      });
+      const followingIds = clientFollowings.map(
+        (following) => following.user_id
+      );
+
+      console.log("====================================");
+      console.log(clientFollowings, followingIds);
+      const videos = await prisma.video.findMany({
+        where: {
+          user_id: { in: followingIds },
+        },
+      });
+
+      console.log("====================================");
+      return res.status(200).json({
+        status: true,
+        message: "Fetched following videos",
+        data: videos,
+      });
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json({
+        status: false,
+        message: "Internal Server Error",
+        data: null,
+      });
+    }
+  },
   searchVideos: async (req, res) => {
     const { title } = req.body;
     try {
@@ -10,7 +48,7 @@ const Video = {
         where: {
           title: {
             contains: title,
-            mode:"insensitive"
+            mode: "insensitive",
           },
         },
       });
@@ -109,7 +147,43 @@ const Video = {
   uploadVideo: async (req, res) => {
     const { id } = req.user;
     const { title, description, url, categories } = req.body;
+
+    console.log("====================================");
+    console.log("over here");
+    console.log("====================================");
     try {
+      const offensiveTitle = await DetectOffense(title);
+      const offensiveDescription = await DetectOffense(description);
+
+      if (offensiveTitle.offensive || offensiveDescription.offensive) {
+        const user = await prisma.user.findUnique({ where: { id: id } });
+        const status = await prisma.status.findUnique({
+          where: { id: user.status_id },
+        });
+
+        let newStatus = "";
+
+        if (status.name === "Active") {
+          newStatus = await StatusModel.getStatusByName("warning");
+        } else {
+          newStatus = await StatusModel.getStatusByName("caution");
+        }
+        
+        await prisma.user.update({
+          where: { id: id }, 
+          data: {
+            status_id: { set: newStatus.id }, 
+          },
+        });
+        return res.status(200).json({
+          status: false,
+          message: "Offensive Title or Description",
+          data: {
+            offensive: true,
+          },
+        });
+      }
+
       const uploadedVideo = await prisma.video.create({
         data: {
           title,
