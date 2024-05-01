@@ -15,7 +15,7 @@ export default function FollowBtn({ token, following, user_id }: Props) {
 
   const ToggleFollow = async () => {
     const res: HTTPResponse = await api.ToggleFollow({
-      following_id: user_id,
+      user_id: user_id,
       token,
     });
 
