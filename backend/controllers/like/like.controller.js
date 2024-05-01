@@ -67,7 +67,7 @@ const Like = {
         });
       } else {
         await prisma.like.create({
-          data: {
+                   data: {
             user_id: id,
             video_id: video_id,
           },

@@ -2,6 +2,105 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = {
+  videoSavedAsBookmark: async ({
+    token,
+    video_id,
+  }: {
+    token: string;
+    video_id: string;
+  }) => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/private/bookmark/status`,
+        { video_id },
+        {
+          headers: {
+            "learntok-auth-token": token,
+          },
+        }
+      );
+
+      return res.data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  },
+
+  ToggleBookmark: async ({
+    token,
+    video_id,
+  }: {
+    token: string;
+    video_id: string;
+  }) => {
+    try {
+      const res = await axios.put(
+        `${BASE_URL}/private/bookmark/toggle`,
+        { video_id },
+        {
+          headers: {
+            "learntok-auth-token": token,
+          },
+        }
+      );
+      return res.data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  },
+
+  ToggleLike: async ({
+    token,
+    video_id,
+  }: {
+    token: string;
+    video_id: string;
+  }) => {
+    try {
+      const res = await axios.put(
+        `${BASE_URL}/private/like/toggle`,
+        {
+          video_id,
+        },
+        {
+          headers: {
+            "learntok-auth-token": token,
+          },
+        }
+      );
+
+      return res.data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  },
+
+  likeState: async ({
+    token,
+    video_id,
+  }: {
+    token: string;
+    video_id: string;
+  }) => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/private/like/status`,
+        {
+          video_id,
+        },
+        {
+          headers: {
+            "learntok-auth-token": token,
+          },
+        }
+      );
+
+      return res.data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  },
+
   getOtherUserVideos: async ({ user_id }: { user_id: string }) => {
     try {
       const res = await axios.post(

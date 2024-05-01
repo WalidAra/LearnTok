@@ -4,10 +4,11 @@ import FollowButton from "../FollowButton";
 
 type Props = {
   user_id: string;
+  followState: boolean;
 };
 
-export default function FollowContainer({ user_id }: Props) {
-  const [following, setFollowing] = useState<boolean>(false);
+export default function FollowContainer({ user_id  , followState}: Props) {
+  const [following, setFollowing] = useState<boolean>(followState);
   return (
     <FollowButton
       following={following}

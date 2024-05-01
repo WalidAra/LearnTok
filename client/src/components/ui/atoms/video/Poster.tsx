@@ -34,7 +34,7 @@ const Poster = ({ id, token }: Props) => {
       }
 
       const res3: HTTPResponse = await api.followState({
-        following_id: res.data.id,
+        user_id: res.data.id,
         token: token,
       });
       if (res3.status) {

@@ -18,7 +18,7 @@ export default async function FollowBtnContainer() {
     });
 
     const followRes: HTTPResponse = await api.followState({
-      following_id: user_id,
+      user_id: user_id,
       token: session.user.name,
     });
 

@@ -14,7 +14,7 @@ export default function UserFCard({ user, token }: Props) {
   useEffect(() => {
     const fetchUser = async () => {
       const res3: HTTPResponse = await api.followState({
-        following_id: user.id,
+        user_id: user.id,
         token: token,
       });
       if (res3.status) {

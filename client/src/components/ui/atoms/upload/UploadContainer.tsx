@@ -97,10 +97,7 @@ const UploadContainer = () => {
         () => {
           console.log("success!!");
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log(downloadURL);
-            setUrl(downloadURL);
-            setFileName(selectedFile.name);
-            setVideoAsset(true);
+            router.push("/profile");
           });
         }
       );

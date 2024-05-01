@@ -24,21 +24,25 @@ const Bookmark = {
     }
   },
 
-  createNewBookmark: async (req, res) => {
+  bookmarkState: async (req, res) => {
     const { id } = req.user;
     const { video_id } = req.body;
     try {
-      const result = await prisma.bookmark.create({
-        data: {
-          user_id: id,
-          video_id: video_id,
+      const isExists = await prisma.bookmark.findUnique({
+        where: {
+          user_id_video_id: {
+            user_id: id,
+            video_id: video_id,
+          },
         },
       });
 
       return res.status(200).json({
         status: true,
-        message: "Added bookmark successfully",
-        data: result,
+        message: isExists
+          ? "This Video has already been saved"
+          : " This video has not been saved",
+        data: isExists ? true : false,
       });
     } catch (error) {
       console.error(error.message);
@@ -50,23 +54,48 @@ const Bookmark = {
     }
   },
 
-  deleteBookmark: async (req, res) => {
+  toggleSavingBookmark: async (req, res) => {
     const { id } = req.user;
-    const { bookmark_id } = req.body;
+    const { video_id } = req.body;
 
     try {
-      await prisma.bookmark.delete({
+      const isExists = await prisma.bookmark.findUnique({
         where: {
-          user_id: id,
-          id: bookmark_id,
+          user_id_video_id: {
+            user_id: id,
+            video_id: video_id,
+          },
         },
       });
 
-      return res.status(200).json({
-        status: true,
-        message: "Deleted bookmark successfully",
-        data: null,
-      });
+      if (isExists) {
+        await prisma.bookmark.delete({
+          where: {
+            user_id_video_id: {
+              user_id: id,
+              video_id: video_id,
+            },
+          },
+        });
+
+        return res.status(200).json({
+          status: true,
+          message: "Deleted bookmark successfully ",
+          data: false,
+        });
+      } else {
+        await prisma.bookmark.create({
+          data: {
+            user_id: id,
+            video_id: video_id,
+          },
+        });
+        return res.status(200).json({
+          status: true,
+          message: "Created bookmark successfully ",
+          data: true,
+        });
+      }
     } catch (error) {
       console.error(error.message);
       return res.status(500).json({

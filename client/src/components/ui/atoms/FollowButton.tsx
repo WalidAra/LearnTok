@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import api from "@/lib/apis";
 import { Button } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
@@ -23,7 +23,7 @@ export default function FollowButton({
         if (session?.user?.name) {
           setFollowing((prev) => !prev);
           const res: HTTPResponse = await api.ToggleFollow({
-            following_id,
+            user_id: following_id,
             token: session.user.name,
           });
         }

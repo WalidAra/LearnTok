@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 type Props = {
   url: string;
   index: number;
+
 };
 
 export default function VideoCardBody({ url, index }: Props) {
@@ -27,36 +28,27 @@ export default function VideoCardBody({ url, index }: Props) {
   }, [current, videoRef]);
 
   return (
-    <Box
-      p={0}
-      flex={1}
-      w={"100%"}
-      className="sm:grid flex justify-center sm:justify-normal sm:grid-cols-1frauto1fr items-center "
+    <div
+      className="bg-black relative overflow-hidden rounded-xl"
+      onMouseOver={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div></div>
-      <div
-        className="bg-black relative overflow-hidden rounded-xl"
-        onMouseOver={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+      <video
+        ref={videoRef}
+        src={url}
+        loop
+        className="object-cover w-full sm:w-60 lg:w-60 xl:w-80 2xl:w-96 aspect-[9/16]"
+      />
+      <Box
+        className={cn(
+          "absolute grid grid-rows-auto1fr left-0 top-0 w-full h-full z-30 duration-200 ease-out",
+          isHovered ? "opacity-100 " : " opacity-0"
+        )}
       >
-        <video
-          ref={videoRef}
-          src={url}
-          loop
-          className="object-cover w-full sm:w-60 lg:w-60 xl:w-80 2xl:w-96 aspect-[9/16]"
-        />
-        <Box
-          className={cn(
-            "absolute grid grid-rows-auto1fr left-0 top-0 w-full h-full z-30 duration-200 ease-out",
-            isHovered ? "opacity-100 " : " opacity-0"
-          )}
-        >
-          <ToggleSound videoRef={videoRef} />
-          <ToggleVideo videoRef={videoRef} />
-          <VideoProgress videoRef={videoRef} />
-        </Box>
-      </div>
-      <div></div>
-    </Box>
+        <ToggleSound videoRef={videoRef} />
+        <ToggleVideo videoRef={videoRef} />
+        <VideoProgress videoRef={videoRef} />
+      </Box>
+    </div>
   );
 }
