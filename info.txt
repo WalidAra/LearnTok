@@ -1,0 +1,16 @@
+NEXT_PUBLIC_BASE_URL="http://localhost:9090/api"
+NEXT_PUBLIC_API_KEY="AIzaSyAGtHH7h4BwvNBPYJvJQ3q4GYnF9ySu6Kg"
+NEXT_PUBLIC_AUTH_DOMAIN="learntok.firebaseapp.com"
+NEXT_PUBLIC_PROJECT_ID="learntok"
+NEXT_PUBLIC_STORAGE_BUCKET="learntok.appspot.com"
+NEXT_PUBLIC_MESSAGING_SENDER_ID="276565064315"
+NEXT_PUBLIC_APP_ID="1:276565064315:web:bf9eca42ffdef56eed00de"
+NEXT_PUBLIC_MEASUREMENT_ID="G-F7FTTX0YH5"
+AUTH_SECRET=znGpWEeFiYUu/FRBYoM7H+ZwxW8Pv1SUMAJoCVF++Fo=
+
+
+
+DATABASE_URL="postgres://postgres.usflwfhmwzmftksicxwo:Z06w3xIgKIb4HZEQ@aws-0-eu-central-1.pooler.supabase.com:5432/postgres"
+JWT_SECRET="15978f3746deae4336d671d9b9c857b70e21a94ee54051ad925794beeb3ef819fbf52061b72cc9604a225fd1dcd81d9ccca4a2223834b6c1f5116a19b1f4cb38"
+OPENAI_KEY="sk-proj-yihjd5uXmYGeY8ShYD09T3BlbkFJILkbO2cstQHJPovzPD24"
+MONGODB_URL="mongodb+srv://walid:8v1v3YVhk7T90VlN@learntokcluster.p4n0emi.mongodb.net/?retryWrites=true&w=majority&appName=learntokCluster"
