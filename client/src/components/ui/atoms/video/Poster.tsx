@@ -12,9 +12,10 @@ import { cn } from "@/lib/utils";
 type Props = {
   id: string;
   token: string;
+  isShown?: boolean;
 };
 
-const Poster = ({ id, token }: Props) => {
+const Poster = ({ id, token , isShown = true }: Props) => {
   const [user, setUser] = useState<User | null>(null);
   const [badge, setBadge] = useState<string>("");
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
@@ -89,11 +90,13 @@ const Poster = ({ id, token }: Props) => {
         </Link>
       </Tooltip>
 
-      <FollowButton
-        following_id={user.id}
-        setFollowing={setIsFollowing}
-        following={isFollowing}
-      />
+      {isShown && (
+        <FollowButton
+          following_id={user.id}
+          setFollowing={setIsFollowing}
+          following={isFollowing}
+        />
+      )}
     </div>
   );
 };

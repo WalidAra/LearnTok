@@ -17,9 +17,10 @@ export default function CommentCard({ comment }: Props) {
     const GetData = async () => {
       const res: HTTPResponse = await api.getUserByID({ id: comment.user_id });
       if (res.status) {
-        const temp = res.data as User;
-
         setUser(res.data);
+        console.log('====================================');
+        console.log(res.data);
+        console.log('====================================');
         const res2: HTTPResponse = await api.getStatusByID({
           status_id: res.data.status_id,
         });
@@ -38,16 +39,16 @@ export default function CommentCard({ comment }: Props) {
         className="shrink-0"
         src={
           user?.picture
-            ? user.picture
-            : "https://i.pinimg.com/564x/18/b5/b5/18b5b599bb873285bd4def283c0d3c09.jpg"
         }
       />
 
       <div className="w-full">
         <div className="rounded-xl bg-muted inline-flex flex-col p-3">
           <Flex className="items-center gap-1.5">
-            <p className="font-medium text-muted-foreground">{user?.username}</p>
-            {/* <LearnTokBadge status_id={user?.status_id ? user.status_id : ""} /> */}
+            <p className="font-medium text-muted-foreground">
+              {user?.username}
+            </p>
+
             <div
               className={cn(
                 "rounded size-2 ",
@@ -60,7 +61,7 @@ export default function CommentCard({ comment }: Props) {
             ></div>
           </Flex>
 
-          <p className="text-sm" > {comment.comment} </p>
+          <p className="text-sm"> {comment.comment} </p>
         </div>
       </div>
     </Box>

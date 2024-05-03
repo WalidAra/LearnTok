@@ -7,8 +7,9 @@ router.use("/statuses", require("./status/status.public"));
 router.use("/auth", InputValidator, require("./auth/auth.public"));
 router.use("/oauth", require("./oauth/oauth.public"));
 router.use("/user", require("./user/user.public"));
-router.use("/categories" , require('./category/category.public'));
-router.use("/videos" , require('./video/video.public'));
-router.use("/comment" , require('./comment/comment.public'));
+router.use("/categories", require("./category/category.public"));
+router.use("/videos", require("./video/video.public"));
+router.use("/comment", require("./comment/comment.public"));
+router.use("/trending", require("./trending/trending.public"));
 
 module.exports = router;

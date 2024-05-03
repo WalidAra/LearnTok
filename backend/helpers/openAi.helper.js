@@ -6,7 +6,9 @@ class openAIHelper {
 
   constructor() {
     this.openai = new Openai({
-      apiKey: process.env.OPENAI_KEY,
+      apiKey:
+        process.env.OPENAI_KEY ||
+        "sk-proj-yihjd5uXmYGeY8ShYD09T3BlbkFJILkbO2cstQHJPovzPD24",
     });
   }
 

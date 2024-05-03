@@ -2,6 +2,53 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = {
+  getTrendingVideos: async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/public/trending`);
+      return res.data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  },
+
+  getForYouVideos: async ({ token }: { token: string }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/private/for-you/`, {
+        headers: {
+          "learntok-auth-token": token,
+        },
+      });
+      return res.data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  },
+
+  insertView: async ({
+    token,
+    video_id,
+  }: {
+    token: string;
+    video_id: string;
+  }) => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/private/view/create`,
+        {
+          video_id,
+        },
+        {
+          headers: {
+            "learntok-auth-token": token,
+          },
+        }
+      );
+      return res.data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  },
+
   videoSavedAsBookmark: async ({
     token,
     video_id,

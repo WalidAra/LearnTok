@@ -29,9 +29,6 @@ export default function DeleteAccDialog() {
       const res: HTTPResponse = await api.deleteProfile({
         token: session.user.name,
       });
-      console.log("====================================");
-      console.log(res);
-      console.log("====================================");
       if (res.status) {
         onClose();
         signOut({ callbackUrl: "/", redirect: true });

@@ -1,0 +1,36 @@
+Client [icon: user, color: gray]
+Login [icon: monitor, color: red]
+Server [icon: server, color: blue]
+database [icon: database, color: green]
+
+Login < Client: Fill info
+activate Login 
+Login < Client: submit
+
+Server < Login: Send Credentials
+activate Server
+Server < Server: Verify fields
+
+activate database
+alt [label: If Fields valid ]{
+Server > database: Verifyg Credentials 
+Server <-- database: Return response
+alt [label: If Authenticated ]{
+  Server>Login: return response with token
+  Login>Client: Clear fields
+  Login>Client: redirect user
+}
+else [label: If Authentication failed]{
+  Server>Login: return response with false status
+  Login>Client: display credentials message
+}
+}
+else [label: If Fields Invalid]{
+  Server>Login: return response with false status
+  Login>Client: display empty credentials message
+}
+deactivate database
+deactivate Server
+
+
+deactivate Login 

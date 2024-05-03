@@ -1,0 +1,29 @@
+Client [icon: user, color: gray]
+Video page [icon: monitor, color: red]
+Server [icon: server, color: blue]
+database [icon: database, color: green]
+OpenAi [icon: ai, color: yellow]
+
+Client > Video page: Type Comment
+activate Video page
+Video page >Server: Send comment object along with user signater
+Server>OpenAi: verify if the comment is offensive or not
+OpenAi-->Server: return response of json {offensive:boolean}
+alt [label: if the comment is offensive] {
+Server>database: update user status
+alt [label: if the user status is on caution] {
+  Server>database: update user account to be banned
+  Server>Video page:send ban response 
+  Client <Video page:logout
+}
+else [label: its either on warning or active] {
+  Server>database: update user account status
+  Server>Video page:send warning response 
+}
+}
+else [label: if complete] {
+  Server>database: insert new instance of comment
+  Server<--database: return reponse
+  Server>Video page: update commen list ui
+}
+deactivate Video page

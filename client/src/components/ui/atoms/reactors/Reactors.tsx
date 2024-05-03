@@ -15,6 +15,7 @@ export default async function Reactors({ video_id, user_id }: Props) {
   if (session?.user?.name) {
     return (
       <div className="md:flex hidden flex-col items-center gap-5">
+
         <LikeIconContainer token={session.user.name} video_id={video_id} />
         <ShareIconContainer user_id={user_id} video_id={video_id} />
         <CommentIconButton user_id={user_id} video_id={video_id} />

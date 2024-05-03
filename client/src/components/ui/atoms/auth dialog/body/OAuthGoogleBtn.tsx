@@ -21,7 +21,7 @@ export default function OAuthGoogleBtn() {
 
   const handleOAuth = async () => {
     try {
-      console.log("====================================");
+      
       const firebaseResult: any = await signInWithPopup(auth, googleAuth);
 
       const { accessToken } = firebaseResult.user;
@@ -29,8 +29,7 @@ export default function OAuthGoogleBtn() {
         accessToken: accessToken,
       });
 
-      console.log(response);
-      console.log("====================================");
+      
 
       if (response.status) {
         const res = await signIn("credentials", {

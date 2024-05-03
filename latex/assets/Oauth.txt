@@ -1,0 +1,29 @@
+Client [icon: user, color: gray]
+OAuth [icon: monitor, color: red]
+Server [icon: server, color: blue]
+database [icon: database, color: green]
+
+Client>OAuth:Click OAuth 
+activate OAuth 
+OAuth>Server:Send access token
+activate Server
+
+Server>Server:decrypt the access token
+Server>database: verify if email exist
+activate database
+Server<--database: return the reponse
+
+alt [label: if user exist] {
+  Server>OAuth: sends response with token
+}
+
+else [label: if user does not exist] {
+  Server>database: Insert new user
+  Server-->Server: generate token
+  Server-->OAuth: return reponse with token
+  OAuth-->Client: grant authorization & redirect
+}
+deactivate database
+
+deactivate Server
+deactivate OAuth 

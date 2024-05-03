@@ -1,0 +1,34 @@
+Client [icon: user, color: gray]
+Upload [icon: monitor, color: red]
+Server [icon: server, color: blue]
+Firebase [icon: firebase, color: white]
+database [icon: database, color: green]
+OpenAi [icon: ai, color: yellow]
+
+Client> Upload:fill fields 
+Client> Firebase: Upload video to cloud storage
+Client> Upload:Submit Criedentials
+Upload> Server:Send request with criedentials
+
+activate Server
+Server>OpenAi: verify the feilds and detect offense
+OpenAi-->Server: return response of json {offensive:boolean}
+alt [label: if offensive] {
+Server>database: update user status
+alt [label: if the user status is on caution] {
+  Server>database: update user account to be banned
+  Server>Upload:send ban response 
+  Client <Upload:logout
+}
+else [label: its either on warning or active] {
+  Server>database: update user account status
+  Server>Upload:send warning response 
+}
+}
+else [label: if not offensive] {
+  Server>database: insert new instance of video
+  Server<--database: return reponse
+  Server>Upload: redirect to profile route
+}
+
+deactivate Server

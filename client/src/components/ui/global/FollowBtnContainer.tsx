@@ -7,8 +7,7 @@ type Props = {
   user_id: string;
 };
 
-export default async function FollowBtnContainer() {
-  const user_id = "a2af2433-477a-4213-8bdf-fecafec10d59";
+export default async function FollowBtnContainer({user_id}:Props) {
   const session = await auth();
 
   if (session && session.user?.name) {

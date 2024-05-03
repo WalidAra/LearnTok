@@ -1,0 +1,36 @@
+Client [icon: user, color: gray]
+SignUp [icon: monitor, color: red]
+Server [icon: server, color: blue]
+database [icon: database, color: green]
+
+SignUp < Client: Fill info
+activate SignUp 
+SignUp < Client: submit
+
+Server < SignUp: Send Credentials
+activate Server
+Server < Server: Verify fields
+
+activate database
+alt [label: If Fields valid ]{
+Server > database: Verifyg if email exists 
+Server <-- database: Return response
+alt [label: If Email exist ]{
+  Server-->SignUp: return response error message this email already exists
+  SignUp-->Client: Clear fields
+}
+else [label: If Email does not exist]{
+  Server>Server: generate access token
+  Server-->SignUp: return response with token
+  SignUp-->Client: Grant the authorization & Redirect
+}
+}
+else [label: If Fields Invalid]{
+  Server>SignUp: return response with false status
+  SignUp>Client: display empty credentials message
+}
+deactivate database
+deactivate Server
+
+
+deactivate SignUp 

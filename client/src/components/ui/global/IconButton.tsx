@@ -14,7 +14,7 @@ function IconButton({ children, onClick, activeStyle, isChecked }: Props) {
     <button
       onClick={onClick}
       className={cn(
-        "  p-2 duration-200 text-xl rounded-full border border-border center-div active:scale-75 hover:scale-105",
+        "  p-2 duration-200 text-xl rounded-full center-div active:scale-75 hover:scale-105",
 
         isChecked && activeStyle ? activeStyle : "bg-muted"
       )}

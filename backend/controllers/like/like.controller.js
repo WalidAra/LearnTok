@@ -1,4 +1,5 @@
 const prisma = require("../../config/prisma");
+const Note = require("../../scripts/shema.mongo");
 
 const Like = {
   getUserLikedVideos: async (req, res) => {
@@ -16,7 +17,6 @@ const Like = {
         message: "Fetched liked videos",
         data: likedVids,
       });
-      
     } catch (error) {
       console.error(error.message);
       return res.status(500).json({
@@ -28,8 +28,8 @@ const Like = {
   },
 
   ToggleLike: async (req, res) => {
-    const { id } = req.user;
-    const { video_id } = req.body;
+    const { id } = req.user; // me who liked
+    const { video_id, poster_id } = req.body; // the poster who 
 
     try {
       const currentVideo = await prisma.video.findUnique({
@@ -67,7 +67,7 @@ const Like = {
         });
       } else {
         await prisma.like.create({
-                   data: {
+          data: {
             user_id: id,
             video_id: video_id,
           },
@@ -79,6 +79,17 @@ const Like = {
             likes_count: currentVideo.likes_count + 1,
           },
         });
+        const user = await Note.findOne({ user_id: id });
+
+        if (user) {
+          const newNotification = {
+            type: "",
+            content: content,
+          };
+          user.notifications.push(newNotification);
+          await user.save();
+        }
+
         return res.status(200).json({
           status: true,
           message: "Like video successfully",

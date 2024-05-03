@@ -6,36 +6,52 @@ const View = {
     const { video_id } = req.body;
 
     try {
-      const result = await prisma.view.create({
-        data: {
-          user_id: id,
-          video_id: video_id,
+      const isExists = await prisma.view.findUnique({
+        where: {
+          user_id_video_id: {
+            user_id: id,
+            video_id: video_id,
+          },
         },
       });
 
-      const currentVideo = await prisma.video.findUnique({
-        where: { id: video_id },
-      });
+      if (!isExists) {
+        const result = await prisma.view.create({
+          data: {
+            user_id: id,
+            video_id: video_id,
+          },
+        });
 
-      await prisma.video.update({
-        where: { id: video_id },
-        data: {
-          views_count: currentVideo.views_count + 1,
-        },
-      });
+        const currentVideo = await prisma.video.findUnique({
+          where: { id: video_id },
+        });
 
-      if (!result) {
-        return res.status(402).json({
-          status: false,
-          message: "Error creating a view",
-          data: null,
+        await prisma.video.update({
+          where: { id: video_id },
+          data: {
+            views_count: currentVideo.views_count + 1,
+          },
+        });
+
+        if (!result) {
+          return res.status(402).json({
+            status: false,
+            message: "Error creating a view",
+            data: null,
+          });
+        }
+
+        return res.status(201).json({
+          status: true,
+          message: "Created view successfully",
+          data: result,
         });
       }
-
       return res.status(201).json({
         status: true,
-        message: "Created view successfully",
-        data: result,
+        message: "Already created view",
+        data: null,
       });
     } catch (error) {
       console.error(error.message);

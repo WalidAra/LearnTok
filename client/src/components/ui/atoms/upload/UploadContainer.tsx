@@ -95,7 +95,6 @@ const UploadContainer = () => {
           console.log("error :(");
         },
         () => {
-          console.log("success!!");
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             router.push("/profile");
           });
@@ -137,7 +136,6 @@ const UploadContainer = () => {
       const videoRef = ref(storage, videoUrl);
       deleteObject(videoRef)
         .then(() => {
-          console.log("Video deleted successfully!");
           router.refresh();
         })
         .catch((error: any) => {

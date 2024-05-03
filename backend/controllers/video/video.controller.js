@@ -5,6 +5,35 @@ const StatusModel = require("../../models/status/status.model");
 const videoModel = require("../../models/video/video.model");
 
 const Video = {
+  getTrendingVideos: async (req, res) => {
+    try {
+      const trendingVideos = await prisma.video.findMany({
+        orderBy: [
+          { likes_count: "desc" }, 
+          { views_count: "desc" }, 
+        ],
+        take: 10, 
+      });
+
+      console.log('====================================');
+      console.log(trendingVideos);
+      console.log('====================================');
+
+      return res.status(200).json({
+        status: true,
+        message: "Fetched trending videos",
+        data: trendingVideos,
+      });
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json({
+        status: false,
+        message: "Internal Server Error",
+        data: null,
+      });
+    }
+  },
+
   getUserFollowingVideos: async (req, res) => {
     const { id } = req.user;
 
@@ -168,11 +197,11 @@ const Video = {
         } else {
           newStatus = await StatusModel.getStatusByName("caution");
         }
-        
+
         await prisma.user.update({
-          where: { id: id }, 
+          where: { id: id },
           data: {
-            status_id: { set: newStatus.id }, 
+            status_id: { set: newStatus.id },
           },
         });
         return res.status(200).json({

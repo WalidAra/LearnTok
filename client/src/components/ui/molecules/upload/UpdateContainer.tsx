@@ -56,15 +56,6 @@ export default function UpdateContainer({ token }: Props) {
         </Button>
         <Button
           onClick={async () => {
-            console.log(bio);
-            console.log(email);
-            console.log(firstName);
-            console.log(lastName);
-            console.log(confirmNewPassword);
-            console.log(newPassword);
-            console.log(oldPassword);
-            console.log(username);
-            console.log(pic);
 
             const res: HTTPResponse = await api.updateUserProfile({
               token,

@@ -11,10 +11,11 @@ import { cn } from "@/lib/utils";
 type Props = {
   url: string;
   index: number;
-
+  video_id: string;
+  token: string | null;
 };
 
-export default function VideoCardBody({ url, index }: Props) {
+export default function VideoCardBody({ url, index, video_id , token }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { current } = useCurrentHomeVid();
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -47,7 +48,7 @@ export default function VideoCardBody({ url, index }: Props) {
       >
         <ToggleSound videoRef={videoRef} />
         <ToggleVideo videoRef={videoRef} />
-        <VideoProgress videoRef={videoRef} />
+        <VideoProgress token={token} video_id={video_id} videoRef={videoRef} />
       </Box>
     </div>
   );

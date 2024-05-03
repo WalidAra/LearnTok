@@ -40,7 +40,6 @@ export default function ProfilePicSetting({ url }: Props) {
           console.log("error :(");
         },
         () => {
-          console.log("success!!");
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setImage(downloadURL);
             setPic(downloadURL);

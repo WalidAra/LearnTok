@@ -43,9 +43,8 @@ const VideoUpload = () => {
           console.log("error :(");
         },
         () => {
-          console.log("success!!");
+
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log(downloadURL);
             setUrl(downloadURL);
             setFileName(selectedFile.name);
             setVideoAsset(true);

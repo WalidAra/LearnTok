@@ -8,7 +8,8 @@ router.use("/view", require("./view/view.private"));
 router.use("/like", require("./like/like.private"));
 router.use("/comment", require("./comment/comment.private"));
 router.use("/bookmark", require("./bookmark/bookmark.private"));
-router.use("/forYou", require("./forYou/you.private.js"));
+router.use("/for-you", require("./forYou/you.private.js"));
 router.use("/token", require("./token/token.private.js"));
+router.use("/notifications", require("./notifications/note.private.js"));
 
 module.exports = router;
