@@ -15,7 +15,7 @@ const DetectOffense = async (str) => {
 module.exports = DetectOffense;
 
 // const Main = async () => {
-//   const t = await DetectOffense("fuck muslims");
+//   const t = await DetectOffense("nazi were good example of heros");
 //   console.log(t);
 // };
 

@@ -10,14 +10,12 @@ datasource db {
 model Provider {
   id   String @id @default(uuid())
   name String
-
   User User[]
 }
 
 model Status {
   id   String @id @default(uuid())
   name String
-
   User User[]
 }
 
@@ -39,32 +37,38 @@ model User {
 
   Provider   Provider   @relation(fields: [provider_id], references: [id])
   Status     Status     @relation(fields: [status_id], references: [id])
+  
   followers  Follow[]   @relation("Followers")
   followings Follow[]   @relation("Followings")
+
   Video      Video[]
+  
   View       View[]
   Like       Like[]
   Comment    Comment[]
   Bookmark   Bookmark[]
   ForYou     ForYou[]
+  Notification Notification[] 
+  Reports Reports[]
+  BlockedUsers  Block[]  
 }
 
 model Category {
-  id         String   @id @default(uuid())
+  id         String          @id @default(uuid())
   category   String
-  videoCount Int      @default(0)
-  videos     VideoCategory[] 
+  videoCount Int             @default(0)
+  videos     VideoCategory[]
   ForYou     ForYou[]
 }
 
 model Follow {
-  id           String   @id @default(uuid())
-  client_id  String 
-  user_id String 
-  createdAt    DateTime @default(now())
+  id        String   @id @default(uuid())
+  client_id String
+  user_id   String
+  createdAt DateTime @default(now())
 
-  client  User @relation("Followers", fields: [client_id], references: [id] , onDelete:Cascade)
-  user User @relation("Followings", fields: [user_id], references: [id], onDelete:Cascade)
+  client User @relation("Followers", fields: [client_id], references: [id], onDelete: Cascade)
+  user   User @relation("Followings", fields: [user_id], references: [id], onDelete: Cascade)
 
   @@unique([client_id, user_id])
 }
@@ -73,8 +77,8 @@ model VideoCategory {
   video_id    String
   category_id String
 
-  video       Video   @relation(fields: [video_id], references: [id] , onDelete:Cascade)
-  category    Category @relation(fields: [category_id], references: [id] , onDelete:Cascade)
+  video    Video    @relation(fields: [video_id], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
 
   @@id([video_id, category_id])
 }
@@ -90,57 +94,57 @@ model Video {
   likes_count    Int      @default(0)
   views_count    Int      @default(0)
 
-  categories     VideoCategory[]
-  User     User       @relation(fields: [user_id], references: [id] , onDelete:Cascade)
-  View     View[]
-  Like     Like[]
-  Comment  Comment[]
-  Bookmark Bookmark[]
+  categories VideoCategory[]
+  User       User            @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  View       View[]
+  Like       Like[]
+  Comment    Comment[]
+  Bookmark   Bookmark[]
 }
 
 model View {
-  id       String   @id @default(uuid())
-  user_id  String
-  video_id String
+  id        String   @id @default(uuid())
+  user_id   String
+  video_id  String
   createdAt DateTime @default(now())
-  User     User     @relation(fields: [user_id], references: [id], onDelete:Cascade)
-  Video    Video    @relation(fields: [video_id], references: [id], onDelete:Cascade)
+  User      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  Video     Video    @relation(fields: [video_id], references: [id], onDelete: Cascade)
 
   @@unique([user_id, video_id])
 }
 
 model Like {
-  id       String   @id @default(uuid())
-  user_id  String
-  video_id String
-  createdAt  DateTime @default(now())
+  id        String   @id @default(uuid())
+  user_id   String
+  video_id  String
+  createdAt DateTime @default(now())
 
-  User  User  @relation(fields: [user_id], references: [id], onDelete:Cascade)
-  Video Video @relation(fields: [video_id], references: [id], onDelete:Cascade)
+  User  User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  Video Video @relation(fields: [video_id], references: [id], onDelete: Cascade)
 
   @@unique([user_id, video_id])
 }
 
 model Comment {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   user_id   String
   video_id  String
   comment   String
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
   updatedAt DateTime?
 
-  User  User  @relation(fields: [user_id], references: [id], onDelete:Cascade)
-  Video Video @relation(fields: [video_id], references: [id], onDelete:Cascade)
+  User  User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  Video Video @relation(fields: [video_id], references: [id], onDelete: Cascade)
 }
 
 model Bookmark {
   id        String   @id @default(uuid())
   user_id   String
   video_id  String
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
 
-  User  User  @relation(fields: [user_id], references: [id], onDelete:Cascade)
-  Video Video @relation(fields: [video_id], references: [id], onDelete:Cascade)
+  User  User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  Video Video @relation(fields: [video_id], references: [id], onDelete: Cascade)
 
   @@unique([user_id, video_id])
 }
@@ -150,8 +154,32 @@ model ForYou {
   user_id     String
   category_id String
 
-  User     User     @relation(fields: [user_id], references: [id], onDelete:Cascade)
+  User     User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   Category Category @relation(fields: [category_id], references: [id])
 
-  @@unique([user_id , category_id])
+  @@unique([user_id, category_id])
+}
+
+model Notification {
+  id        String      @id @default(uuid())
+  type      String
+  content   String
+  createdAt DateTime @default(now())
+  user_id String
+  User User @relation(fields:[user_id] , references:[id] )
+}
+
+model Reports {
+  id String @id @default(uuid())
+  user_id String
+  report String
+  User     User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Block {
+  id         String      @id @default(uuid())
+  user_id    String
+  reason     String
+  blocker_id String
+  User User @relation(fields:[user_id] , references:[id])
 }

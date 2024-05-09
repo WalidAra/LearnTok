@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,8 +11,12 @@ import { LuSun } from "react-icons/lu";
 import { Button } from "@/components/cli/button";
 import { useTheme } from "next-themes";
 export default function UserOptions() {
-
   const {setTheme} = useTheme();
+
+  useEffect(() => {
+    
+  }, [])
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

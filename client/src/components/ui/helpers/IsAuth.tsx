@@ -5,14 +5,19 @@ import UserOptions from "../atoms/navbar/UserOptions";
 import { auth } from "@/auth";
 import UserMenu from "../molecules/UserMenu";
 import NotificationMenu from "../molecules/NotificationMenu";
+import api from "@/lib/apis";
 
 export default async function IsAuth() {
   const session = await auth();
+  const res: HTTPResponse = await api.getUserProfile({
+    token: session?.user?.name as string,
+  });
+
   return (
     <Flex className="items-center gap-2 md:gap-4">
-      {session && session?.user?.name ? (
+      {res.status ? (
         <>
-          <UserMenu id={session.user.name} />
+          <UserMenu id={session?.user?.name as string} />
           <NotificationMenu />
         </>
       ) : (
