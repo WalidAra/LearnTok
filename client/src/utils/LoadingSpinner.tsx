@@ -4,5 +4,9 @@ import React from "react";
 type Props = {};
 
 export default function LoadingSpinner() {
-  return <Spinner />;
+  return (
+    <div className="flex-1 center">
+      <Spinner />
+    </div>
+  );
 }
