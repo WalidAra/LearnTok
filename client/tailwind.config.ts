@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
 const { fontFamily } = require("tailwindcss/defaultTheme");
 import { nextui } from "@nextui-org/react";
 
@@ -24,14 +24,13 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
-        sm: "576px", // Small
-        md: "768px", // Medium
-        lg: "992px", // Large
-        xl: "1200px", // X-Large
-        "2xl": "1400px", // XX-Large
+        "2xl": "1400px",
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+      },
       width: {
         "13": "53px",
         "500": "500px",
@@ -51,7 +50,7 @@ const config = {
       gridTemplateRows: {
         "1frauto1fr": "1fr auto 1fr",
         "1fr2fr": "208px 3fr",
-        "auto1fr":"auto 1fr"
+        auto1fr: "auto 1fr",
       },
 
       height: {
@@ -73,15 +72,11 @@ const config = {
       padding: {
         "13": "53px",
       },
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-      },
       colors: {
-        // common colors
         lightGreen: "#22b07d",
         lightOrange: "#ff7551",
         lightRed: "#ec5252",
-        // rest
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -137,7 +132,7 @@ const config = {
       },
     },
   },
-  plugins: [nextui(), require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), nextui()],
 } satisfies Config;
 
-export default config;
+export default config

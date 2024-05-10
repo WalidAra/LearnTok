@@ -4,7 +4,7 @@ const View = require("../../../controllers/view/view.controller");
 const Comment = require("../../../controllers/comment/comment.controller");
 const router = express.Router();
 
-router.post("/", Video.getVideos);
+router.get("/", Video.getVideos);
 router.post("/search", Video.searchVideos);
 router.get("/:id", Video.getVideoByID);
 router.post("/:id/views", View.getVideoViews);

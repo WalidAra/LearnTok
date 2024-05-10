@@ -1,6 +1,7 @@
 /.vscode
 /rules.txt
 /.todo
+/info.txt
 /backend/.env
 /backend/.todo
 /backend/node_modules

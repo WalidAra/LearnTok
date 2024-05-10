@@ -5,8 +5,9 @@ const videoModel = {
     if (page < 1) page = 1;
     const videos = await prisma.video.findMany({
       where: condition,
-      take: 10,
-      skip: 10 * (page - 1),
+      include: {
+        User: true,
+      },
     });
     return videos;
   },

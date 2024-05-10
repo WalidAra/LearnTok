@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 const checkAuth = async (req, res, next) => {
   const token = req.headers["learntok-auth-token"];
-
   if (!token) {
     return res.status(403).json({
       status: false,
@@ -18,7 +17,9 @@ const checkAuth = async (req, res, next) => {
       return res.status(401).json({
         status: false,
         message: "Unauthorized - Token expired",
-        data: null,
+        data: {
+          isExpired: true,
+        },
       });
     }
 

@@ -3,45 +3,22 @@
 @tailwind utilities;
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  border: none;
   outline: none;
-}
-
-.center-div {
-  display: flex !important ;
-  justify-content: center !important;
-  align-items: center !important;
+  border: none;
 }
 
 .test {
-  background-color: rgba(255, 0, 0, 0.39);
+  background-color: rgba(255, 0, 0, 0.315);
   outline: 1px solid red;
 }
 
-.scroll-snap-type {
-  scroll-snap-type: y mandatory;
-}
-
-::-webkit-scrollbar {
-  width: 0px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @layer base {
@@ -91,140 +68,11 @@
   }
 }
 
-.progress-search {
-  position: relative;
-  display: block;
-  height: 6px;
-  background-color: brown;
-  animation: progressSearch 5s linear forwards;
-  -webkit-animation: progressSearch 0.5s linear forwards ease-out;
-  width: 0;
-}
-
-@keyframes progressSearch {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
 @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
-  }
-}
-
-/*------ Settings ------*/
-.pause-container {
-  --color: #a5a5b0;
-  --size: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-  font-size: var(--size);
-  user-select: none;
-  fill: var(--color);
-}
-
-.pause-container .play {
-  position: absolute;
-  animation: keyframes-fill 0.5s;
-}
-
-.pause-container .pause {
-  position: absolute;
-  display: none;
-  animation: keyframes-fill 0.5s;
-}
-
-/* ------ On check event ------ */
-.pause-container input:checked ~ .play {
-  display: none;
-}
-
-.pause-container input:checked ~ .pause {
-  display: block;
-}
-
-/* ------ Hide the default checkbox ------ */
-.pause-container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-/* ------ Animation ------ */
-@keyframes keyframes-fill {
-  0% {
-    transform: rotate(-180deg) scale(0);
-    opacity: 0;
-  }
-
-  50% {
-    transform: rotate(-10deg) scale(1.2);
-  }
-}
-
-/*------ Settings ------*/
-.sound-container {
-  --color: #a5a5b0;
-  --size: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-  font-size: var(--size);
-  user-select: none;
-  fill: var(--color);
-}
-
-.sound-container .mute {
-  position: absolute;
-  animation: keyframes-fill 0.5s;
-}
-
-.sound-container .voice {
-  position: absolute;
-  display: none;
-  animation: keyframes-fill 0.5s;
-}
-
-/* ------ On check event ------ */
-.sound-container input:checked ~ .mute {
-  display: none;
-}
-
-.sound-container input:checked ~ .voice {
-  display: block;
-}
-
-/* ------ Hide the default checkbox ------ */
-.sound-container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-/* ------ Animation ------ */
-@keyframes keyframes-fill {
-  0% {
-    transform: rotate(0deg) scale(0);
-    opacity: 0;
-  }
-
-  50% {
-    transform: rotate(-10deg) scale(1.2);
   }
 }
