@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss"
-const { fontFamily } = require("tailwindcss/defaultTheme");
 import { nextui } from "@nextui-org/react";
+const { fontFamily } = require("tailwindcss/defaultTheme");
 
 const config = {
   darkMode: ["class"],
@@ -59,7 +59,7 @@ const config = {
         "112": "450px",
         "128": "512px",
 
-        clientVideo: "calc(100vh - 53px - 16px)",
+        clientVideo: "calc(100vh - 57px - 32px)",
         mainView: "calc(100vh - 53px)",
       },
       maxHeight: {

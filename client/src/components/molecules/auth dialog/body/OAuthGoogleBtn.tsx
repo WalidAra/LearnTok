@@ -26,7 +26,7 @@ export default function OAuthGoogleBtn() {
 
     const res = await useFetch({
       method: "POST",
-      body: { accessToken },
+      body: { accessToken, recall: true },
       endPoint: "/oauth/google",
     });
 

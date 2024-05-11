@@ -1,10 +1,12 @@
-import { getProfile } from "@/utils/api/private/client/client";
+import { getProfile } from "@/utils/api/private/client";
 import { auth } from "@/utils/auth";
 import { Flex } from "@chakra-ui/react";
 import React from "react";
-import LoginButtonDialog from "../molecules/navbar/LoginAuthDialog";
+import LoginButtonDialog from "../atoms/navbar/LoginAuthDialog";
 import ThemeMenu from "../molecules/navbar/ThemeMenu";
 import Toaster from "./toaster";
+import UserMenu from "../organisms/UserMenu";
+import NotificationMenu from "../organisms/NotificationMenu";
 
 const NavBarAuthen = async () => {
   const session = await auth();
@@ -29,7 +31,12 @@ const NavBarAuthen = async () => {
       );
     }
 
-    return <Flex className="items-center gap-4"></Flex>;
+    return (
+      <Flex className="items-center gap-4">
+        <UserMenu client={response.data as Client} />
+        <NotificationMenu token={session.user.name} />
+      </Flex>
+    );
   }
 };
 

@@ -6,6 +6,8 @@ const destructUser = require("../../scripts/destructUser");
 const OAuth = {
   Google: async (req, res) => {
     const { email, picture, name } = req.oauth;
+    const { recall } = req.body;
+
     try {
       let user;
       let token;
@@ -19,7 +21,7 @@ const OAuth = {
 
       if (findUser) {
         user = destructUser(findUser);
-        token = await createToken(findUser.id);
+        token = createToken(findUser.id, recall);
         return res.status(200).json({
           status: true,
           message: "User sign in successfully",
@@ -43,7 +45,7 @@ const OAuth = {
       });
 
       user = destructUser(isUser);
-      token = await createToken(isUser.id, true);
+      token = createToken(isUser.id, recall);
       console.log(token);
       return res.status(200).json({
         status: true,

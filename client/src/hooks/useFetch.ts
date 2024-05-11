@@ -7,6 +7,7 @@ export const useFetch = async ({
   body,
   token,
 }: Fetch) => {
+  
   const header = process.env.NEXT_PUBLIC_TOKEN_HEADER as string;
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL as string;
 
@@ -21,7 +22,7 @@ export const useFetch = async ({
       data: body,
     };
 
-    const response = await axios(axiosConfig);
+    const response = await axios(axiosConfig);    
     return response.data as FetchResponse;
   } catch (error: any) {
     console.log("====================================");

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import React, { useState } from "react";
 import FormWrapper from "../FormWrapper";
@@ -19,7 +20,8 @@ import { Flex, Link } from "@chakra-ui/react";
 import RememberMe from "./RememberMe";
 import { signIn } from "next-auth/react";
 import { Spinner } from "@nextui-org/react";
-import { useAuthDialog } from "@/providers/AuthDialogProvider";
+import { useFetch } from "@/hooks/useFetch";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -31,9 +33,6 @@ const formSchema = z.object({
 const SignIn = () => {
   const [recall, setRecall] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const { onClose } = useAuthDialog();
-  const [isError, setIsError] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,7 +43,36 @@ const SignIn = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
+    const res = await useFetch({
+      method: "POST",
+      body: values,
+      endPoint: "/auth/sign-in",
+    });
+    setIsLoading(false);
 
+    if (res.status === true) {
+      await signIn("credentials", {
+        token: res.token as string,
+        callbackUrl: "/",
+        redirect: true,
+      });
+    } else if (res.data.wrongPW === true) {
+      toast("Password is wrong ", {
+        description: "please check again",
+        action: {
+          label: "Undo",
+          onClick: () => {},
+        },
+      });
+    } else if (res.data.notFound === true) {
+      toast("Wrong credentials ", {
+        description: "please check again",
+        action: {
+          label: "Undo",
+          onClick: () => {},
+        },
+      });
+    }
   }
 
   return (
@@ -82,13 +110,6 @@ const SignIn = () => {
                 </FormControl>
                 <FormDescription className="flex flex-col gap-3">
                   <RememberMe recall={recall} setRecall={setRecall} />
-
-                  {isError && (
-                    <p className="font-medium text-red-500">
-                      Invalid email or password. Please check your credentials
-                      and try again.
-                    </p>
-                  )}
                 </FormDescription>
                 <FormMessage />
               </FormItem>

@@ -5,7 +5,12 @@ const User = {
   getUserByID: async (req, res) => {
     const { id } = req.params;
     try {
-      const isUser = await prisma.user.findUnique({ where: { id: id } });
+      const isUser = await prisma.user.findUnique({
+        where: { id: id },
+        include: {
+          Status: true,
+        },
+      });
       const user = destructUser(isUser);
 
       if (!isUser) {

@@ -16,13 +16,11 @@ const Auth = {
           .status(200)
           .json({ status: true, data: null, message: "user id match" });
       } else {
-        return res
-          .status(200)
-          .json({
-            status: false,
-            data: null,
-            message: "user id does not match",
-          });
+        return res.status(200).json({
+          status: false,
+          data: null,
+          message: "user id does not match",
+        });
       }
     } catch (error) {
       console.error("Auth controller : ", error.message);
@@ -41,13 +39,14 @@ const Auth = {
       });
 
       if (isUser) {
-        return res.status(403).json({
+        return res.status(200).json({
           status: false,
           message: "User Already exists",
-          data: null,
+          data: {
+            isExist: true,
+          },
         });
       }
-
       const hashedPwd = await bcrypt.hash(password, saltRounds);
 
       const provider = await ProviderModel.getProviderByName("direct");
@@ -67,7 +66,7 @@ const Auth = {
       });
 
       const user = destructProfile(newUser);
-      const token = await createToken(newUser.id, recall);
+      const token = createToken(newUser.id, recall);
 
       return res.status(200).json({
         status: true,
@@ -91,19 +90,23 @@ const Auth = {
       });
 
       if (!isUser) {
-        return res.status(402).json({
+        return res.status(200).json({
           status: false,
           message: "User not found",
-          data: null,
+          data: {
+            notFound: true,
+          },
         });
       }
 
       const match = await bcrypt.compare(password, isUser.password);
       if (!match) {
-        return res.status(404).json({
+        return res.status(200).json({
           status: false,
           message: "wrong password",
-          data: null,
+          data: {
+            wrongPW: true,
+          },
         });
       }
 
@@ -137,6 +140,9 @@ const Auth = {
       const isUser = await prisma.user.findUnique({
         where: {
           id: id,
+        },
+        include: {
+          Status: true,
         },
       });
 

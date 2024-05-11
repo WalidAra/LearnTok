@@ -33,16 +33,21 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ThemeProvider>
-          <Providers>
-            <AuthDialogProvider>
+        <Providers>
+          <AuthDialogProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
               <FormAuthen />
               <HomeWrapper>
                 <Toaster /> {children}
               </HomeWrapper>
-            </AuthDialogProvider>
-          </Providers>
-        </ThemeProvider>
+            </ThemeProvider>
+          </AuthDialogProvider>
+        </Providers>
       </body>
     </html>
   );

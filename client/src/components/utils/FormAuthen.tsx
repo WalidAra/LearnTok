@@ -1,4 +1,4 @@
-import { getProfile } from "@/utils/api/private/client/client";
+import { getProfile } from "@/utils/api/private/client";
 import { auth } from "@/utils/auth";
 import React from "react";
 import AuthDialog from "../organisms/AuthDialog";

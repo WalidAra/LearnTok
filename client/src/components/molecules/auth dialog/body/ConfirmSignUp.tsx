@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,8 +21,9 @@ import RememberMe from "./RememberMe";
 import SocialSignInPanel from "./SocialSignInPanel";
 import { useMyForm } from "@/providers/Form";
 import { signIn } from "next-auth/react";
-import { useAuthDialog } from "@/providers/AuthDialogProvider";
 import { Spinner } from "@nextui-org/react";
+import { useFetch } from "@/hooks/useFetch";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -33,7 +35,6 @@ const formSchema = z.object({
 export default function ConfirmSignUp() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { onClose } = useAuthDialog();
   const {
     username: { username },
     fullName: { fullName },
@@ -49,7 +50,35 @@ export default function ConfirmSignUp() {
   const [recall, setRecall] = useState<boolean>(false);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-   
+    setIsLoading(true);
+    const res = await useFetch({
+      method: "POST",
+      body: {
+        email: values.email,
+        password: values.password,
+        username,
+        fullName,
+        recall,
+      },
+      endPoint: "/auth/sign-up",
+    });
+    setIsLoading(false);
+
+    if (res.status === true) {
+      await signIn("credentials", {
+        token: res.token as string,
+        callbackUrl: "/",
+        redirect: true,
+      });
+    } else if (res.data.isExist === true) {
+      toast("This email already exists", {
+        description: "Please sign up with a other email",
+        action: {
+          label: "Undo",
+          onClick: () => {},
+        },
+      });
+    }
   }
 
   return (

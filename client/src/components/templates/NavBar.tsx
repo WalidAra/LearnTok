@@ -4,7 +4,7 @@ import NavBarAuthen from "../utils/NavBarAuthen";
 
 const NavBar = () => {
   return (
-    <header className="z-10 flex h-[57px] justify-between items-center gap-1 border-b bg-background px-4">
+    <header className="z-10 flex p-2 justify-between items-center gap-1 border-b border-border bg-background px-4">
       <InputSearch />
       <NavBarAuthen />
     </header>
