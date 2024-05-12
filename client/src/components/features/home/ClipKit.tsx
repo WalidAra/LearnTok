@@ -8,6 +8,7 @@ import {
 import { useCurrentVideo } from "@/hooks/usePlay";
 import React from "react";
 import { type CarouselApi } from "@/components/cli/shadcn/carousel";
+import CurrentVideoProvider from "@/providers/currentVideo";
 
 export default function ClipKit({ children }: { children?: React.ReactNode }) {
   const {setIndex } = useCurrentVideo();
@@ -26,12 +27,13 @@ export default function ClipKit({ children }: { children?: React.ReactNode }) {
 
   return (
     <div className="w-full m-auto sm:w-112 xl:w-128 2xl:w-175 ">
-      <Carousel orientation="vertical" setApi={setApi}>
-        <CarouselContent className="h-clientVideo w-full ">
-
-          {children}
-        </CarouselContent>
-      </Carousel>
+      <CurrentVideoProvider>
+        <Carousel orientation="vertical" setApi={setApi}>
+          <CarouselContent className="h-clientVideo w-full ">
+            {children}
+          </CarouselContent>
+        </Carousel>
+      </CurrentVideoProvider>
     </div>
   );
 }

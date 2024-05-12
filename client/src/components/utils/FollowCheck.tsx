@@ -12,7 +12,14 @@ export default async function FollowCheck({ user_id }: Props) {
   const session = await auth();
 
   if (!session || !session.user?.name) {
-    return null;
+    return (
+      <FollowButton
+        follow={false}
+        token={""}
+        user_id={user_id}
+        isAuthenticated={false}
+      />
+    );
   } else {
     const response = await useFetch({
       method: "POST",
@@ -30,9 +37,10 @@ export default async function FollowCheck({ user_id }: Props) {
 
     return (
       <FollowButton
-        follow={false}
+        follow={response.data}
         token={session.user.name}
         user_id={user_id}
+        isAuthenticated={true}
       />
     );
   }
