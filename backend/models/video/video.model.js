@@ -6,7 +6,16 @@ const videoModel = {
     const videos = await prisma.video.findMany({
       where: condition,
       include: {
-        User: true,
+        User: {
+          select: {
+            bio: true,
+            fullName: true,
+            id: true,
+            picture: true,
+            username: true,
+            Status: true,
+          },
+        },
       },
     });
     return videos;

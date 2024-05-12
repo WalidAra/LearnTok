@@ -42,3 +42,25 @@ type User = {
   status_id: string;
   Status: Status;
 };
+
+type PosterCip = {
+  bio: string;
+  fullName: string;
+  id: string;
+  picture: string;
+  username: string;
+  Status: Status;
+};
+
+type VideoClip = {
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  user_id: string;
+  uploadedAt: string;
+  comments_count: number;
+  likes_count: number;
+  views_count: number;
+  User: PosterCip;
+};

@@ -1,6 +1,6 @@
 "use client";
 
-import { Play } from "@/providers/currentVideo";
+import { CurrentIndex } from "@/providers/currentVideo";
 import { useContext } from "react";
 
-export const useCurrentVideo = () => useContext(Play);
+export const useCurrentVideo = () => useContext(CurrentIndex);

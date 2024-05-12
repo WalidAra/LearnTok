@@ -51,6 +51,7 @@ const config = {
         "1frauto1fr": "1fr auto 1fr",
         "1fr2fr": "208px 3fr",
         auto1fr: "auto 1fr",
+        auto1frauto: "auto 1fr auto",
       },
 
       height: {

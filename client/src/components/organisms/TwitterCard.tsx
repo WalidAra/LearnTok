@@ -2,6 +2,7 @@ import { User } from "@nextui-org/react";
 import React from "react";
 import Badge from "../atoms/Badge";
 import { defaultPic } from "@/assets/pfp";
+import { cn } from "@/lib/utils";
 
 type Props = {
   username: string;
@@ -9,6 +10,7 @@ type Props = {
   pic: string;
   status_name: string;
   popOver?: boolean;
+  hoverUsername?: boolean;
 };
 
 const TwitterCard = ({
@@ -17,13 +19,21 @@ const TwitterCard = ({
   status_name,
   username,
   popOver = false,
+  hoverUsername = false,
 }: Props) => {
   return (
     <User
       className="gap-3"
       name={
         <div className="flex items-center gap-2">
-          <span> {username} </span>
+          <span
+            className={cn(
+              "",
+              hoverUsername ? "hover:underline cursor-pointer" : ""
+            )}
+          >
+            {username}
+          </span>
           <Badge status_name={status_name} />
         </div>
       }

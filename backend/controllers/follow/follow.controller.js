@@ -6,6 +6,16 @@ const Follow = {
     const { user_id } = req.body;
 
     try {
+      if (id === user_id) {
+        return res.status(200).json({
+          status: false,
+          message: "You are you basically :D",
+          data: {
+            isItMe: true,
+          },
+        });
+      }
+
       const isFollow = await prisma.follow.findUnique({
         where: {
           client_id_user_id: {

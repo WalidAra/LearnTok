@@ -45,13 +45,15 @@ const View = {
         return res.status(201).json({
           status: true,
           message: "Created view successfully",
-          data: result,
+          data: null,
         });
       }
       return res.status(201).json({
-        status: true,
+        status: false,
         message: "Already created view",
-        data: null,
+        data: {
+          isExists: true,
+        },
       });
     } catch (error) {
       console.error(error.message);
