@@ -16,9 +16,24 @@
 }
 
 .center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.center-panel {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+@media screen and (max-width: 450px) {
+  .center-panel {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+  }
 }
 
 @layer base {
@@ -84,7 +99,6 @@
   scroll-snap-type: y mandatory !important;
 }
 
-
 .sound-container {
   --color: #a5a5b0;
   --size: 30px;
@@ -138,7 +152,6 @@
     transform: rotate(-10deg) scale(1.2);
   }
 }
-
 
 /*------ Settings ------*/
 .pause-container {

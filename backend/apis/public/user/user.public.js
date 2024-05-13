@@ -9,5 +9,6 @@ router.post("/search", User.searchForUsers);
 router.get("/:id/followers", Follow.getUserFollowers);
 router.get("/:id/followings", Follow.getUserFollowings);
 router.post("/:id/videos", Video.getUserVideos);
+router.get("/:id/profile-status", User.getStatusStatesUser);
 
 module.exports = router;

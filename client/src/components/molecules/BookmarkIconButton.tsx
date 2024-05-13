@@ -20,9 +20,7 @@ const BookmarkIconButton = ({
   video_id,
   isAuthenticated,
 }: Props) => {
-  console.log('====================================');
-  console.log(isSaved, token, video_id, isAuthenticated);
-  console.log('====================================');
+
   const [saved, setSaved] = useState(isSaved);
   const { onOpen } = useAuthDialog();
 

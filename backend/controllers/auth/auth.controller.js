@@ -7,7 +7,46 @@ const StatusModel = require("../../models/status/status.model");
 const saltRounds = 10;
 
 const Auth = {
-  checkLikeAndBookmark: async (req , res) => {
+  statusStates: async (req, res) => {
+    const { id } = req.user;
+
+    try {
+      const followers = await prisma.follow.findMany({
+        where: {
+          user_id: id,
+        },
+      });
+
+      const followings = await prisma.follow.findMany({
+        where: {
+          client_id: id,
+        },
+      });
+
+      const likes = await prisma.like.findMany({
+        where: {
+          user_id: id,
+        },
+      });
+
+      return res.status(201).json({
+        message: "got user statuses",
+        status: true,
+        data: {
+          likes: likes.length,
+          followings: followings.length,
+          followers: followers.length,
+        },
+      });
+    } catch (error) {
+      console.error("Auth controller : ", error.message);
+      return res
+        .status(500)
+        .json({ message: "Internal server error", status: false, data: null });
+    }
+  },
+
+  checkLikeAndBookmark: async (req, res) => {
     const { id } = req.user;
     const { video_id } = req.body;
 
@@ -150,7 +189,7 @@ const Auth = {
       });
 
       const user = destructProfile(updatedUser);
-      const token = await createToken(updatedUser.id, recall);
+      const token = createToken(updatedUser.id, recall);
 
       return res.status(200).json({
         status: true,

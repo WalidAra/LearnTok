@@ -64,3 +64,15 @@ type VideoClip = {
   views_count: number;
   User: PosterCip;
 };
+
+type User = {
+  id: string;
+  username: string;
+  fullName: string;
+  picture: string;
+  bio: string;
+  isBanned: boolean;
+  createdAt: string;
+  status_id: string;
+  Status: Status;
+};
