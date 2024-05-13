@@ -29,7 +29,7 @@ const Like = {
 
   ToggleLike: async (req, res) => {
     const { id } = req.user; // me who liked
-    const { video_id, poster_id } = req.body; // the poster who 
+    const { video_id } = req.body; 
 
     try {
       const currentVideo = await prisma.video.findUnique({

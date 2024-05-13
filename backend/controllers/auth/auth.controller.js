@@ -7,6 +7,40 @@ const StatusModel = require("../../models/status/status.model");
 const saltRounds = 10;
 
 const Auth = {
+  checkLikeAndBookmark: async (req , res) => {
+    const { id } = req.user;
+    const { video_id } = req.body;
+
+    try {
+      const like = await prisma.like.findFirst({
+        where: {
+          user_id: id,
+          video_id: video_id,
+        },
+      });
+      const bookmark = await prisma.bookmark.findFirst({
+        where: {
+          user_id: id,
+          video_id: video_id,
+        },
+      });
+
+      return res.status(200).json({
+        message: "Got reaction status",
+        status: true,
+        data: {
+          isLiked: like != null,
+          isBookmarked: bookmark != null,
+        },
+      });
+    } catch (error) {
+      console.error("Auth controller : ", error.message);
+      return res
+        .status(500)
+        .json({ message: "Internal server error", status: false, data: null });
+    }
+  },
+
   idMatch: async (req, res) => {
     const { id } = req.user;
     const { user_id } = req.body;

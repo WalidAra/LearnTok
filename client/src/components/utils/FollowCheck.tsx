@@ -33,6 +33,16 @@ export default async function FollowCheck({ user_id }: Props) {
 
     if (response.status === false && response.data.isItMe === true) {
       return null;
+    } else if (response.status === false && response.data.isExpired === true) {
+
+      return (
+        <FollowButton
+          follow={false}
+          token={""}
+          user_id={user_id}
+          isAuthenticated={false}
+        />
+      );
     }
 
     return (

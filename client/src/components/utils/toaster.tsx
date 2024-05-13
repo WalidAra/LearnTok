@@ -6,10 +6,7 @@ import { toast } from "sonner";
 export default function Toaster() {
   useEffect(() => {
     const DestroyToken = async () => {
-      const res = await signOut({ redirect: false });
-      console.log("====================================");
-      console.log(res);
-      console.log("====================================");
+      await signOut({ redirect: false });
     };
 
     DestroyToken();

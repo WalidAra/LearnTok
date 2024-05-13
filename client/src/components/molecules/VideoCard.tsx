@@ -5,13 +5,14 @@ import TwitterCard from "../organisms/TwitterCard";
 import Link from "next/link";
 import FollowCheck from "../utils/FollowCheck";
 import VideoClip from "./video card/VideoClip";
+import ReactorsAuthen from "../utils/ReactorsAuthen";
 
 type Props = {
   video: VideoClip;
   index: number;
 };
 
-const VideoCard = ({ video , index }: Props) => {
+const VideoCard = ({ video, index }: Props) => {
   const {
     User: {
       Status: { name },
@@ -54,11 +55,13 @@ const VideoCard = ({ video , index }: Props) => {
           p={0}
           flex={1}
           w={"100%"}
-          className="sm:grid flex-1 flex justify-center sm:justify-normal sm:grid-cols-1frauto1fr items-center "
+          className="sm:grid flex-1 h-full flex justify-center sm:justify-normal sm:grid-cols-1frauto1fr items-center "
         >
           <div></div>
           <VideoClip index={index} url={video.url} video_id={video.id} />
-          <div></div>
+          <div className=" h-full w-full flex items-center justify-center">
+            <ReactorsAuthen poster_id={id} video_id={video.id} />
+          </div>
         </Box>
       </div>
     </CarouselItem>

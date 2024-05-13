@@ -15,5 +15,6 @@ router.get("/likedVideos", Like.getUserLikedVideos);
 router.get("/videos", Video.getUserBaseVideos);
 router.get("/followings", Follow.getUserBaseFollowings);
 router.get("/followers", Follow.getUserBaseFollowers);
+router.post("/reactors", Auth.checkLikeAndBookmark);
 
 module.exports = router;

@@ -2,7 +2,6 @@ import { getProfile } from "@/utils/api/private/client";
 import { auth } from "@/utils/auth";
 import React from "react";
 import AuthDialog from "../organisms/AuthDialog";
-import { Flex } from "@chakra-ui/react";
 
 export default async function FormAuthen() {
   const session = await auth();
@@ -16,6 +15,6 @@ export default async function FormAuthen() {
       return <AuthDialog />;
     }
 
-    return <Flex className="items-center gap-4"></Flex>;
+    return null;
   }
 }
