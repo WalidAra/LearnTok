@@ -17,7 +17,7 @@ const IconButton = ({ children, onClick, onActive , isLiked }: Props) => {
       onClick={onClick}
       className={cn(
         "rounded-full size-10 center border duration-150 hover:scale-105 active:scale-75",
-        isLiked ? onActive : "bg-muted text-foreground border-border"
+        isLiked ? onActive : "bg-muted text-muted-foreground border-border"
       )}
     >
       {children}
