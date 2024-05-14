@@ -5,17 +5,29 @@ import { MdOutlineCollections } from "react-icons/md";
 import {
   Tabs,
   TabList,
-
   Tab,
   Flex,
   Text,
   TabPanels,
   TabPanel,
 } from "@chakra-ui/react";
+import VideoPin from "./VideoPin";
 
-const TabPanelsB = () => {
+type Props = {
+  createdVids: VideoClip[];
+  savedVids: VideoClip[];
+  likedVids: VideoClip[];
+  isClient?: boolean;
+};
+
+const TabPanelsB = ({
+  createdVids,
+  likedVids,
+  savedVids,
+  isClient = false,
+}: Props) => {
   return (
-    <section className="w-full flex flex-col ">
+    <section className="w-full flex flex-col flex-1 ">
       <Tabs
         display={"flex"}
         flexDirection={"column"}
@@ -23,20 +35,22 @@ const TabPanelsB = () => {
         variant="unstyled"
       >
         <TabList className="border-b border-border center-panel">
-          <Tab
-            className="border-b-4 border-transparent"
-            _selected={{ borderBottom: "4px solid #6C5ECF" }}
-          >
-            <Flex align="center">
-              <MdOutlineCollections className="size-5 mr-2" />
-              <Text fontSize="lg" fontWeight="500" me="12px">
-                Collected
-              </Text>
-              <Text color="secondaryGray.600" fontSize="md" fontWeight="400">
-                34
-              </Text>
-            </Flex>
-          </Tab>
+          {isClient && (
+            <Tab
+              className="border-b-4 border-transparent"
+              _selected={{ borderBottom: "4px solid #6C5ECF" }}
+            >
+              <Flex align="center">
+                <MdOutlineCollections className="size-5 mr-2" />
+                <Text fontSize="lg" fontWeight="500" me="12px">
+                  Collected
+                </Text>
+                <Text color="secondaryGray.600" fontSize="md" fontWeight="400">
+                  {savedVids.length}
+                </Text>
+              </Flex>
+            </Tab>
+          )}
           <Tab
             className="border-b-4 border-transparent"
             _selected={{ borderBottom: "4px solid #6C5ECF" }}
@@ -47,7 +61,7 @@ const TabPanelsB = () => {
                 Created
               </Text>
               <Text color="secondaryGray.600" fontSize="md" fontWeight="400">
-                345
+                {createdVids.length}
               </Text>
             </Flex>
           </Tab>
@@ -61,21 +75,32 @@ const TabPanelsB = () => {
                 Liked
               </Text>
               <Text color="secondaryGray.600" fontSize="md" fontWeight="400">
-                20
+                {likedVids.length}
               </Text>
             </Flex>
           </Tab>
         </TabList>
 
         <TabPanels>
-          <TabPanel className="test md:flex md:flex-wrap md:gap-6 grid grid-cols-2 gap-2" >
-            
+          {isClient && (
+            <TabPanel className=" md:flex md:flex-wrap md:gap-6 grid grid-cols-2 gap-2">
+              {savedVids.map((video) => (
+                <VideoPin key={video.id + "collected-profile"} video={video} />
+              ))}
+            </TabPanel>
+          )}
+          <TabPanel className="md:flex md:flex-wrap md:gap-6 grid grid-cols-2 gap-2">
+            {createdVids.map((video) => (
+              <>
+                <VideoPin key={video.id + "created-profile"} video={video} />
+                <VideoPin key={video.id + "created-profile"} video={video} />
+              </>
+            ))}
           </TabPanel>
-          <TabPanel>
-            <p>two!</p>
-          </TabPanel>
-          <TabPanel>
-            <p>three!</p>
+          <TabPanel className=" md:flex md:flex-wrap md:gap-6 grid grid-cols-2 gap-2">
+            {likedVids.map((video) => (
+              <VideoPin key={video.id + "liked-profile"} video={video} />
+            ))}
           </TabPanel>
         </TabPanels>
       </Tabs>

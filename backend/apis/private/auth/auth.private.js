@@ -12,7 +12,7 @@ router.delete("/delete", Auth.delete);
 router.put("/update", Auth.update);
 router.get("/bookmarks", Bookmark.getUserBookmarks);
 router.get("/likedVideos", Like.getUserLikedVideos);
-router.get("/videos", Video.getUserBaseVideos);
+router.get("/videos-book", Video.getClientVideosBook);
 router.get("/followings", Follow.getUserBaseFollowings);
 router.get("/followers", Follow.getUserBaseFollowers);
 router.post("/reactors", Auth.checkLikeAndBookmark);

@@ -8,16 +8,13 @@ const Video = {
   getTrendingVideos: async (req, res) => {
     try {
       const trendingVideos = await prisma.video.findMany({
-        orderBy: [
-          { likes_count: "desc" }, 
-          { views_count: "desc" }, 
-        ],
-        take: 10, 
+        orderBy: [{ likes_count: "desc" }, { views_count: "desc" }],
+        take: 10,
       });
 
-      console.log('====================================');
+      console.log("====================================");
       console.log(trendingVideos);
-      console.log('====================================');
+      console.log("====================================");
 
       return res.status(200).json({
         status: true,
@@ -306,9 +303,8 @@ const Video = {
 
   getUserVideos: async (req, res) => {
     const { id } = req.params;
-    const { page } = req.body;
     try {
-      const videos = await videoModel.getVideos({ user_id: id }, page);
+      const videos = await videoModel.getVideos({ user_id: id }, 1);
       return res.status(200).json({
         status: true,
         message: "User videos fetched successfully",
@@ -324,18 +320,180 @@ const Video = {
     }
   },
 
-  getUserBaseVideos: async (req, res) => {
+  getUserVideosBook: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const videos = await prisma.video.findMany({
+        where: {
+          user_id: id,
+        },
+        include: {
+          User: {
+            select: {
+              bio: true,
+              fullName: true,
+              id: true,
+              picture: true,
+              username: true,
+              Status: true,
+            },
+          },
+        },
+      });
+
+      const tempSaved = await prisma.bookmark.findMany({
+        where: {
+          user_id: id,
+        },
+
+        include: {
+          Video: {
+            include: {
+              User: {
+                select: {
+                  bio: true,
+                  fullName: true,
+                  id: true,
+                  picture: true,
+                  username: true,
+                  Status: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      const savedVideos = tempSaved.map((v) => {
+        return v.Video;
+      });
+
+      const tempLiked = await prisma.like.findMany({
+        where: {
+          user_id: id,
+        },
+
+        include: {
+          Video: {
+            include: {
+              User: {
+                select: {
+                  bio: true,
+                  fullName: true,
+                  id: true,
+                  picture: true,
+                  username: true,
+                  Status: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      const likedVideos = tempLiked.map((v) => {
+        return v.Video;
+      });
+
+      return res.status(200).json({
+        status: true,
+        message: "User videos fetched successfully",
+        data: {
+          created: videos,
+          saved: savedVideos,
+          liked: likedVideos,
+        },
+      });
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json({
+        status: false,
+        message: "Internal Server Error",
+        data: null,
+      });
+    }
+  },
+
+  getClientVideosBook: async (req, res) => {
     const { id } = req.user;
     try {
       const videos = await prisma.video.findMany({
         where: {
           user_id: id,
         },
+        include: {
+          User: {
+            select: {
+              bio: true,
+              fullName: true,
+              id: true,
+              picture: true,
+              username: true,
+              Status: true,
+            },
+          },
+        },
       });
+
+      const tempSaved = await prisma.bookmark.findMany({
+        where: {
+          user_id: id,
+        },
+
+        include: {
+          Video: {
+            include: {
+              User: {
+                select: {
+                  bio: true,
+                  fullName: true,
+                  id: true,
+                  picture: true,
+                  username: true,
+                  Status: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      const savedVideos = tempSaved.map((v) => {
+        return v.Video;
+      });
+
+      const tempLiked = await prisma.like.findMany({
+        where: {
+          user_id: id,
+        },
+
+        include: {
+          Video: {
+            include: {
+              User: {
+                select: {
+                  bio: true,
+                  fullName: true,
+                  id: true,
+                  picture: true,
+                  username: true,
+                  Status: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      const likedVideos = tempLiked.map((v) => {
+        return v.Video;
+      });
+
       return res.status(200).json({
         status: true,
         message: "User videos fetched successfully",
-        data: videos,
+        data: {
+          created: videos,
+          saved: savedVideos,
+          liked: likedVideos,
+        },
       });
     } catch (error) {
       console.error(error.message);

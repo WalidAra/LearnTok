@@ -4,7 +4,7 @@ import StatusStates from "@/components/utils/StatusStates";
 import { getProfile } from "@/utils/api/private/client";
 import { auth } from "@/utils/auth";
 import React from "react";
-import TabPanelsB from "@/components/features/profile/TabPanelsB";
+import ProfileContent from "@/components/utils/ProfileContent";
 
 const Profile = async () => {
   const session = await auth();
@@ -15,7 +15,7 @@ const Profile = async () => {
     if (res.status === true) {
       const data = res.data as Client;
       return (
-        <MainView className="px-2 sm:px-10 pb-2 ">
+        <MainView className="px-2 sm:px-10 pb-2 overflow-auto">
           <div className="flex flex-col gap-6 items-center w-full">
             <section className="w-full flex flex-col gap-3 pt-10">
               <ProfileInfo
@@ -29,7 +29,7 @@ const Profile = async () => {
                 <StatusStates token={session.user.name} />
               </ProfileInfo>
             </section>
-            <TabPanelsB />
+            <ProfileContent />
           </div>
         </MainView>
       );

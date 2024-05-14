@@ -8,7 +8,8 @@ router.get("/:id", User.getUserByID);
 router.post("/search", User.searchForUsers);
 router.get("/:id/followers", Follow.getUserFollowers);
 router.get("/:id/followings", Follow.getUserFollowings);
-router.post("/:id/videos", Video.getUserVideos);
+router.get("/:id/videos", Video.getUserVideos);
+router.get("/:id/videos-book", Video.getUserVideosBook);
 router.get("/:id/profile-status", User.getStatusStatesUser);
 
 module.exports = router;
