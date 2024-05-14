@@ -174,9 +174,6 @@ const Video = {
     const { id } = req.user;
     const { title, description, url, categories } = req.body;
 
-    console.log("====================================");
-    console.log("over here");
-    console.log("====================================");
     try {
       const offensiveTitle = await DetectOffense(title);
       const offensiveDescription = await DetectOffense(description);
@@ -263,8 +260,21 @@ const Video = {
   getVideoByID: async (req, res) => {
     const { id } = req.params;
     try {
-      const video = await prisma.video.findUnique({ where: { id: id } });
-
+      const video = await prisma.video.findUnique({
+        where: { id: id },
+        include: {
+          User: {
+            select: {
+              bio: true,
+              fullName: true,
+              id: true,
+              picture: true,
+              username: true,
+              Status: true,
+            },
+          },
+        },
+      });
       return res.status(200).json({
         status: true,
         message: "Video fetched successfully",

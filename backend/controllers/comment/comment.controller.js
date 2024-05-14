@@ -1,5 +1,6 @@
 const prisma = require("../../config/prisma");
 const DetectOffense = require("../../helpers/isItOffended");
+const StatusModel = require("../../models/status/status.model");
 
 const Comment = {
   getCommentByID: async (req, res) => {
@@ -35,6 +36,18 @@ const Comment = {
         where: {
           video_id: id,
         },
+        include: {
+          User: {
+            select: {
+              bio: true,
+              fullName: true,
+              id: true,
+              picture: true,
+              username: true,
+              Status: true,
+            },
+          },
+        },
       });
 
       return res.status(200).json({
@@ -57,33 +70,57 @@ const Comment = {
     const { video_id, comment } = req.body;
 
     try {
-      if (DetectOffense(comment).offensive) {
-        const user = await prisma.user.findUnique({ where: { id: id } });
-        const status = await prisma.status.findUnique({
-          where: { id: user.status_id },
+      const textDetection = await DetectOffense(comment);
+
+      if (textDetection.offensive) {
+        const user = await prisma.user.findUnique({
+          where: { id: id },
+          include: {
+            Status: true,
+          },
         });
 
-        let newStatus = "";
-
-        if (status.name === "Active") {
-          newStatus = await prisma.status.findUnique({
-            where: { name: "Warning" },
-          });
-        } else {
-          newStatus = await prisma.status.findUnique({
-            where: { name: "Caution" },
+        if (!user) {
+          return res.status(404).json({
+            status: false,
+            message: "User not found",
+            data: null,
           });
         }
 
-        await prisma.user.update({
-          data: { status_id: newStatus },
-        });
+        let newStatus = null;
+
+        if (user.Status.name === "Active") {
+          newStatus = await StatusModel.getStatusByName("warning");
+        } else if (user.Status.name === "Warning") {
+          newStatus = await StatusModel.getStatusByName("caution");
+        } else {
+          await prisma.user.update({
+            where: { id: id },
+            data: { isBanned: true },
+          });
+          return res.status(201).json({
+            status: false,
+            message:
+              "Your account has been banned due to repeated violations of our community guidelines.",
+            data: {
+              isBanned: true,
+            },
+          });
+        }
+
+        if (newStatus) {
+          await prisma.user.update({
+            where: { id: id },
+            data: { status_id: newStatus.id },
+          });
+        }
+
         return res.status(200).json({
           status: false,
-          message: "Offensive Comment",
-          data: {
-            offensive: true,
-          },
+          message:
+            "Your comment is inappropriate and does not align with our community guidelines.",
+          data: { offensive: true },
         });
       }
 
@@ -94,9 +131,10 @@ const Comment = {
           comment: comment,
         },
       });
+
       return res.status(200).json({
         status: true,
-        message: "Comments fetched successfully",
+        message: "Comment created successfully",
         data: createdComment,
       });
     } catch (error) {

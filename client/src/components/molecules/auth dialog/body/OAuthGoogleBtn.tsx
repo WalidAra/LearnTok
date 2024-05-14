@@ -10,6 +10,7 @@ import { useTheme } from "next-themes";
 import { signIn } from "next-auth/react";
 import { useAuthDialog } from "@/providers/AuthDialogProvider";
 import { useFetch } from "@/hooks/useFetch";
+import { toast } from "sonner";
 
 export default function OAuthGoogleBtn() {
   const googleAuth = new GoogleAuthProvider();
@@ -30,7 +31,7 @@ export default function OAuthGoogleBtn() {
       endPoint: "/oauth/google",
     });
 
-    if (res.status === true) {
+    if (res.status === true && res.data.isBanned === false) {
       const nextAuth = await signIn("credentials", {
         token: res.token as string,
         callbackUrl: "/",
@@ -38,6 +39,18 @@ export default function OAuthGoogleBtn() {
       if (nextAuth?.ok) {
         onClose();
       }
+    } else if (res.data.isBanned === true) {
+      toast(
+        "Your account has been banned.",
+        {
+          description:
+            "please don't contact us you piece of human shit.",
+          action: {
+            label: "Close",
+            onClick: () => {},
+          },
+        }
+      );
     }
   };
 

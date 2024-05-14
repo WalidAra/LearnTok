@@ -76,3 +76,14 @@ type User = {
   status_id: string;
   Status: Status;
 };
+
+
+type CommentClip = {
+  id: string;
+  user_id: string;
+  video_id: string;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+  User: PosterCip;
+};

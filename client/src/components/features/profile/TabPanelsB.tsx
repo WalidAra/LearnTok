@@ -91,10 +91,7 @@ const TabPanelsB = ({
           )}
           <TabPanel className="md:flex md:flex-wrap md:gap-6 grid grid-cols-2 gap-2">
             {createdVids.map((video) => (
-              <>
-                <VideoPin key={video.id + "created-profile"} video={video} />
-                <VideoPin key={video.id + "created-profile"} video={video} />
-              </>
+              <VideoPin key={video.id + "created-profile"} video={video} />
             ))}
           </TabPanel>
           <TabPanel className=" md:flex md:flex-wrap md:gap-6 grid grid-cols-2 gap-2">
