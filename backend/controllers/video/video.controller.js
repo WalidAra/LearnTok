@@ -44,15 +44,26 @@ const Video = {
         (following) => following.user_id
       );
 
-      console.log("====================================");
-      console.log(clientFollowings, followingIds);
+
       const videos = await prisma.video.findMany({
         where: {
           user_id: { in: followingIds },
         },
+        include: {
+          User: {
+            select: {
+              bio: true,
+              fullName: true,
+              id: true,
+              picture: true,
+              username: true,
+              Status: true,
+            },
+          },
+        },
       });
 
-      console.log("====================================");
+
       return res.status(200).json({
         status: true,
         message: "Fetched following videos",

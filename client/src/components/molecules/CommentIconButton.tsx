@@ -9,7 +9,7 @@ type Props = {
 
 export default function CommentIconButton({ video_id, user_id }: Props) {
   return (
-    <Link href={``}>
+    <Link href={`/user/${user_id}/videos/${video_id}`}>
       <IconButton>
         <FaRegComment className="size-5" />
       </IconButton>

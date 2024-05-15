@@ -44,9 +44,11 @@ const VideoCard = ({ video, index }: Props) => {
           <Flex className="items-end w-full gap-2">
             <Text fontSize="sm">
               {video.description}
-              <span className="shrink-0 ml-1.5 text-foreground underline cursor-pointer p-0 h-auto">
-                see more
-              </span>
+              <Link href={`/user/${id}/videos/${video.id}`}>
+                <span className="shrink-0 ml-1.5 text-foreground underline cursor-pointer p-0 h-auto">
+                  see more
+                </span>
+              </Link>
             </Text>
           </Flex>
         </Flex>

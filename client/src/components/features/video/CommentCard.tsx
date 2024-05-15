@@ -22,7 +22,7 @@ const CommentCard = ({
 }: Props) => {
   return (
     <Box className="inline-flex gap-3  ">
-      <Link href={`/user/${id}}`}>
+      <Link href={`/user/${id}`}>
         <Avatar
           isBordered
           className="shrink-0"
@@ -33,7 +33,7 @@ const CommentCard = ({
       <div className="w-full">
         <div className="rounded-xl bg-muted inline-flex flex-col p-3">
           <Flex className="items-center gap-1.5">
-            <Link href={`/user/${id}}`}>
+            <Link href={`/user/${id}`}>
               <p className=" cursor-pointer text-muted-foreground hover:underline">
                 {username}
               </p>

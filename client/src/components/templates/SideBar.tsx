@@ -18,7 +18,7 @@ const SideBar = () => {
   return (
     <aside className="inset-y fixed left-0 z-20 flex h-full flex-col border-r border-border">
       <div className="border-b border-border p-2">
-        <Link href={"./"}>
+        <Link href={"/"}>
           <Button variant="outline" size="icon" aria-label="Home">
             <LearnTokLogo size={25} />
           </Button>

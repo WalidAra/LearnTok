@@ -29,16 +29,19 @@ const CommentsContainer = ({ comments, video_id }: Props) => {
   return (
     <Box className="w-full flex-1 flex flex-col gap-4 overflow-hidden ">
       <Box className=" flex-1 gap-3 p-1 flex flex-col overflow-auto">
-        {videoComments.map((comment) => (
-          <CommentCard
-            id={comment.User.id}
-            key={comment.id}
-            comment={comment.comment}
-            picture={comment.User.picture}
-            status_name={comment.User.Status.name}
-            username={comment.User.username}
-          />
-        ))}
+        {videoComments.map((comment) => {
+
+          return (
+            <CommentCard
+              id={comment.User.id}
+              key={comment.id}
+              comment={comment.comment}
+              picture={comment.User.picture}
+              status_name={comment.User.Status.name}
+              username={comment.User.username}
+            />
+          );
+        })}
       </Box>
       <CommentInput
         video_id={video_id}
