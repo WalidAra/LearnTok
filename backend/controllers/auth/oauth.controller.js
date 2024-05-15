@@ -46,7 +46,6 @@ const OAuth = {
 
       user = destructUser(isUser);
       token = createToken(isUser.id, recall);
-      console.log(token);
       return res.status(200).json({
         status: true,
         message: "User created successfully",

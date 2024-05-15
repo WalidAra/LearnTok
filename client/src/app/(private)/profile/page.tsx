@@ -1,7 +1,7 @@
 import MainView from "@/components/atoms/MainView";
 import ProfileInfo from "@/components/features/profile/ProfileInfo";
 import StatusStates from "@/components/utils/StatusStates";
-import { getProfile } from "@/utils/api/private/client";
+import { getProfile } from "@/lib/api/private/client";
 import { auth } from "@/utils/auth";
 import React from "react";
 import ProfileContent from "@/components/utils/ProfileContent";

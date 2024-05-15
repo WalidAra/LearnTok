@@ -77,7 +77,6 @@ type User = {
   Status: Status;
 };
 
-
 type CommentClip = {
   id: string;
   user_id: string;
@@ -86,4 +85,10 @@ type CommentClip = {
   createdAt: string;
   updatedAt: string;
   User: PosterCip;
+};
+
+type Category = {
+  id: string;
+  category: string;
+  videoCount: number;
 };

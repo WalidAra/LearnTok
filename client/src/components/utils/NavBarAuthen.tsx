@@ -1,4 +1,4 @@
-import { getProfile } from "@/utils/api/private/client";
+import { getProfile } from "@/lib/api/private/client";
 import { auth } from "@/utils/auth";
 import { Flex } from "@chakra-ui/react";
 import React from "react";
