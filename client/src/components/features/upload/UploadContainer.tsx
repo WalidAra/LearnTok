@@ -69,9 +69,14 @@ const UploadContainer = ({ token, learnCategories }: Props) => {
         () => {
           setProgress(0);
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+
+            console.log('====================================');
+            console.log(downloadURL);
+            console.log('====================================');
+
             const res = await useFetch({
               method: "POST",
-              endPoint: "",
+              endPoint: "/video/upload",
               body: {
                 title,
                 description,
@@ -81,6 +86,10 @@ const UploadContainer = ({ token, learnCategories }: Props) => {
               token: token,
               TokenInclude: true,
             });
+
+            console.log('====================================');
+            console.log(res);
+            console.log('====================================');
 
             if (res.status === true) {
               router.push("/profile");
@@ -116,6 +125,18 @@ const UploadContainer = ({ token, learnCategories }: Props) => {
           });
         }
       );
+    }else {
+       toast(
+         "Wrong format",
+         {
+           description:
+            "select video with format mp4,ogg or webm",
+           action: {
+             label: "Undo",
+             onClick: () => {},
+           },
+         }
+       );
     }
   };
 
@@ -158,7 +179,7 @@ const UploadContainer = ({ token, learnCategories }: Props) => {
               key={category.id}
               value={category.id}
               onClick={() => {
-                handleCategoryChange(category.category);
+                handleCategoryChange(category.id);
               }}
             >
               {category.category}
