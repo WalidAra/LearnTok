@@ -5,34 +5,33 @@ const User = {
   getStatusStatesUser: async (req, res) => {
     const { id } = req.params;
     try {
+      const followers = await prisma.follow.findMany({
+        where: {
+          user_id: id,
+        },
+      });
 
-       const followers = await prisma.follow.findMany({
-         where: {
-           user_id: id,
-         },
-       });
+      const followings = await prisma.follow.findMany({
+        where: {
+          client_id: id,
+        },
+      });
 
-       const followings = await prisma.follow.findMany({
-         where: {
-           client_id: id,
-         },
-       });
+      const likes = await prisma.like.findMany({
+        where: {
+          user_id: id,
+        },
+      });
 
-       const likes = await prisma.like.findMany({
-         where: {
-           user_id: id,
-         },
-       });
-
-       return res.status(201).json({
-         message: "got user statuses",
-         status: true,
-         data: {
-           likes: likes.length,
-           followings: followings.length,
-           followers: followers.length,
-         },
-       });
+      return res.status(201).json({
+        message: "got user statuses",
+        status: true,
+        data: {
+          likes: likes.length,
+          followings: followings.length,
+          followers: followers.length,
+        },
+      });
     } catch (error) {
       return res.status(500).json({
         message: "Internal server error",
@@ -95,6 +94,10 @@ const User = {
               },
             },
           ],
+        },
+
+        include: {
+          Status: true,
         },
       });
 

@@ -87,10 +87,6 @@ const UploadContainer = ({ token, learnCategories }: Props) => {
               TokenInclude: true,
             });
 
-            console.log('====================================');
-            console.log(res);
-            console.log('====================================');
-
             if (res.status === true) {
               router.push("/profile");
             } else if (res.status === false && res.data?.offensive === true) {

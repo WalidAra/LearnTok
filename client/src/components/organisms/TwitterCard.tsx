@@ -4,12 +4,12 @@ import Badge from "../atoms/Badge";
 import { defaultPic } from "@/assets/pfp";
 import { cn } from "@/lib/utils";
 
+
 type Props = {
   username: string;
   fullName: string;
   pic: string;
   status_name: string;
-  popOver?: boolean;
   hoverUsername?: boolean;
 };
 
@@ -18,7 +18,6 @@ const TwitterCard = ({
   pic,
   status_name,
   username,
-  popOver = false,
   hoverUsername = false,
 }: Props) => {
   return (

@@ -88,6 +88,19 @@ const Video = {
             mode: "insensitive",
           },
         },
+
+        include: {
+          User: {
+            select: {
+              bio: true,
+              fullName: true,
+              id: true,
+              picture: true,
+              username: true,
+              Status: true,
+            },
+          },
+        },
       });
 
       return res.status(200).json({
