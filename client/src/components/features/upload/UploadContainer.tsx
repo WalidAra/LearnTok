@@ -54,6 +54,7 @@ const UploadContainer = ({ token, learnCategories }: Props) => {
   const [file, setFile] = useState<File | null>(null);
   const [progress, setProgress] = useState<number>(0);
   const [categoryError, setCategoryError] = useState<boolean>(false);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const Reset = useCallback(() => {
     setCategories([]);
@@ -78,10 +79,16 @@ const UploadContainer = ({ token, learnCategories }: Props) => {
   );
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (isUploading === true) {
+      return;
+    }
+
+    setIsUploading(true);
+
     if (categories.length === 0) {
       setCategoryError(true);
       return;
-    }  
+    }
 
     const fileTypes = ["video/mp4", "video/webm", "video/ogg"];
 
@@ -166,6 +173,8 @@ const UploadContainer = ({ token, learnCategories }: Props) => {
         },
       });
     }
+
+    setIsUploading(false);
   };
 
   return (
