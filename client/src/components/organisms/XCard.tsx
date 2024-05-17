@@ -1,14 +1,9 @@
 import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Avatar,
-} from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Avatar } from "@nextui-org/react";
 import { defaultPic } from "@/assets/pfp";
 import FollowCheck from "../utils/FollowCheck";
 import Link from "next/link";
-import CardFooterXCard from "./x card/CardFooterXcard";
+import CardFooterXCard from "./x card/CardFooterXCard";
 
 type Props = {
   user: User;
