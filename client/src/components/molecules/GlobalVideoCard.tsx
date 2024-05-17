@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { User } from "@nextui-org/react";
 import React from "react";
 import Link from "next/link";
@@ -46,7 +46,11 @@ const GlobalVideoCard = async ({ video }: Props) => {
           />
 
           <div className="mt-3">
-            <div className="font-semibold line-clamp-2">{video.title}</div>
+            <div className="font-semibold line-clamp-2 text-lg">{video.title}</div>
+            <Text className="line-clamp-2 font-medium" fontSize={"13px"}>
+              {" "}
+              {video.description}{" "}
+            </Text>
             <div className="flex items-center space-x-1 text-xs text-[#A3A3A3] mt-1">
               <span> {formatNumber(video.views_count)} views </span>
               <span>•</span>

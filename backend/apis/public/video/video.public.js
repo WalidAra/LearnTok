@@ -5,6 +5,7 @@ const Comment = require("../../../controllers/comment/comment.controller");
 const router = express.Router();
 
 router.get("/", Video.getVideos);
+router.post("/category", Video.getVideoBasedOnCategory);
 router.post("/search", Video.searchVideos);
 router.get("/:id", Video.getVideoByID);
 router.post("/:id/views", View.getVideoViews);

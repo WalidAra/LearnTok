@@ -44,7 +44,6 @@ const Video = {
         (following) => following.user_id
       );
 
-
       const videos = await prisma.video.findMany({
         where: {
           user_id: { in: followingIds },
@@ -62,7 +61,6 @@ const Video = {
           },
         },
       });
-
 
       return res.status(200).json({
         status: true,
@@ -314,9 +312,60 @@ const Video = {
     }
   },
 
+  getVideoBasedOnCategory: async (req, res) => {
+    const { category } = req.body;
+    try {
+      const cat = await prisma.category.findFirst({
+        where: {
+          category: category,
+        },
+      });
+
+      const videoCategories = await prisma.videoCategory.findMany({
+        where: {
+          category_id: cat.id,
+        },
+      });
+
+      const videoIds = videoCategories.map((v) => v.video_id);
+
+      const videos = await prisma.video.findMany({
+        where: {
+          id: {
+            in: videoIds,
+          },
+        },
+        include: {
+          User: {
+            select: {
+              bio: true,
+              fullName: true,
+              id: true,
+              picture: true,
+              username: true,
+              Status: true,
+            },
+          },
+        },
+      });
+
+      return res.status(201).json({
+        status: true,
+        message: "Fetched video based category",
+        data: videos,
+      });
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json({
+        status: false,
+        message: "Internal Server Error",
+        data: null,
+      });
+    }
+  },
+
   getVideos: async (req, res) => {
     const { page } = req.body;
-
     try {
       const videos = await videoModel.getVideos({}, page);
 
