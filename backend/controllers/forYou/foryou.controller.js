@@ -58,6 +58,18 @@ const ForYou = {
                 },
               },
             },
+            include: {
+              User: {
+                select: {
+                  bio: true,
+                  fullName: true,
+                  id: true,
+                  picture: true,
+                  username: true,
+                  Status: true,
+                },
+              },
+            },
           });
           return temp;
         })

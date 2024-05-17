@@ -1,6 +1,8 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react-hooks/rules-of-hooks */
+
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "@/utils/firebase";
 import VideoButtonHolder from "./VideoButtonHolder";
@@ -15,6 +17,24 @@ import { Spinner } from "@nextui-org/react";
 import { useFetch } from "@/hooks/useFetch";
 import { toast } from "sonner";
 import { signOut } from "next-auth/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/cli/shadcn/form";
+import { Textarea } from "@/components/cli/shadcn/textarea";
+
+const formSchema = z.object({
+  title: z.string().min(2).max(50),
+  description: z.string().min(10).max(100),
+});
 
 type Props = {
   token: string;
@@ -22,33 +42,46 @@ type Props = {
 };
 
 const UploadContainer = ({ token, learnCategories }: Props) => {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      description: "",
+      title: "",
+    },
+  });
   const router = useRouter();
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
   const [categories, setCategories] = useState<string[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [progress, setProgress] = useState<number>(0);
+  const [categoryError, setCategoryError] = useState<boolean>(false);
 
-  const Reset = () => {
-    setTitle("");
-    setDescription("");
+  const Reset = useCallback(() => {
     setCategories([]);
     setFile(null);
     setProgress(0);
-  };
+  }, []);
 
-  const handleCategoryChange = (category: string) => {
-    const index = categories.indexOf(category);
+  const handleCategoryChange = useCallback(
+    (category: string) => {
+      if (categories.length > 0 && categoryError === true) {
+        setCategoryError(false);
+      }
+      const index = categories.indexOf(category);
 
-    if (index === -1) {
-      setCategories([...categories, category]);
-    } else {
-      setCategories(categories.filter((c) => c !== category));
-    }
-  };
+      if (index === -1) {
+        setCategories([...categories, category]);
+      } else {
+        setCategories(categories.filter((c) => c !== category));
+      }
+    },
+    [categories, categoryError]
+  );
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (categories.length === 0) {
+      setCategoryError(true);
+      return;
+    }  
 
     const fileTypes = ["video/mp4", "video/webm", "video/ogg"];
 
@@ -69,17 +102,12 @@ const UploadContainer = ({ token, learnCategories }: Props) => {
         () => {
           setProgress(0);
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-
-            console.log('====================================');
-            console.log(downloadURL);
-            console.log('====================================');
-
             const res = await useFetch({
               method: "POST",
               endPoint: "/video/upload",
               body: {
-                title,
-                description,
+                title: values.title,
+                description: values.description,
                 url: downloadURL,
                 categories,
               },
@@ -121,95 +149,136 @@ const UploadContainer = ({ token, learnCategories }: Props) => {
           });
         }
       );
-    }else {
-       toast(
-         "Wrong format",
-         {
-           description:
-            "select video with format mp4,ogg or webm",
-           action: {
-             label: "Undo",
-             onClick: () => {},
-           },
-         }
-       );
+    } else if (file === null) {
+      toast("Select a video to upload", {
+        description: "select video with format mp4,ogg or webm",
+        action: {
+          label: "Undo",
+          onClick: () => {},
+        },
+      });
+    } else {
+      toast("Wrong format", {
+        description: "select video with format mp4,ogg or webm",
+        action: {
+          label: "Undo",
+          onClick: () => {},
+        },
+      });
     }
   };
 
   return (
-    <div className="w-full flex justify-center md:justify-normal flex-wrap items-center gap-4 ">
-      {file !== null ? (
-        <VideoHolder file={file} setFile={setFile} />
-      ) : (
-        <VideoButtonHolder setFile={setFile} />
-      )}
-      <Box className="flex flex-col gap-4 w-full md:w-112">
-        <div className="grid w-full items-center gap-1.5">
-          <Label htmlFor="title">Title</Label>
-          <Input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            type="title"
-            id="title"
-            placeholder="Title"
-          />
-        </div>
-        <div className="grid w-full gap-1.5">
-          <Label htmlFor="description">Description</Label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="border border-border rounded-md p-4 bg-transparent h-28"
-            placeholder="Type your description here."
-            id="description"
-          />
-          <p className="text-sm text-muted-foreground">
-            This is your description video.
-          </p>
-        </div>
-
-        <div className="w-full flex flex-wrap gap-2 shadow-none">
-          {learnCategories.map((category) => (
-            <Toggle
-              variant={"outline"}
-              key={category.id}
-              value={category.id}
-              onClick={() => {
-                handleCategoryChange(category.id);
-              }}
-            >
-              {category.category}
-            </Toggle>
-          ))}
-        </div>
-
-        <Flex className="items-center gap-4">
-          <Button
-            onClick={Reset}
-            className="border flex items-center gap-2 border-border"
-            variant={"secondary"}
-          >
-            Cancel
-          </Button>
-          <Button className="relative" onClick={handleSubmit}>
-            <Box
-              height={"100%"}
-              w={progress}
-              className="bg-white/10 absolute left-0 h-full top-0 duration-200"
-            ></Box>
-            {progress > 0 ? (
-              <Flex className="items-center gap-2">
-                <Spinner color="default" className="border-white" size="sm" />
-
-                <p>Uploading...</p>
-              </Flex>
-            ) : (
-              "Upload"
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="w-full flex justify-center md:justify-normal flex-wrap items-center gap-6 "
+      >
+        {file !== null ? (
+          <VideoHolder file={file} setFile={setFile} />
+        ) : (
+          <VideoButtonHolder setFile={setFile} />
+        )}
+        <Box className="flex flex-col gap-4 w-full md:w-112">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input
+                    className=" md:w-96 xl:w-112 2xl:128 w-full"
+                    placeholder="Title"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is your video's display title.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
             )}
-          </Button>
-        </Flex>
-      </Box>
-    </div>
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    className=" md:w-96 xl:w-112 2xl:128 w-full"
+                    placeholder="Type your description here."
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is your video's description.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="w-full flex flex-col gap-4">
+            <div className="w-full flex flex-col gap-4">
+              <Label
+                htmlFor="message"
+                className={categoryError ? "text-destructive" : ""}
+              >
+                Choose the category
+              </Label>
+              <div className="w-full flex flex-wrap gap-2 shadow-none">
+                {learnCategories.map((category) => (
+                  <Toggle
+                    variant={"outline"}
+                    key={category.id}
+                    value={category.id}
+                    onClick={() => {
+                      handleCategoryChange(category.id);
+                    }}
+                  >
+                    {category.category}
+                  </Toggle>
+                ))}
+              </div>
+            </div>
+            <p
+              key=":r1:-form-item-message"
+              className="text-[0.8rem] ml-2 font-medium text-destructive"
+            >
+              {categoryError === true && "Pick one category at least"}
+            </p>
+          </div>
+
+          <Flex className="items-center gap-4">
+            <Button
+              onClick={Reset}
+              className="border flex items-center gap-2 border-border"
+              variant={"secondary"}
+            >
+              Cancel
+            </Button>
+            <Button className="relative" type="submit">
+              <Box
+                height={"100%"}
+                w={progress}
+                className="bg-white/10 absolute left-0 h-full top-0 duration-200"
+              ></Box>
+              {progress > 0 ? (
+                <Flex className="items-center gap-2">
+                  <Spinner color="default" className="border-white" size="sm" />
+
+                  <p>Uploading...</p>
+                </Flex>
+              ) : (
+                "Upload"
+              )}
+            </Button>
+          </Flex>
+        </Box>
+      </form>
+    </Form>
   );
 };
 

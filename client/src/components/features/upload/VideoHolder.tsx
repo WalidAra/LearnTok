@@ -15,7 +15,7 @@ type Props = {
   setFile: Dispatch<SetStateAction<File | null>>;
 };
 
-export default function VideoHolder({ file, setFile }: Props) {
+ function VideoHolder({ file, setFile }: Props) {
   const delVideo = () => {
     setFile(null);
   };
@@ -23,8 +23,8 @@ export default function VideoHolder({ file, setFile }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <video
-        autoPlay
         controls
+        autoPlay
         src={URL.createObjectURL(file)}
         className="w-[260px] aspect-[9/16] object-cover rounded-md"
       ></video>
@@ -53,3 +53,6 @@ export default function VideoHolder({ file, setFile }: Props) {
     </div>
   );
 }
+
+
+export default React.memo(VideoHolder);

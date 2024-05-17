@@ -27,7 +27,7 @@ const Following = async () => {
               {res.data.map((video: VideoClip, index: number) => (
                 <VideoCard
                   index={index}
-                  key={video.id + "-" + "home"}
+                  key={video.id + "-" + "following"}
                   video={video}
                 />
               ))}
