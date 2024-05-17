@@ -11,16 +11,17 @@ type Props = {
 export default function CategoryNavItem({ category: { category, id } }: Props) {
   const pathname = usePathname();
 
+  // URL encode the category name for safe inclusion in URLs
   const encodedCategory = encodeURIComponent(category);
 
+  // Determine the href for the link
   const href =
-    pathname === "/discover" && category === "all"
-      ? "/discover"
-      : `/discover/${encodedCategory}`;
+    category === "all" ? "/discover" : `/discover/${encodedCategory}`;
 
+  // Determine the button variant based on the current pathname
   const isActive =
-    (pathname === "/discover" && category === "all") ||
-    pathname === `/discover/${encodedCategory}`;
+    (category === "all" && pathname === "/discover") ||
+    (category !== "all" && pathname === `/discover/${encodedCategory}`);
 
   return (
     <Link className="inline" href={href}>
