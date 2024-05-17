@@ -10,13 +10,10 @@ const PORT = 9090;
 app.use(express.json());
 
 mongoose
-  .connect(
-    "mongodb+srv://walid:8v1v3YVhk7T90VlN@learntokcluster.p4n0emi.mongodb.net/learntok?retryWrites=true&w=majority&appName=learntokCluster",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to MongoDB");
   })
