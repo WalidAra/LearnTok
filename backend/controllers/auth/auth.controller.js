@@ -254,7 +254,7 @@ const Auth = {
         ...isUser,
         bio: bio ? bio : isUser.bio,
         email: email ? email : isUser.email,
-        fullName: fullName ? fullName : isUser.fullName,
+        fullName: fullName && !/\s/.test(fullName) ? fullName : isUser.fullName,
         password: password ? hashedPwd : isUser.password,
         username: username ? username : isUser.username,
         picture: picture ? picture : isUser.picture,
