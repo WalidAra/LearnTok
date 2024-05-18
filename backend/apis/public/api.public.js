@@ -11,5 +11,6 @@ router.use("/categories", require("./category/category.public"));
 router.use("/videos", require("./video/video.public"));
 router.use("/comment", require("./comment/comment.public"));
 router.use("/trending", require("./trending/trending.public"));
+router.use("/popular", require("./popular/popular.public"));
 
 module.exports = router;
