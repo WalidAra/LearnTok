@@ -1,13 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-
-import React, { useState } from "react";
-import IconButton from "../atoms/IconButton";
-import { toast } from "sonner";
-import { useAuthDialog } from "@/providers/AuthDialogProvider";
-import { LuBookmark } from "react-icons/lu";
-import { IoBookmark } from "react-icons/io5";
 import { useFetch } from "@/hooks/useFetch";
+import { useAuthDialog } from "@/providers/AuthDialogProvider";
+import React, { useState } from "react";
+import { toast } from "sonner";
 
 type Props = {
   video_id: string;
@@ -15,14 +11,12 @@ type Props = {
   isAuthenticated?: boolean;
   isSaved: boolean;
 };
-
-const BookmarkIconButton = ({
+export default function BookmarkToggle({
   isSaved,
   token,
   video_id,
   isAuthenticated,
-}: Props) => {
-
+}: Props) {
   const [saved, setSaved] = useState(isSaved);
   const { onOpen } = useAuthDialog();
 
@@ -49,14 +43,15 @@ const BookmarkIconButton = ({
   };
 
   return (
-    <IconButton isLiked={saved} onActive="bg-lightOrange text-white" onClick={HandleSavingBookmark}>
-      {saved ? (
-        <IoBookmark className="size-5" />
-      ) : (
-        <LuBookmark className="size-5" />
-      )}
-    </IconButton>
+    <label className="ui-bookmark z-30 shrink-0">
+      <input checked={saved} onChange={HandleSavingBookmark} type="checkbox" />
+      <div className="bookmark">
+        <svg viewBox="0 0 32 32">
+          <g>
+            <path d="M27 4v27a1 1 0 0 1-1.625.781L16 24.281l-9.375 7.5A1 1 0 0 1 5 31V4a4 4 0 0 1 4-4h14a4 4 0 0 1 4 4z"></path>
+          </g>
+        </svg>
+      </div>
+    </label>
   );
-};
-
-export default BookmarkIconButton;
+}

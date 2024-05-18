@@ -12,12 +12,18 @@ import {
   TabPanel,
 } from "@chakra-ui/react";
 import VideoPin from "./VideoPin";
+import ProfileBookmarkToggle from "@/components/utils/ProfileBookmarkToggle";
+import ProfileLikeToggle from "@/components/utils/ProfileLikeToggle";
+import ModifyMenu from "./pin/ModifyMenu";
+import DeleteVideoProvider from "@/providers/DeleteVideoProvider";
+import DeleteVideoDialog from "@/components/molecules/DeleteVideoDialog";
 
 type Props = {
   createdVids: VideoClip[];
   savedVids: VideoClip[];
   likedVids: VideoClip[];
   isClient?: boolean;
+  token?: string;
 };
 
 const TabPanelsB = ({
@@ -25,6 +31,7 @@ const TabPanelsB = ({
   likedVids,
   savedVids,
   isClient = false,
+  token,
 }: Props) => {
   return (
     <section className="w-full flex flex-col flex-1 ">
@@ -85,18 +92,24 @@ const TabPanelsB = ({
           {isClient && (
             <TabPanel className=" md:flex md:flex-wrap md:gap-6 grid grid-cols-2 gap-2">
               {savedVids.map((video) => (
-                <VideoPin key={video.id + "collected-profile"} video={video} />
+                <VideoPin key={video.id + "collected-profile"} video={video}>
+                  <ProfileBookmarkToggle video_id={video.id} />
+                </VideoPin>
               ))}
             </TabPanel>
           )}
           <TabPanel className="md:flex md:flex-wrap md:gap-6 grid grid-cols-2 gap-2">
             {createdVids.map((video) => (
-              <VideoPin key={video.id + "created-profile"} video={video} />
+              <VideoPin key={video.id + "created-profile"} video={video}>
+                <ModifyMenu token={token as string} video_id={video.id} />
+              </VideoPin>
             ))}
           </TabPanel>
           <TabPanel className=" md:flex md:flex-wrap md:gap-6 grid grid-cols-2 gap-2">
             {likedVids.map((video) => (
-              <VideoPin key={video.id + "liked-profile"} video={video} />
+              <VideoPin key={video.id + "liked-profile"} video={video}>
+                <ProfileLikeToggle video_id={video.id} />
+              </VideoPin>
             ))}
           </TabPanel>
         </TabPanels>

@@ -10,11 +10,19 @@ const Video = {
       const trendingVideos = await prisma.video.findMany({
         orderBy: [{ likes_count: "desc" }, { views_count: "desc" }],
         take: 10,
+        include: {
+          User: {
+            select: {
+              bio: true,
+              fullName: true,
+              id: true,
+              picture: true,
+              username: true,
+              Status: true,
+            },
+          },
+        },
       });
-
-      console.log("====================================");
-      console.log(trendingVideos);
-      console.log("====================================");
 
       return res.status(200).json({
         status: true,
@@ -151,29 +159,24 @@ const Video = {
     const { video_id } = req.body;
 
     try {
-      const currentVideo = await prisma.video.findUnique({
+      const delVideo = await prisma.video.delete({
         where: {
           id: video_id,
         },
       });
 
-      const currentCategory = await prisma.category.findUnique({
+      const videoCategory = await prisma.videoCategory.delete({
         where: {
-          id: currentVideo.category_id,
+          video_id: video_id,
         },
       });
 
-      await prisma.category.update({
+      const updatedCategoryCount = await prisma.category.update({
         where: {
-          id: currentCategory.id,
+          id: currentVideo.category_id,
         },
         data: {
-          videoCount: currentCategory.videoCount - 1,
-        },
-      });
-      await prisma.video.delete({
-        where: {
-          id: currentVideo.id,
+          videoCount: currentVideo.videoCount - 1,
         },
       });
 

@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get("/", Video.getVideos);
 router.post("/category", Video.getVideoBasedOnCategory);
+router.get("/trending", Video.getTrendingVideos);
 router.post("/search", Video.searchVideos);
 router.get("/:id", Video.getVideoByID);
 router.post("/:id/views", View.getVideoViews);

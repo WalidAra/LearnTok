@@ -2,29 +2,31 @@
 import { useFetch } from "@/hooks/useFetch";
 import { auth } from "@/utils/auth";
 import React from "react";
-import TabPanelsB from "../features/profile/TabPanelsB";
+import BookmarkToggle from "../features/profile/pin/BookmarkToggle";
 
-const ProfileContent = async () => {
+type Props = {
+  video_id: string;
+};
+
+export default async function ProfileBookmarkToggle({ video_id }: Props) {
   const session = await auth();
 
   if (session && session.user?.name) {
     const res = await useFetch({
-      method: "GET",
-      endPoint: "/auth/videos-book",
+      method: "POST",
+      body: { video_id },
+      endPoint: "/auth/reactors",
       token: session.user.name,
       TokenInclude: true,
     });
 
     return (
-      <TabPanelsB
-        createdVids={res.data.created}
-        likedVids={res.data.liked}
-        savedVids={res.data.saved}
-        isClient
+      <BookmarkToggle
+        isSaved={res.data.isBookmarked}
         token={session.user.name}
+        video_id={video_id}
+        isAuthenticated={true}
       />
     );
   }
-};
-
-export default ProfileContent;
+}
