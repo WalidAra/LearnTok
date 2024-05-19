@@ -10,6 +10,6 @@ router.use("/comment", require("./comment/comment.private"));
 router.use("/bookmark", require("./bookmark/bookmark.private"));
 router.use("/for-you", require("./forYou/you.private.js"));
 router.use("/token", require("./token/token.private.js"));
-router.use("/notifications", require("./notifications/note.private.js"));
+router.use("/bells", require("./bell/bell.private.js"));
 
 module.exports = router;

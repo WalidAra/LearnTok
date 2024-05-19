@@ -22,7 +22,7 @@ export default async function Home() {
             ))}
           </ClipKit>
         ) : (
-          <div>There are no videos currently be first content creator :D </div>
+          <h1 className="text-ph" >There are no videos currently be first content creator :D </h1>
         )}
       </Suspense>
     </MainView>

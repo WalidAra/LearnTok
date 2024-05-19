@@ -25,6 +25,14 @@ const Follow = {
         },
       });
 
+      await prisma.notification.create({
+        data: {
+          type: "follow",
+          content: "hehe",
+          user_id: user_id,
+        },
+      });
+
       return res.status(200).json({
         status: true,
         message: isFollow

@@ -79,6 +79,9 @@ const config = {
         lightOrange: "#ff7551",
         lightRed: "#ec5252",
 
+        header:"hsl(--h)",
+        ph:"hsl(--p)",
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

@@ -132,6 +132,20 @@ const Comment = {
         },
       });
 
+      const vid = await prisma.video.findUnique({
+        where: {
+          id: video_id,
+        },
+      });
+
+      await prisma.notification.create({
+        data: {
+          type: "comment",
+          comment,
+          user_id: vid.user_id,
+        },
+      });
+
       return res.status(200).json({
         status: true,
         message: "Comment created successfully",
