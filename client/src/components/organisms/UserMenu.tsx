@@ -44,7 +44,7 @@ const UserMenu = ({ client }: Props) => {
           />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mt-4 w-60 shadow-none p-2 rounded-xl mr-5 sm:mr-0">
+      <DropdownMenuContent className="mt-4 w-60 bg-secondary border-border outline-0 shadow-none p-2 rounded-xl mr-5 sm:mr-0">
         <DropdownMenuLabel className="font-normal">
           <TwitterCard
             username={client.username}

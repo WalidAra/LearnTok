@@ -21,7 +21,7 @@ const SettingContainer = async ({ token }: Props) => {
         <div className="flex-col flex gap-6">
           <SessionPart />
           <NewsLetter />
-          <DeleteProfile />
+          <DeleteProfile token={token} />
         </div>
       </div>
     );

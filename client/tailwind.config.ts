@@ -80,7 +80,7 @@ const config = {
         lightRed: "#ec5252",
 
         header:"hsl(--h)",
-        ph:"hsl(--p)",
+        p:"hsl(--p)",
 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

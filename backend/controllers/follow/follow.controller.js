@@ -83,7 +83,7 @@ const Follow = {
             comment_id: "",
             content: ` followed you`,
             client_id: id,
-            type: "comment",
+            type: "follow",
             whoFollowed: user_id,
             user_id: user_id,
           },

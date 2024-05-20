@@ -1,12 +1,16 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import { Button } from "@/components/cli/shadcn/button";
-// import { useDeleteDialog } from "@/context/DeleteAccount";
+import { useFetch } from "@/hooks/useFetch";
 import { Box } from "@chakra-ui/react";
+import { signOut } from "next-auth/react";
 import React from "react";
 
-export default function DeleteProfile() {
-  //   const { onOpen } = useDeleteDialog();
+type Props = {
+  token: string;
+};
 
+export default function DeleteProfile({ token }: Props) {
   return (
     <div className="border border-border w-full p-2 md:p-4 rounded-md flex justify-between flex-wrap items-center gap-6">
       <Box className="flex flex-col">
@@ -16,7 +20,20 @@ export default function DeleteProfile() {
         </p>
       </Box>
 
-      <Button>Delete account</Button>
+      <Button
+        onClick={async () => {
+          await useFetch({
+            method: "DELETE",
+            endPoint: "/auth/delete",
+            token: token,
+            TokenInclude: true,
+          });
+
+          await signOut({ callbackUrl: "/", redirect: true });
+        }}
+      >
+        Delete account
+      </Button>
     </div>
   );
 }

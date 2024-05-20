@@ -10,7 +10,7 @@ const Trending = async () => {
   const res = await useFetch({ method: "GET", endPoint: "/videos/trending" });
 
   return (
-    <MainView className="grid grid-cols-1  overflow-hidden md:grid-cols-2 gap-4 md:p-4 p-2">
+    <MainView className="grid grid-cols-1 text-foreground overflow-auto md:grid-cols-2 gap-4 md:p-4 p-2">
       <section className="flex flex-col gap-4 overflow-auto h-full items-end px-2">
         <Suspense fallback={<Loading />}>
           {res.data.map((v: VideoClip) => (
@@ -19,7 +19,7 @@ const Trending = async () => {
         </Suspense>
       </section>
 
-      <section className="hidden md:flex flex-col gap-4 w-96 h-full ">
+      <section className="hidden md:flex flex-col gap-4 w-[420px] h-full ">
         <PopularUsers />
         <PopularSearches />
       </section>

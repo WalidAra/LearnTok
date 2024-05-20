@@ -2,7 +2,7 @@
 "use client";
 import { useFetch } from "@/hooks/useFetch";
 import { useAuthDialog } from "@/providers/AuthDialogProvider";
-import { Button } from "@nextui-org/react";
+import { Button, cn } from "@nextui-org/react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -48,8 +48,10 @@ const FollowButton = ({
 
   return (
     <Button
-      className="font-medium"
-      color="danger"
+      className={cn(
+        "font-medium",
+        isFollowing ? "border border-primary text-primary" : "bg-secondary"
+      )}
       size="sm"
       radius="full"
       onClick={handleClick}

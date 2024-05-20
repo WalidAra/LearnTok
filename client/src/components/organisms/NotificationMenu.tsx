@@ -2,9 +2,6 @@ import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/cli/shadcn/dropdown-menu";
 import {
@@ -33,16 +30,12 @@ const NotificationMenu = async ({ token }: Props) => {
     endPoint: "/bells/",
   });
 
-  console.log("====================================");
-  console.log(notes.data);
-  console.log("====================================");
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="relative"
+          className="relative  text-foreground"
           size="icon"
           aria-label="Home"
         >
@@ -54,7 +47,7 @@ const NotificationMenu = async ({ token }: Props) => {
           <LuBell className="size-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mr-4 mt-5 p-3 flex flex-col gap-3 w-full md:w-auto shadow-none">
+      <DropdownMenuContent className="mr-4 mt-5 p-3 bg-secondary border-border  flex flex-col gap-3 w-full md:w-auto shadow-none">
         <Flex className="justify-between font-semibold items-center">
           <h2 className="text-xl">Your notifications</h2>
 
@@ -89,17 +82,43 @@ const NotificationMenu = async ({ token }: Props) => {
           </TabsList>
           <TabsContent className="flex flex-col gap-3" value="all">
             {notes.data.all.map((c: Note) => (
-              <NotePin createdAt={c.createdAt} key={c.id} msg={c.content} user_id={c.user_id} />
+              <NotePin
+                createdAt={c.createdAt}
+                key={c.id}
+                msg={c.content}
+                user_id={c.user_id}
+              />
             ))}
           </TabsContent>
           <TabsContent className="flex flex-col gap-3" value="comments">
-            comments
+            {notes.data.comments.map((c: Note) => (
+              <NotePin
+                createdAt={c.createdAt}
+                key={c.id}
+                msg={c.content}
+                user_id={c.user_id}
+              />
+            ))}
           </TabsContent>
           <TabsContent className="flex flex-col gap-3" value="followers">
-            followers
+            {notes.data.follows.map((c: Note) => (
+              <NotePin
+                createdAt={c.createdAt}
+                key={c.id}
+                msg={c.content}
+                user_id={c.user_id}
+              />
+            ))}
           </TabsContent>
           <TabsContent className="flex flex-col gap-3" value="likes">
-            Likes.
+            {notes.data.follows.map((c: Note) => (
+              <NotePin
+                createdAt={c.createdAt}
+                key={c.id}
+                msg={c.content}
+                user_id={c.user_id}
+              />
+            ))}
           </TabsContent>
         </Tabs>
 

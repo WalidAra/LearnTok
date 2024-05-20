@@ -24,11 +24,13 @@ const TwitterCard = ({
     <User
       className="gap-3"
       name={
-        <div className="flex items-center gap-2">
+        <div className="flex  items-center gap-2">
           <span
             className={cn(
               "",
-              hoverUsername ? "hover:underline cursor-pointer" : ""
+              hoverUsername
+                ? "text-foreground hover:underline cursor-pointer"
+                : ""
             )}
           >
             {username}

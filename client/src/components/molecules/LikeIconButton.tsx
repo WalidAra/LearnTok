@@ -51,7 +51,7 @@ export default function LikeIconButton({
   return (
     <IconButton
       isLiked={liked}
-      onActive="text-white bg-lightRed"
+      onActive="text-white bg-lightRed "
       onClick={HandleToggleLike}
     >
       {liked ? <FaHeart className="size-5" /> : <LuHeart className="size-5" />}

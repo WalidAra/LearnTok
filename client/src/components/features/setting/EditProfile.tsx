@@ -81,7 +81,7 @@ export default function EditProfile({ user }: Props) {
             onChange={(e) => setLastName(e.target.value)}
             type="last"
             id="last"
-            placeholder="Email"
+            placeholder="Last name"
           />
         </div>
       </Box>

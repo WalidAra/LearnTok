@@ -10,7 +10,7 @@ const Settings = async () => {
 
   if (session && session.user?.name) {
     return (
-      <MainView className="w-full overflow-auto relative p-2 md:p-3">
+      <MainView className="w-full overflow-auto text-foreground relative p-2 md:p-3">
         <UserUpdateProvider>
           <SettingContainer token={session.user.name} />
         </UserUpdateProvider>

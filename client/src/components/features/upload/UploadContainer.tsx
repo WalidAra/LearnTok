@@ -30,6 +30,7 @@ import {
   FormMessage,
 } from "@/components/cli/shadcn/form";
 import { Textarea } from "@/components/cli/shadcn/textarea";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   title: z.string().min(2).max(50),
@@ -233,13 +234,17 @@ const UploadContainer = ({ token, learnCategories }: Props) => {
             <div className="w-full flex flex-col gap-4">
               <Label
                 htmlFor="message"
-                className={categoryError ? "text-destructive" : ""}
+                className={cn(
+                  "text-foreground",
+                  categoryError ? "text-destructive" : ""
+                )}
               >
                 Choose the category
               </Label>
               <div className="w-full flex flex-wrap gap-2 shadow-none">
                 {learnCategories.map((category) => (
                   <Toggle
+                    className="text-foreground"
                     variant={"outline"}
                     key={category.id}
                     value={category.id}
