@@ -18,12 +18,25 @@ import { LuBell, LuCheckCheck } from "react-icons/lu";
 import NoteBadge from "../atoms/NoteBadge";
 import { Button } from "../cli/shadcn/button";
 import { cn } from "@/lib/utils";
+import { useFetch } from "@/hooks/useFetch";
+import NotePin from "./NotePin";
 
 type Props = {
   token: string;
 };
 
 const NotificationMenu = async ({ token }: Props) => {
+  const notes = await useFetch({
+    method: "GET",
+    token: token,
+    TokenInclude: true,
+    endPoint: "/bells/",
+  });
+
+  console.log("====================================");
+  console.log(notes.data);
+  console.log("====================================");
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -54,22 +67,40 @@ const NotificationMenu = async ({ token }: Props) => {
         <Tabs defaultValue="all" className="">
           <TabsList>
             <TabsTrigger className="flex items-center gap-2" value="all">
-              View all <NoteBadge count={4} />{" "}
+              View all{" "}
+              <NoteBadge
+                count={
+                  notes.data.likes.length +
+                  notes.data.comments.length +
+                  notes.data.follows.length
+                }
+              />
             </TabsTrigger>
             <TabsTrigger className="flex items-center gap-2" value="comments">
-              comments <NoteBadge count={4} />{" "}
+              comments <NoteBadge count={notes.data.comments.length} />
             </TabsTrigger>
             <TabsTrigger className="flex items-center gap-2" value="followers">
-              Followers <NoteBadge count={4} />{" "}
+              Followers
+              <NoteBadge count={notes.data.follows.length} />
             </TabsTrigger>
             <TabsTrigger className="flex items-center gap-2" value="likes">
-              Likes <NoteBadge count={4} />{" "}
+              Likes <NoteBadge count={notes.data.likes.length} />
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="all">all.</TabsContent>
-          <TabsContent value="comments">comments</TabsContent>
-          <TabsContent value="followers">followers</TabsContent>
-          <TabsContent value="likes">Likes.</TabsContent>
+          <TabsContent className="flex flex-col gap-3" value="all">
+            {notes.data.all.map((c: Note) => (
+              <NotePin createdAt={c.createdAt} key={c.id} msg={c.content} user_id={c.user_id} />
+            ))}
+          </TabsContent>
+          <TabsContent className="flex flex-col gap-3" value="comments">
+            comments
+          </TabsContent>
+          <TabsContent className="flex flex-col gap-3" value="followers">
+            followers
+          </TabsContent>
+          <TabsContent className="flex flex-col gap-3" value="likes">
+            Likes.
+          </TabsContent>
         </Tabs>
 
         {/* <DropdownMenuItem>Subscription</DropdownMenuItem> */}

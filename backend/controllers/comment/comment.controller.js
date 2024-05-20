@@ -132,17 +132,14 @@ const Comment = {
         },
       });
 
-      const vid = await prisma.video.findUnique({
-        where: {
-          id: video_id,
-        },
-      });
-
       await prisma.notification.create({
         data: {
+          comment_id: createdComment.id,
+          content: `commented on your video`,
+          client_id: id,
           type: "comment",
-          comment,
-          user_id: vid.user_id,
+          whoFollowed: "",
+          user_id: createdComment.user_id,
         },
       });
 

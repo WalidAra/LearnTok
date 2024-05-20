@@ -29,7 +29,7 @@ const Like = {
 
   ToggleLike: async (req, res) => {
     const { id } = req.user; // me who liked
-    const { video_id } = req.body; 
+    const { video_id } = req.body;
 
     try {
       const currentVideo = await prisma.video.findUnique({
@@ -79,21 +79,16 @@ const Like = {
             likes_count: currentVideo.likes_count + 1,
           },
         });
-        const user = await Note.findOne({ user_id: id });
 
-        if (user) {
-          const newNotification = {
-            type: "",
-            content: content,
-          };
-          user.notifications.push(newNotification);
-          await user.save();
-        }
-
-        return res.status(200).json({
-          status: true,
-          message: "Like video successfully",
-          data: true,
+        await prisma.notification.create({
+          data: {
+            comment_id: "",
+            content: `liked your video`,
+            client_id: id,
+            type: "like",
+            whoFollowed: "",
+            user_id: currentVideo.user_id,
+          },
         });
       }
     } catch (error) {

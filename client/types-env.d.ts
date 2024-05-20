@@ -92,3 +92,14 @@ type Category = {
   category: string;
   videoCount: number;
 };
+
+type Note = {
+  id: string;
+  type: "like" | "comment" | "follow";
+  content: string;
+  createdAt: string;
+  client_id: string;
+  user_id: string;
+  whoFollowed: string | null;
+  comment_id: string | null;
+};

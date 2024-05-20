@@ -165,8 +165,11 @@ model Notification {
   type      String
   content   String
   createdAt DateTime @default(now())
+  client_id String
   user_id String
-  User User @relation(fields:[user_id] , references:[id] )
+  whoFollowed String
+  comment_id String
+  User User @relation(fields:[client_id] , references:[id] )
 }
 
 model Reports {

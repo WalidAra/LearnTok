@@ -159,30 +159,37 @@ const Video = {
     const { video_id } = req.body;
 
     try {
+      // Find the related VideoCategory entries
+      const videoCategories = await prisma.videoCategory.findMany({
+        where: { video_id: video_id },
+      });
+
+      // Delete the video
       const delVideo = await prisma.video.delete({
-        where: {
-          id: video_id,
-        },
+        where: { id: video_id },
       });
 
-      const videoCategory = await prisma.videoCategory.delete({
-        where: {
-          video_id: video_id,
-        },
-      });
+      // Delete related VideoCategory entries and update Category counts
+      for (const vc of videoCategories) {
+        await prisma.videoCategory.delete({
+          where: {
+            video_id_category_id: {
+              video_id: vc.video_id,
+              category_id: vc.category_id,
+            },
+          },
+        });
 
-      const updatedCategoryCount = await prisma.category.update({
-        where: {
-          id: currentVideo.category_id,
-        },
-        data: {
-          videoCount: currentVideo.videoCount - 1,
-        },
-      });
+        // Decrement the videoCount for the related category
+        await prisma.category.update({
+          where: { id: vc.category_id },
+          data: { videoCount: { decrement: 1 } },
+        });
+      }
 
       return res.status(200).json({
         status: true,
-        message: "deleted video successfully",
+        message: "Deleted video successfully",
         data: null,
       });
     } catch (error) {
