@@ -3,6 +3,7 @@
 import { useFetch } from "@/hooks/useFetch";
 import { useAuthDialog } from "@/providers/AuthDialogProvider";
 import { Button, cn } from "@nextui-org/react";
+import { useTheme } from "next-themes";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -21,6 +22,7 @@ const FollowButton = ({
 }: Props) => {
   const [isFollowing, setIsFollowing] = useState<boolean>(follow);
   const { onOpen } = useAuthDialog();
+  const { theme } = useTheme();
 
   const handleClick = async () => {
     if (isAuthenticated === true) {
@@ -50,11 +52,14 @@ const FollowButton = ({
     <Button
       className={cn(
         "font-medium",
-        isFollowing ? "border border-primary text-primary" : "bg-secondary"
+        isFollowing
+          ? theme === "dark" && "border border-primary text-primary"
+          : theme === "dark" && "bg-secondary"
       )}
       size="sm"
       radius="full"
       onClick={handleClick}
+      color={theme === "light" ? "danger" : "default"}
       variant={isFollowing ? "bordered" : "solid"}
     >
       {isFollowing ? "Unfollow" : "Follow"}

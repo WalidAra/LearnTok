@@ -61,7 +61,7 @@ const VideoCard = ({ video, index }: Props) => {
         >
           <div></div>
           <VideoClip index={index} url={video.url} video_id={video.id} />
-          <div className=" h-full w-full flex items-center justify-center">
+          <div className=" h-full w-full hidden md:flex items-center justify-center">
             <ReactorsAuthen poster_id={id} video_id={video.id} />
           </div>
         </Box>
